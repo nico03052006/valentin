@@ -144,27 +144,33 @@
 
     // Von der Maus wegschweben (über ganze Seite)
     function repel(clientX, clientY){
-      const b = noBtn.getBoundingClientRect();
-      const bx = b.left + b.width/2;
-      const by = b.top  + b.height/2;
+  const b = noBtn.getBoundingClientRect();
+  const bx = b.left + b.width/2;
+  const by = b.top  + b.height/2;
 
-      const dx = clientX - bx;
-      const dy = clientY - by;
-      const dist = Math.hypot(dx, dy);
+  const dx = clientX - bx;
+  const dy = clientY - by;
+  const dist = Math.hypot(dx, dy);
 
-      const trigger = 140;   // ab welcher Nähe er "flieht"
-      const strength = 22;   // wie stark pro Tick
+  const trigger = 220; // ab dieser Entfernung reagiert er schon
+  if (dist <= 0.001 || dist > trigger) return;
 
-      if(dist < trigger && dist > 0.001){
-        const ux = dx / dist;
-        const uy = dy / dist;
+  // Nähe-Faktor: 0 (weit weg) -> 1 (sehr nah)
+  const closeness = 1 - (dist / trigger);
 
-        // weg von der Maus
-        const nx = b.left - ux * strength;
-        const ny = b.top  - uy * strength;
+  // Speed steigt stark an je näher du kommst (Quadrat macht's "panischer")
+  const speed = 6 + (closeness * closeness) * 55; // <— hier kannst du "unfair" machen 😈
 
-        setNoPos(nx, ny);
-      }
+  const ux = dx / dist;
+  const uy = dy / dist;
+
+  // weg von der Maus
+  const nx = b.left - ux * speed;
+  const ny = b.top  - uy * speed;
+
+  setNoPos(nx, ny);
+}
+
     }
 
     // Ganze Seite “aktiv”
