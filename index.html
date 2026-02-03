@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>💘 Valentinstag</title>
+  <title>Valentinstag</title>
   <style>
     body{
       margin:0;
@@ -51,52 +51,83 @@
 </head>
 <body>
   <div class="box">
-    <h1>Willst du mein Valentinstag sein? 💘</h1>
+    <h1>Do you want my valentine?</h1>
 
     <div class="btns" id="area">
-      <button id="yes">Ja 💞</button>
-      <button id="no">Nein 🙃</button>
+      <button id="yes">Ja 😃</button>
+      <button id="no">Nein 😒</button>
     </div>
 
     <div id="msg"></div>
   </div>
 
   <script>
-    const area = document.getElementById("area");
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
-    const msg = document.getElementById("msg");
+  const area = document.getElementById("area");
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const msg = document.getElementById("msg");
 
-    function moveNo() {
-      const areaRect = area.getBoundingClientRect();
-      const btnRect  = noBtn.getBoundingClientRect();
+  let isFlying = false;
 
-      const maxX = areaRect.width  - btnRect.width;
-      const maxY = areaRect.height - btnRect.height;
+  function randomSpawnPosition() {
+    const areaRect = area.getBoundingClientRect();
+    const btnRect  = noBtn.getBoundingClientRect();
 
-      // zufällige Position innerhalb der Fläche
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+    const maxX = areaRect.width  - btnRect.width;
+    const maxY = areaRect.height - btnRect.height;
 
-      noBtn.style.left = x + "px";
-      noBtn.style.top  = y + "px";
-    }
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
 
-    // Desktop: bei Hover weg
-    noBtn.addEventListener("mouseenter", moveNo);
+    noBtn.style.left = x + "px";
+    noBtn.style.top  = y + "px";
+  }
 
-    // Mobile: bei Touch/Click weg
-    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNo(); });
-    noBtn.addEventListener("click", (e) => { e.preventDefault(); moveNo(); });
+  function flyNo() {
+    if (isFlying) return;
+    isFlying = true;
 
-    // Ja klicken
-    yesBtn.addEventListener("click", () => {
-      msg.textContent = "YEEES!! 🥹💞";
-      msg.style.fontWeight = "700";
-    });
+    // Button "wegfliegen" lassen
+    const dx = (Math.random() < 0.5 ? -1 : 1) * (250 + Math.random() * 250);
+    const dy = (-1) * (180 + Math.random() * 220); // eher nach oben
 
-    // Startposition einmal random
-    moveNo();
+    noBtn.style.transition = "transform 220ms ease, opacity 220ms ease";
+    noBtn.style.transform  = `translate(${dx}px, ${dy}px) rotate(${(Math.random()*40-20)}deg)`;
+    noBtn.style.opacity    = "0";
+
+    // Danach reset + an neuer Stelle "reinfliegen"
+    setTimeout(() => {
+      noBtn.style.transition = "none";
+      noBtn.style.transform  = "translate(0,0)";
+      noBtn.style.opacity    = "1";
+
+      randomSpawnPosition();
+
+      // kleine "pop-in" Animation
+      noBtn.style.transition = "transform 160ms ease";
+      noBtn.style.transform  = "scale(1.06)";
+      setTimeout(() => {
+        noBtn.style.transform = "scale(1)";
+        isFlying = false;
+      }, 160);
+    }, 230);
+  }
+
+  // Desktop: bei Hover wegfliegen
+  noBtn.addEventListener("mouseenter", flyNo);
+
+  // Mobile: bei Touch/Click wegfliegen
+  noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); flyNo(); }, {passive:false});
+  noBtn.addEventListener("click", (e) => { e.preventDefault(); flyNo(); });
+
+  // Ja klicken
+  yesBtn.addEventListener("click", () => {
+    msg.textContent = "Lets GOOO❤️❤️";
+    msg.style.fontWeight = "700";
+  });
+
+  // Startposition einmal random
+  randomSpawnPosition();
   </script>
 </body>
 </html>
