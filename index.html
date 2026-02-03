@@ -12,6 +12,7 @@
       place-items:center;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       background:#fff0f6;
+      overflow:hidden; /* damit nix scrollt wenn der Button rumfliegt */
     }
     .box{
       background:#fff;
@@ -20,6 +21,8 @@
       box-shadow:0 15px 40px rgba(0,0,0,.12);
       text-align:center;
       width:min(520px, 92vw);
+      position: relative;
+      z-index: 2; /* Box bleibt über dem Hintergrund */
     }
 
     .gif{
@@ -37,9 +40,8 @@
     }
 
     h1{ margin:0 0 14px; font-size:26px; }
+
     .btns{
-      position:relative;
-      height:90px;
       margin-top:18px;
     }
     button{
@@ -53,20 +55,20 @@
     #yes{
       background:#ff3d7f;
       color:#fff;
-      margin-right:10px;
     }
+
+    /* WICHTIG: Nein-Button ist jetzt über die ganze Seite */
     #no{
       background:#f3f4f6;
-      position:absolute;
-      left:55%;
-      top:0;
-      transition:left 90ms ease, top 90ms ease;
+      position: fixed;              /* <- ganze Seite */
+      left: 60vw;
+      top: 55vh;
+      transition: left 90ms ease, top 90ms ease;
+      z-index: 9999;                /* immer sichtbar */
     }
 
     /* Erfolgs-Screen */
-    #success{
-      display:none;
-    }
+    #success{ display:none; }
     #success h1{
       margin: 10px 0 0;
       font-size: 30px;
@@ -78,11 +80,10 @@
 <body>
   <div class="box">
 
-    <!-- Screen 1: Frage -->
+    <!-- Screen 1 -->
     <div id="questionScreen">
       <div class="gif">
         <iframe
-          id="gifFrame"
           src="https://giphy.com/embed/4YXWEvbQKgDmZftNzv"
           title="Valentine GIF"
           allowfullscreen>
@@ -91,17 +92,16 @@
 
       <h1>Do you want my valentine?</h1>
 
-      <div class="btns" id="area">
+      <div class="btns">
         <button id="yes">Ja 😃</button>
         <button id="no">Nein 😒</button>
       </div>
     </div>
 
-    <!-- Screen 2: Erfolg -->
+    <!-- Screen 2 -->
     <div id="success">
       <div class="gif">
         <iframe
-          id="gifYes"
           src="https://giphy.com/embed/YporP8X437C4U"
           title="Yes GIF"
           allowfullscreen>
@@ -113,72 +113,88 @@
   </div>
 
   <script>
-    const area = document.getElementById("area");
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
-
     const questionScreen = document.getElementById("questionScreen");
     const success = document.getElementById("success");
 
     function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
-    function getPos(){
-      return { x: parseFloat(noBtn.style.left)||0, y: parseFloat(noBtn.style.top)||0 };
-    }
-    function initPos(){
-      const r = area.getBoundingClientRect();
-      const b = noBtn.getBoundingClientRect();
-      const x = (r.width * 0.55) - (b.width / 2);
-      noBtn.style.left = x + "px";
-      noBtn.style.top  = "0px";
+
+    function setNoPos(x, y){
+      const r = noBtn.getBoundingClientRect();
+      const margin = 10;
+
+      const maxX = window.innerWidth  - r.width  - margin;
+      const maxY = window.innerHeight - r.height - margin;
+
+      noBtn.style.left = clamp(x, margin, maxX) + "px";
+      noBtn.style.top  = clamp(y, margin, maxY) + "px";
     }
 
-    // Button schwebt von der Maus weg, bleibt im Feld
+    // Start: Nein neben Ja platzieren
+    function initNoNearYes(){
+      const y = yesBtn.getBoundingClientRect();
+      const n = noBtn.getBoundingClientRect();
+
+      // rechts neben dem Ja-Button
+      const startX = y.right + 16;
+      const startY = y.top + (y.height/2) - (n.height/2);
+      setNoPos(startX, startY);
+    }
+
+    // Von der Maus wegschweben (über ganze Seite)
     function repel(clientX, clientY){
-      const areaRect = area.getBoundingClientRect();
-      const mx = clientX - areaRect.left;
-      const my = clientY - areaRect.top;
+      const b = noBtn.getBoundingClientRect();
+      const bx = b.left + b.width/2;
+      const by = b.top  + b.height/2;
 
-      const btnRect = noBtn.getBoundingClientRect();
-      const bw = btnRect.width;
-      const bh = btnRect.height;
-
-      const pos = getPos();
-      const bx = pos.x + bw/2;
-      const by = pos.y + bh/2;
-
-      const dx = mx - bx;
-      const dy = my - by;
+      const dx = clientX - bx;
+      const dy = clientY - by;
       const dist = Math.hypot(dx, dy);
 
-      const trigger = 110;   // Nähe
-      const strength = 18;   // "Flucht" pro Tick
+      const trigger = 140;   // ab welcher Nähe er "flieht"
+      const strength = 22;   // wie stark pro Tick
 
       if(dist < trigger && dist > 0.001){
-        const ux = dx / dist, uy = dy / dist;
-        let nx = pos.x - ux * strength;
-        let ny = pos.y - uy * strength;
+        const ux = dx / dist;
+        const uy = dy / dist;
 
-        const maxX = areaRect.width - bw;
-        const maxY = areaRect.height - bh;
+        // weg von der Maus
+        const nx = b.left - ux * strength;
+        const ny = b.top  - uy * strength;
 
-        noBtn.style.left = clamp(nx, 0, maxX) + "px";
-        noBtn.style.top  = clamp(ny, 0, maxY) + "px";
+        setNoPos(nx, ny);
       }
     }
 
-    area.addEventListener("mousemove", (e) => repel(e.clientX, e.clientY));
-    area.addEventListener("touchmove", (e) => {
+    // Ganze Seite “aktiv”
+    document.addEventListener("mousemove", (e) => repel(e.clientX, e.clientY));
+
+    // Mobile: Finger bewegt -> auch weg
+    document.addEventListener("touchmove", (e) => {
       const t = e.touches[0];
       repel(t.clientX, t.clientY);
     }, {passive:true});
 
-    // Ja -> Screen wechseln
+    // Falls man ihn doch klickt: wegrutschen
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      repel(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+    });
+
+    // Ja -> Seite wechseln (nur GIF + Lets gooo)
     yesBtn.addEventListener("click", () => {
       questionScreen.style.display = "none";
       success.style.display = "block";
     });
 
-    initPos();
+    // Wenn Fenstergröße sich ändert: Button im Bild halten
+    window.addEventListener("resize", () => {
+      const b = noBtn.getBoundingClientRect();
+      setNoPos(b.left, b.top);
+    });
+
+    initNoNearYes();
   </script>
 </body>
 </html>
