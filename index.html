@@ -12,8 +12,9 @@
       place-items:center;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       background:#fff0f6;
-      overflow:hidden; /* damit nix scrollt wenn der Button rumfliegt */
+      overflow:hidden; /* kein Scrollen wenn Button rumflitzt */
     }
+
     .box{
       background:#fff;
       padding:28px 26px;
@@ -22,7 +23,7 @@
       text-align:center;
       width:min(520px, 92vw);
       position: relative;
-      z-index: 2; /* Box bleibt über dem Hintergrund */
+      z-index: 2; /* Box bleibt über allem */
     }
 
     .gif{
@@ -41,9 +42,8 @@
 
     h1{ margin:0 0 14px; font-size:26px; }
 
-    .btns{
-      margin-top:18px;
-    }
+    .btns{ margin-top:18px; }
+
     button{
       border:0;
       padding:14px 20px;
@@ -57,17 +57,18 @@
       color:#fff;
     }
 
-    /* WICHTIG: Nein-Button ist jetzt über die ganze Seite */
+    /* Nein ist über die ganze Seite */
     #no{
       background:#f3f4f6;
-      position: fixed;              /* <- ganze Seite */
+      position: fixed;
       left: 60vw;
       top: 55vh;
-      transition: left 90ms ease, top 90ms ease;
-      z-index: 9999;                /* immer sichtbar */
+      transition: left 70ms ease, top 70ms ease;
+      z-index: 9999;
+      touch-action: none;
     }
 
-    /* Erfolgs-Screen */
+    /* Erfolgsscreen */
     #success{ display:none; }
     #success h1{
       margin: 10px 0 0;
@@ -131,70 +132,64 @@
       noBtn.style.top  = clamp(y, margin, maxY) + "px";
     }
 
-    // Start: Nein neben Ja platzieren
+    // Start: Nein neben Ja-Button platzieren (damit es “normal” aussieht)
     function initNoNearYes(){
       const y = yesBtn.getBoundingClientRect();
       const n = noBtn.getBoundingClientRect();
-
-      // rechts neben dem Ja-Button
       const startX = y.right + 16;
       const startY = y.top + (y.height/2) - (n.height/2);
       setNoPos(startX, startY);
     }
 
-    // Von der Maus wegschweben (über ganze Seite)
+    // Je näher die Maus, desto schneller flieht der Button
     function repel(clientX, clientY){
-  const b = noBtn.getBoundingClientRect();
-  const bx = b.left + b.width/2;
-  const by = b.top  + b.height/2;
+      const b = noBtn.getBoundingClientRect();
+      const bx = b.left + b.width / 2;
+      const by = b.top  + b.height / 2;
 
-  const dx = clientX - bx;
-  const dy = clientY - by;
-  const dist = Math.hypot(dx, dy);
+      const dx = clientX - bx;
+      const dy = clientY - by;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 0.001) return;
 
-  const trigger = 220; // ab dieser Entfernung reagiert er schon
-  if (dist <= 0.001 || dist > trigger) return;
+      const trigger = 650; // groß = reagiert “immer ein bisschen”
+      const closeness = clamp(1 - (dist / trigger), 0, 1);
 
-  // Nähe-Faktor: 0 (weit weg) -> 1 (sehr nah)
-  const closeness = 1 - (dist / trigger);
+      // speed: weit weg langsam, nah dran sehr schnell
+      const speed = 2 + (closeness * closeness) * 95;
 
-  // Speed steigt stark an je näher du kommst (Quadrat macht's "panischer")
-  const speed = 6 + (closeness * closeness) * 55; // <— hier kannst du "unfair" machen 😈
+      const ux = dx / dist;
+      const uy = dy / dist;
 
-  const ux = dx / dist;
-  const uy = dy / dist;
+      const nx = b.left - ux * speed;
+      const ny = b.top  - uy * speed;
 
-  // weg von der Maus
-  const nx = b.left - ux * speed;
-  const ny = b.top  - uy * speed;
-
-  setNoPos(nx, ny);
-}
-
+      setNoPos(nx, ny);
     }
 
-    // Ganze Seite “aktiv”
+    // Maus überall auf der Seite
     document.addEventListener("mousemove", (e) => repel(e.clientX, e.clientY));
 
-    // Mobile: Finger bewegt -> auch weg
+    // Mobile: Finger bewegen
     document.addEventListener("touchmove", (e) => {
       const t = e.touches[0];
       repel(t.clientX, t.clientY);
-    }, {passive:true});
+    }, { passive: true });
 
-    // Falls man ihn doch klickt: wegrutschen
+    // Falls sie doch "Nein" anklickt: extra wegschubsen
     noBtn.addEventListener("click", (e) => {
       e.preventDefault();
       repel(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
     });
 
-    // Ja -> Seite wechseln (nur GIF + Lets gooo)
+    // Ja -> Seite wechseln (nur GIF + Text)
     yesBtn.addEventListener("click", () => {
       questionScreen.style.display = "none";
       success.style.display = "block";
+      noBtn.style.display = "none"; // Nein komplett weg
     });
 
-    // Wenn Fenstergröße sich ändert: Button im Bild halten
+    // Bei Resize Button im Bild halten
     window.addEventListener("resize", () => {
       const b = noBtn.getBoundingClientRect();
       setNoPos(b.left, b.top);
