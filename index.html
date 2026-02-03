@@ -61,73 +61,100 @@
     <div id="msg"></div>
   </div>
 
-  <script>
+<script>
   const area = document.getElementById("area");
   const noBtn = document.getElementById("no");
   const yesBtn = document.getElementById("yes");
   const msg = document.getElementById("msg");
 
-  let isFlying = false;
-
-  function randomSpawnPosition() {
-    const areaRect = area.getBoundingClientRect();
-    const btnRect  = noBtn.getBoundingClientRect();
-
-    const maxX = areaRect.width  - btnRect.width;
-    const maxY = areaRect.height - btnRect.height;
-
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-
+  // Startposition (aus deinem CSS: left 55%, top 0) -> wir setzen feste Pixel
+  function initPos() {
+    const r = area.getBoundingClientRect();
+    const b = noBtn.getBoundingClientRect();
+    // ungefähr bei 55% starten
+    const x = (r.width * 0.55) - (b.width / 2);
+    const y = 0;
     noBtn.style.left = x + "px";
     noBtn.style.top  = y + "px";
   }
 
-  function flyNo() {
-    if (isFlying) return;
-    isFlying = true;
-
-    // Button "wegfliegen" lassen
-    const dx = (Math.random() < 0.5 ? -1 : 1) * (250 + Math.random() * 250);
-    const dy = (-1) * (180 + Math.random() * 220); // eher nach oben
-
-    noBtn.style.transition = "transform 220ms ease, opacity 220ms ease";
-    noBtn.style.transform  = `translate(${dx}px, ${dy}px) rotate(${(Math.random()*40-20)}deg)`;
-    noBtn.style.opacity    = "0";
-
-    // Danach reset + an neuer Stelle "reinfliegen"
-    setTimeout(() => {
-      noBtn.style.transition = "none";
-      noBtn.style.transform  = "translate(0,0)";
-      noBtn.style.opacity    = "1";
-
-      randomSpawnPosition();
-
-      // kleine "pop-in" Animation
-      noBtn.style.transition = "transform 160ms ease";
-      noBtn.style.transform  = "scale(1.06)";
-      setTimeout(() => {
-        noBtn.style.transform = "scale(1)";
-        isFlying = false;
-      }, 160);
-    }, 230);
+  // Position innerhalb der Fläche halten
+  function clamp(v, min, max) {
+    return Math.max(min, Math.min(max, v));
   }
 
-  // Desktop: bei Hover wegfliegen
-  noBtn.addEventListener("mouseenter", flyNo);
+  // Button-Position aus style lesen
+  function getPos() {
+    return {
+      x: parseFloat(noBtn.style.left) || 0,
+      y: parseFloat(noBtn.style.top)  || 0
+    };
+  }
 
-  // Mobile: bei Touch/Click wegfliegen
-  noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); flyNo(); }, {passive:false});
-  noBtn.addEventListener("click", (e) => { e.preventDefault(); flyNo(); });
+  // Maus bewegt sich im Bereich -> Button driftet weg, wenn zu nah
+  function repel(clientX, clientY) {
+    const areaRect = area.getBoundingClientRect();
 
-  // Ja klicken
+    // Mausposition relativ zur area
+    const mx = clientX - areaRect.left;
+    const my = clientY - areaRect.top;
+
+    const btnRect = noBtn.getBoundingClientRect();
+    const bw = btnRect.width;
+    const bh = btnRect.height;
+
+    const pos = getPos();
+    const bx = pos.x + bw / 2;
+    const by = pos.y + bh / 2;
+
+    // Vektor: Button -> Maus
+    const dx = mx - bx;
+    const dy = my - by;
+    const dist = Math.hypot(dx, dy);
+
+    const trigger = 110;     // ab welcher Nähe er "flieht"
+    const strength = 18;     // wie stark pro Bewegung
+
+    if (dist < trigger && dist > 0.001) {
+      // weg von der Maus: -dx, -dy (normiert)
+      const ux = dx / dist;
+      const uy = dy / dist;
+
+      // neue Position ein Stück weg schieben
+      let nx = pos.x - ux * strength;
+      let ny = pos.y - uy * strength;
+
+      // im Kasten bleiben
+      const maxX = areaRect.width - bw;
+      const maxY = areaRect.height - bh;
+
+      nx = clamp(nx, 0, maxX);
+      ny = clamp(ny, 0, maxY);
+
+      noBtn.style.left = nx + "px";
+      noBtn.style.top  = ny + "px";
+    }
+  }
+
+  // Smoothes Gleiten
+  noBtn.style.transition = "left 90ms ease, top 90ms ease";
+
+  area.addEventListener("mousemove", (e) => repel(e.clientX, e.clientY));
+
+  // Mobile: finger in area -> auch wegdriften
+  area.addEventListener("touchmove", (e) => {
+    const t = e.touches[0];
+    repel(t.clientX, t.clientY);
+  }, { passive: true });
+
   yesBtn.addEventListener("click", () => {
     msg.textContent = "Lets GOOO❤️❤️";
     msg.style.fontWeight = "700";
   });
 
-  // Startposition einmal random
-  randomSpawnPosition();
-  </script>
+  // Start
+  initPos();
+</script>
+
 </body>
 </html>
