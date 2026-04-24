@@ -13,13 +13,14 @@
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .submenu-transition { transition: max-height 0.3s ease-out, opacity 0.2s ease-in; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
     <div class="min-h-screen flex flex-col md:flex-row">
         <!-- Sidebar -->
-        <aside class="w-full md:w-72 bg-white border-r border-slate-200 flex-shrink-0 flex flex-col">
+        <aside class="w-full md:w-72 bg-white border-r border-slate-200 flex-shrink-0 flex flex-col shadow-sm">
             <div class="p-6">
                 <div class="flex items-center gap-3 mb-10">
                     <div class="bg-indigo-600 p-2 rounded-lg text-white shadow-lg shadow-indigo-200">
@@ -40,8 +41,8 @@
                 <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
                     <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 border border-slate-300">MA</div>
                     <div class="text-[11px]">
-                        <p class="font-bold text-slate-700">Sprint 1 | V3.0</p>
-                        <p class="text-slate-400">Inhaltlich Vollständig</p>
+                        <p class="font-bold text-slate-700">Sprint 1 | V3.2</p>
+                        <p class="text-slate-400">EVA vor EVA-S Fokus</p>
                     </div>
                 </div>
             </div>
@@ -56,7 +57,7 @@
                     <input 
                         type="text" 
                         id="search-input"
-                        placeholder="Alle 39 Glossar-Begriffe durchsuchen..." 
+                        placeholder="Wiki durchsuchen..." 
                         class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all outline-none"
                     >
                 </div>
@@ -74,6 +75,25 @@
     <script>
         // --- DATA ---
         const wikiData = [
+            { 
+                id: "eva_konzept", 
+                title: "Das EVA-Prinzip (Einstieg)", 
+                category: "konzept", 
+                definition: "Das **EVA-Prinzip** ist das Fundament der IT: **E**ingabe, **V**erarbeitung, **A**usgabe.", 
+                content: `Bevor wir über moderne Speicherlösungen sprechen, müssen wir verstehen, wie ein Computer grundsätzlich arbeitet. Das klassische **EVA-Modell** erklärt den logischen Fluss von Daten:
+
+                1. **Eingabe**: Ein Mensch gibt Daten ein (z. B. durch einen Tastendruck).
+                2. **Verarbeitung**: Der Computer rechnet und wandelt den Tastendruck in einen Befehl um.
+                3. **Ausgabe**: Das System zeigt dem Menschen das Ergebnis (z. B. den Buchstaben auf dem Schirm).
+
+                **Vom EVA zum EVA-S**:
+                In der heutigen Arbeitswelt reicht das nicht mehr aus. Wir wollen Daten nicht nur kurz sehen, sondern behalten. Deshalb wurde das Modell um das **S** für **Speicherung** erweitert. 
+                
+                Stellen Sie sich vor, Sie schreiben ein Angebot: Ohne **Speicherung** wäre Ihre Arbeit nach dem Ausschalten des PCs weg. Erst durch die **SSD** oder die **Cloud** wird der Kreislauf für den Vertrieb profitabel.`, 
+                businessValue: "Nutzen Sie das einfache EVA-Modell, um Kunden zu erklären, dass Hardware immer als geschlossene Kette funktioniert. Reißt ein Glied (z.B. schlechte Ausgabe), leidet der ganze Workflow.", 
+                related: ["Zentraleinheit", "Software", "Speicherung"], 
+                tags: ["Grundlagen", "Einstieg"] 
+            },
             { id: "ram", title: "Arbeitsspeicher (RAM)", category: "verarbeitung", definition: "Flüchtiger Kurzzeitspeicher für laufende Prozesse.", content: "Der RAM ist der 'Schreibtisch' des Computers. Alles, womit der PC gerade arbeitet, liegt hier bereit. Wird der Strom abgeschaltet, ist der Schreibtisch leer.", businessValue: "Viel RAM verhindert, dass der Rechner bei vielen offenen Programmen (Multitasking) ins Stocken gerät.", related: ["CPU", "SSD", "Verarbeitung"], tags: ["Hardware", "Speed"] },
             { id: "audio", title: "Audio-Anschlüsse", category: "peripherie", definition: "Schnittstellen zur Übertragung von Tonsignalen.", content: "Klassische Klinkenanschlüsse (3,5mm) oder USB für Headsets, Mikrofone und Lautsprecher.", businessValue: "Essenziell für professionelle Videokonferenzen und Support-Mitarbeiter im Home-Office.", related: ["Lautsprecher", "USB"], tags: ["Anschluss", "Kommunikation"] },
             { id: "aufloesung", title: "Auflösung", category: "ausgabe", definition: "Anzahl der Bildpunkte (Pixel) auf einem Monitor.", content: "Gibt an, wie scharf ein Bild ist. Gängige Standards sind Full-HD (1080p) oder 4K (UHD).", businessValue: "Höhere Auflösung bedeutet mehr Details und weniger Ermüdung der Augen bei Textarbeit.", related: ["Monitor", "Grafikkarte"], tags: ["Display", "Qualität"] },
@@ -83,13 +103,13 @@
             { id: "desktop", title: "Desktop-PC", category: "bauformen", definition: "Stationärer Computer für den Einsatz am festen Arbeitsplatz.", content: "Besteht meist aus einem Gehäuse (Tower) und wird mit externer Peripherie betrieben.", businessValue: "Bietet das beste Preis-Leistungs-Verhältnis und ist einfach aufzurüsten oder zu reparieren.", related: ["Workstation", "Mini-PC", "Laptop"], tags: ["System", "Büro"] },
             { id: "displayport", title: "DisplayPort", category: "peripherie", definition: "Ein digitaler Anschlussstandard für Video und Audio.", content: "Ähnlich wie HDMI, aber im Profi-Bereich verbreiteter für den Anschluss hochauflösender Monitore.", businessValue: "Unterstützt sehr hohe Auflösungen und Bildraten – ideal für moderne Workstations.", related: ["HDMI", "Monitor"], tags: ["Anschluss", "Video"] },
             { id: "drucker", title: "Drucker", category: "ausgabe", definition: "Gerät zur Ausgabe von digitalen Daten auf Papier.", content: "Oberbegriff für Geräte, die Dokumente physisch greifbar machen.", businessValue: "Unverzichtbar für Verträge, Rechnungen und physische Marketingunterlagen beim Kunden.", related: ["Laserdrucker", "Tintenstrahl", "Plotter"], tags: ["Peripherie", "Output"] },
-            { id: "eingabe", title: "Eingabe (Input)", category: "grundlagen", definition: "Der erste Schritt im EVA-Prinzip: Datenaufnahme.", content: "Überführung von Informationen vom Menschen in die Maschine.", businessValue: "Die Qualität der Eingabegeräte bestimmt, wie fehlerfrei und schnell Daten erfasst werden können.", related: ["Maus", "Tastatur", "Scanner", "EVA"], tags: ["Grundkonzept", "Prozess"] },
+            { id: "eingabe_konzept", title: "Eingabe (Input)", category: "eingabe", definition: "Der erste Schritt im EVA-Prinzip: Datenaufnahme.", content: "Überführung von Informationen vom Menschen in die Maschine.", businessValue: "Die Qualität der Eingabegeräte bestimmt, wie fehlerfrei und schnell Daten erfasst werden können.", related: ["Maus", "Tastatur", "Scanner", "EVA"], tags: ["Grundkonzept", "Prozess"] },
             { id: "hdd", title: "Festplatte (HDD)", category: "speicherung", definition: "Mechanischer Massenspeicher mit rotierenden Magnetscheiben.", content: "Günstiger Speicherplatz für große Datenmengen, aber deutlich langsamer als eine SSD.", businessValue: "Gute Wahl als günstiges Datengrab für Archive, die nicht täglich schnell abgerufen werden müssen.", related: ["SSD", "Speicherung"], tags: ["Hardware", "Storage"] },
             { id: "formfaktor", title: "Formfaktor", category: "bauformen", definition: "Standardisierte Größenangabe für Hardware-Bauteile.", content: "Gibt an, ob ein Mainboard in ein Gehäuse passt (z.B. ATX, Micro-ATX).", businessValue: "Entscheidend für die Kompatibilität beim Zusammenbau oder Aufrüsten von Kundensystemen.", related: ["Mainboard", "Desktop-PC"], tags: ["Standard", "Technik"] },
-            { id: "grafik", title: "Grafikkarte", category: "verarbeitung", definition: "Komponente zur Berechnung der Bildausgabe.", content: "Kann ein eigener Chip (dediziert) oder im Prozessor integriert sein.", businessValue: "Wichtig für Grafik-Design, CAD oder Videobearbeitung. Ein Muss für kreative Kunden.", related: ["Monitor", "CPU"], tags: ["Hardware", "Grafik"] },
-            { id: "hardware", title: "Hardware", category: "grundlagen", definition: "Die physischen, greifbaren Komponenten eines IT-Systems.", content: "Alles vom Gehäuse über das Mainboard bis zur Maus gehört zur Hardware.", businessValue: "Das materielle Investment des Kunden. Langlebige Hardware spart langfristig Wartungskosten.", related: ["Software", "Peripherie"], tags: ["Grundbegriff"] },
+            { id: "grafik", title: "Grafikkarte", category: "verarbeitung", definition: "Komponente zur Berechnung der Bildausgabe.", content: "Kann ein eigener chip (dediziert) oder im Prozessor integriert sein.", businessValue: "Wichtig für Grafik-Design, CAD oder Videobearbeitung. Ein Muss für kreative Kunden.", related: ["Monitor", "CPU"], tags: ["Hardware", "Grafik"] },
+            { id: "hardware", title: "Hardware", category: "konzept", definition: "Die physischen, greifbaren Komponenten eines IT-Systems.", content: "Alles vom Gehäuse über das Mainboard bis zur Maus gehört zur Hardware.", businessValue: "Das materielle Investment des Kunden. Langlebige Hardware spart langfristig Wartungskosten.", related: ["Software", "Peripherie"], tags: ["Grundbegriff"] },
             { id: "hdmi", title: "HDMI", category: "peripherie", definition: "Universeller Anschluss für Bild und Ton.", content: "Standard an fast allen Monitoren, Fernsehern und Beamern.", businessValue: "Ermöglicht einfaches Plug-and-Play bei Präsentationen in Besprechungsräumen.", related: ["DisplayPort", "Monitor"], tags: ["Anschluss", "Video"] },
-            { id: "kompatibilitaet", title: "Kompatibilität", category: "grundlagen", definition: "Das reibungslose Zusammenspiel verschiedener IT-Komponenten.", content: "Beschreibt, ob Hardware A mit Software B oder Hardware C zusammenarbeitet.", businessValue: "Fehlende Kompatibilität führt zu Ausfällen. Wir garantieren geprüfte Systeme.", related: ["Formfaktor", "Software"], tags: ["Beratung"] },
+            { id: "kompatibilitaet", title: "Kompatibilität", category: "konzept", definition: "Das reibungslose Zusammenspiel verschiedener IT-Komponenten.", content: "Beschreibt, ob Hardware A mit Software B oder Hardware C zusammenarbeitet.", businessValue: "Fehlende Kompatibilität führt zu Ausfällen. Wir garantieren geprüfte Systeme.", related: ["Formfaktor", "Software"], tags: ["Beratung"] },
             { id: "lan", title: "LAN (Ethernet)", category: "peripherie", definition: "Kabelgebundene Netzwerkverbindung.", content: "Wird über ein RJ45-Kabel hergestellt. Stabiler und schneller als WLAN.", businessValue: "Empfehlenswert für stationäre Büro-Arbeitsplätze, um Verbindungsabbrüche in Meetings zu vermeiden.", related: ["Netzwerk", "Schnittstellen"], tags: ["Netzwerk", "Speed"] },
             { id: "laptop", title: "Laptop / Notebook", category: "bauformen", definition: "Tragbarer Computer mit integriertem Akku und Monitor.", content: "Kombiniert alle EVA-Komponenten in einem mobilen Gehäuse.", businessValue: "Ermöglicht flexibles Arbeiten im Home-Office, im Zug oder direkt beim Kunden vor Ort.", related: ["Desktop-PC", "Mini-PC"], tags: ["Mobil", "System"] },
             { id: "laserdrucker", title: "Laserdrucker", category: "ausgabe", definition: "Drucker, der mit Tonerpulver und Laserstrahlen arbeitet.", content: "Sehr schnell, wischfest und günstig im Seitpreis bei hohem Textaufkommen.", businessValue: "Die beste Wahl für klassische Büros mit viel Korrespondenz und Rechnungsdruck.", related: ["Drucker", "Tintenstrahl"], tags: ["Hardware", "Office"] },
@@ -99,29 +119,39 @@
             { id: "minipc", title: "Mini-PC", category: "bauformen", definition: "Extrem kompakter Computer für Büroanwendungen.", content: "Oft kaum größer als ein Buch. Kann oft direkt hinter dem Monitor montiert werden.", businessValue: "Spart Platz auf dem Schreibtisch und verbraucht deutlich weniger Energie als große Tower-PCs.", related: ["Desktop-PC", "Laptop"], tags: ["System", "Platzsparend"] },
             { id: "monitor", title: "Monitor", category: "ausgabe", definition: "Das wichtigste visuelle Ausgabegerät.", content: "Zeigt die Benutzeroberfläche und Daten an. Das 'Fenster' zur digitalen Welt.", businessValue: "Ein zweiter Monitor kann die Arbeitseffizienz um bis zu 30% steigern.", related: ["Auflösung", "Bildgroesse", "Grafik"], tags: ["Hardware", "Anzeige"] },
             { id: "netzteil", title: "Netzteil", category: "verarbeitung", definition: "Bauteil zur Stromversorgung aller PC-Komponenten.", content: "Wandelt den Strom aus der Steckdose in die benötigten Spannungen für den PC um.", businessValue: "Ein effizientes Netzteil (80 Plus Zertifikat) senkt die monatlichen Stromkosten des Unternehmens.", related: ["Hardware", "Mainboard"], tags: ["Hardware", "Energie"] },
-            { id: "peripherie", title: "Peripherie", category: "grundlagen", definition: "Zusatzgeräte, die an den Computer angeschlossen werden.", content: "Dazu zählen Maus, Tastatur, Drucker, Scanner und externe Festplatten.", businessValue: "Durch die richtige Peripherie wird ein einfacher PC erst zur individuellen Arbeitsstation für den Kunden.", related: ["Hardware", "Eingabe", "Ausgabe"], tags: ["Zubehör"] },
+            { id: "peripherie_konzept", title: "Peripherie", category: "eingabe", definition: "Zusatzgeräte, die an den Computer angeschlossen werden.", content: "Dazu zählen Maus, Tastatur, Drucker, Scanner und externe Festplatten.", businessValue: "Durch die richtige Peripherie wird ein einfacher PC erst zur individuellen Arbeitsstation für den Kunden.", related: ["Hardware", "Eingabe", "Ausgabe"], tags: ["Zubehör"] },
             { id: "plotter", title: "Plotter", category: "ausgabe", definition: "Großformatdrucker für technische Zeichnungen.", content: "Kann Papierrollen in Übergrößen (A1, A0) bedrucken. Wird oft mit Stiften oder Tintendüsen betrieben.", businessValue: "Unerlässlich für Architekten, Ingenieurbüros und Werbeagenturen.", related: ["Drucker", "Ausgabe"], tags: ["Spezial", "Hardware"] },
             { id: "cpu", title: "Prozessor (CPU)", category: "verarbeitung", definition: "Die Zentraleinheit und das 'Gehirn' des Computers.", content: "Der 'Sachbearbeiter', der alle Befehle ausführt. Mehr Kerne erlauben die parallele Bearbeitung von Aufgaben.", businessValue: "Das Herzstück für die Arbeitsgeschwindigkeit. Ein schneller Prozessor spart dem Kunden wertvolle Zeit.", related: ["Zentraleinheit", "Mainboard", "RAM"], tags: ["Hardware", "Gehirn"] },
             { id: "scanner", title: "Scanner", category: "eingabe", definition: "Gerät zur Digitalisierung von physischen Dokumenten.", content: "Wandelt Papier in digitale Dateien (PDF/Bild) um.", businessValue: "Basis für das 'papierlose Büro' und die schnelle Archivierung von Kundenakten.", related: ["Drucker", "Eingabe"], tags: ["Digitalisierung", "Peripherie"] },
-            { id: "software", title: "Software", category: "grundlagen", definition: "Sammelbegriff für Programme und Betriebssysteme.", content: "Das 'Wissen' des Computers. Ohne Software weiß die Hardware nicht, was sie tun soll.", businessValue: "Die richtige Software (z.B. CRM oder Office) entscheidet über den Erfolg der Geschäftsprozesse.", related: ["Hardware", "Kompatibilitaet"], tags: ["Programme", "Immateriell"] },
+            { id: "software", title: "Software", category: "konzept", definition: "Sammelbegriff für Programme und Betriebssysteme.", content: "Das 'Wissen' des Computers. Ohne Software weiß die Hardware nicht, was sie tun soll.", businessValue: "Die richtige Software (z.B. CRM oder Office) entscheidet über den Erfolg der Geschäftsprozesse.", related: ["Hardware", "Kompatibilitaet"], tags: ["Programme", "Immateriell"] },
             { id: "ssd", title: "Solid State Drive (SSD)", category: "speicherung", definition: "Elektronisches Speichermedium ohne bewegliche Teile.", content: "Das 'Turbo-Archiv'. Extrem schnelle Lese- und Schreibzugriffe.", businessValue: "Verkürzt das Hochfahren des PCs von Minuten auf Sekunden. Ein absolutes Muss für jeden Kunden.", related: ["HDD", "Speicherung", "RAM"], tags: ["Speed", "Hardware"] },
-            { id: "speicherung", title: "Speicherung", category: "grundlagen", definition: "Die vierte Phase des EVA-S Prinzips: Dauerhaftes Sichern.", content: "Sorgt dafür, dass Daten auch nach dem Ausschalten erhalten bleiben.", businessValue: "Ein sicheres Speicherkonzept (lokal + Cloud) schützt den Kunden vor fatalem Datenverlust.", related: ["SSD", "HDD", "Cloud", "EVA"], tags: ["Archiv", "Sicherheit"] },
+            { id: "speicherung_konzept", title: "Speicherung", category: "speicherung", definition: "Die vierte Phase des EVA-S Prinzips: Dauerhaftes Sichern.", content: "Sorgt dafür, dass Daten auch nach dem Ausschalten erhalten bleiben.", businessValue: "Ein sicheres Speicherkonzept (lokal + Cloud) schützt den Kunden vor fatalem Datenverlust.", related: ["SSD", "HDD", "Cloud", "EVA"], tags: ["Archiv", "Sicherheit"] },
             { id: "tastatur", title: "Tastatur", category: "eingabe", definition: "Hauptgerät zur Eingabe von Texten und Befehlen.", content: "Bestandteil der Standard-Eingabe. Gibt es in verschiedenen Layouts (z.B. QWERTZ).", businessValue: "Gute Druckpunkte und leise Tasten erhöhen den Schreibkomfort in Großraumbüros.", related: ["Maus", "Eingabe"], tags: ["Hardware", "Input"] },
             { id: "tintenstrahl", title: "Tintenstrahldrucker", category: "ausgabe", definition: "Drucker, der flüssige Tinte auf das Papier sprüht.", content: "Ideal für Farbdrucke und Fotos. Günstiger in der Anschaffung als Laserdrucker.", businessValue: "Perfekt für Marketingabteilungen oder Kunden, die gelegentlich hochwertige Fotos drucken müssen.", related: ["Drucker", "Laserdrucker"], tags: ["Hardware", "Foto"] },
             { id: "usb", title: "USB (USB-A, USB-C)", category: "peripherie", definition: "Universeller Anschluss für fast alle Geräte.", content: "USB-A ist der alte Standard, USB-C der neue, verdrehsichere Alleskönner.", businessValue: "USB-C kann gleichzeitig laden, Daten übertragen und Monitore ansteuern – weniger Kabelsalat.", related: ["Schnittstellen", "Laptop"], tags: ["Anschluss", "Standard"] },
-            { id: "verarbeitung", title: "Verarbeitung", category: "grundlagen", definition: "Die zweite Phase des EVA-Prinzip: Datenumwandlung.", content: "Hier wird aus einem Tastendruck ein Buchstabe oder aus Zahlen eine Grafik.", businessValue: "In dieser Phase entsteht der Mehrwert der IT: Daten werden zu nutzbaren Informationen.", related: ["CPU", "RAM", "Mainboard", "EVA"], tags: ["Prozess", "Logik"] },
+            { id: "verarbeitung_konzept", title: "Verarbeitung", category: "verarbeitung", definition: "Die zweite Phase des EVA-Prinzip: Datenumwandlung.", content: "Hier wird aus einem Tastendruck ein Buchstabe oder aus Zahlen eine Grafik.", businessValue: "In dieser Phase entsteht der Mehrwert der IT: Daten werden zu nutzbaren Informationen.", related: ["CPU", "RAM", "Mainboard", "EVA"], tags: ["Prozess", "Logik"] },
             { id: "workstation", title: "Workstation", category: "bauformen", definition: "Hochleistungs-PC für spezialisierte Profi-Anwendungen.", content: "Besonders robust, mit extrem viel RAM und Profi-Grafikkarten ausgestattet.", businessValue: "Für Kunden mit extremen Anforderungen (3D-Design, Videoproduktion, KI-Berechnungen).", related: ["Desktop-PC", "Grafik"], tags: ["Leistung", "Profi"] },
-            { id: "zentraleinheit", title: "Zentraleinheit", category: "grundlagen", definition: "Der Kern des Computersystems.", content: "Besteht im Wesentlichen aus Gehäuse, Netzteil, Mainboard und CPU.", businessValue: "Das stabile Herz der IT-Infrastruktur beim Kunden.", related: ["CPU", "Mainboard", "Hardware"], tags: ["Systemkern"] },
-            { id: "ausgabe", title: "Ausgabe (Output)", category: "grundlagen", definition: "Die dritte Phase des EVA-Prinzips: Präsentation.", content: "Sichtbar- oder Hörbarmachen der verarbeiteten Daten für den Menschen.", businessValue: "Die Schnittstelle zum Anwender. Nur eine gute Ausgabe macht die IT-Arbeit erlebbar.", related: ["Monitor", "Drucker", "EVA"], tags: ["Ergebnis", "Display"] }
+            { id: "zentraleinheit", title: "Zentraleinheit", category: "konzept", definition: "Der Kern des Computersystems.", content: "Besteht im Wesentlichen aus Gehäuse, Netzteil, Mainboard und CPU.", businessValue: "Das stabile Herz der IT-Infrastruktur beim Kunden.", related: ["CPU", "Mainboard", "Hardware"], tags: ["Systemkern"] },
+            { id: "ausgabe_konzept", title: "Ausgabe (Output)", category: "ausgabe", definition: "Die dritte Phase des EVA-Prinzips: Präsentation.", content: "Sichtbar- oder Hörbarmachen der verarbeiteten Daten für den Menschen.", businessValue: "Die Schnittstelle zum Anwender. Nur eine gute Ausgabe macht die IT-Arbeit erlebbar.", related: ["Monitor", "Drucker", "EVA"], tags: ["Ergebnis", "Display"] }
         ];
 
+        // Hierarchie für die Seitenleiste
         const categories = [
             { id: 'dashboard', name: 'Wiki-Zentrale', icon: 'home' },
             { id: 'glossar', name: 'A-Z Glossar', icon: 'list' },
-            { id: 'grundlagen', name: 'EVA-S & Grundlagen', icon: 'layers' },
-            { id: 'verarbeitung', name: 'Verarbeitung (Kern)', icon: 'cpu' },
-            { id: 'ausgabe', name: 'Ausgabe-Geräte', icon: 'monitor' },
-            { id: 'speicherung', name: 'Speicherung', icon: 'hard-drive' },
+            { 
+                id: 'evas', 
+                name: 'EVA-S Prinzip', 
+                icon: 'layers', 
+                hasSubmenu: true,
+                children: [
+                    { id: 'konzept', name: 'Konzept & Übersicht', icon: 'info' },
+                    { id: 'eingabe', name: 'Eingabe', icon: 'mouse-pointer-2' },
+                    { id: 'verarbeitung', name: 'Verarbeitung', icon: 'cpu' },
+                    { id: 'ausgabe', name: 'Ausgabe', icon: 'monitor' },
+                    { id: 'speicherung', name: 'Speicherung', icon: 'hard-drive' }
+                ]
+            },
             { id: 'peripherie', name: 'Anschlüsse & Extras', icon: 'usb' },
             { id: 'bauformen', name: 'Computer-Bauformen', icon: 'layout' }
         ];
@@ -130,6 +160,7 @@
         let currentTab = 'dashboard';
         let searchTerm = '';
         let selectedArticleId = null;
+        let isEvasOpen = true; 
 
         // --- DOM ELEMENTS ---
         const navContainer = document.getElementById('sidebar-nav');
@@ -148,16 +179,51 @@
             });
         }
 
+        function toggleEvasMenu(e) {
+            e.stopPropagation();
+            isEvasOpen = !isEvasOpen;
+            renderSidebar();
+        }
+
         function renderSidebar() {
-            navContainer.innerHTML = categories.map(cat => `
-                <button 
-                    onclick="switchTab('${cat.id}')"
-                    class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentTab === cat.id && !searchTerm ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}"
-                >
-                    <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
-                    <span class="text-sm">${cat.name}</span>
-                </button>
-            `).join('');
+            navContainer.innerHTML = categories.map(cat => {
+                if (cat.hasSubmenu) {
+                    return `
+                        <div class="space-y-1">
+                            <button 
+                                onclick="toggleEvasMenu(event)"
+                                class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all duration-200"
+                            >
+                                <div class="flex items-center gap-3">
+                                    <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
+                                    <span class="text-sm font-semibold">${cat.name}</span>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 ${isEvasOpen ? 'rotate-180' : ''}"></i>
+                            </button>
+                            <div class="overflow-hidden submenu-transition ${isEvasOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}">
+                                ${cat.children.map(child => `
+                                    <button 
+                                        onclick="switchTab('${child.id}')"
+                                        class="w-full flex items-center gap-3 pl-12 pr-4 py-2.5 rounded-xl transition-all duration-200 ${currentTab === child.id && !searchTerm ? 'text-indigo-700 bg-indigo-50 font-bold' : 'text-slate-400 hover:text-slate-900 hover:bg-slate-50'}"
+                                    >
+                                        <i data-lucide="${child.icon}" class="w-4 h-4"></i>
+                                        <span class="text-sm">${child.name}</span>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                return `
+                    <button 
+                        onclick="switchTab('${cat.id}')"
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentTab === cat.id && !searchTerm ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'}"
+                    >
+                        <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
+                        <span class="text-sm font-semibold">${cat.name}</span>
+                    </button>
+                `;
+            }).join('');
             lucide.createIcons();
         }
 
@@ -201,15 +267,15 @@
                     </section>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div onclick="switchTab('grundlagen')" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer group">
+                        <div onclick="switchTab('konzept')" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer group">
                             <i data-lucide="layers" class="text-indigo-600 mb-4 w-10 h-10"></i>
                             <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-600">Das EVA-S Prinzip</h3>
-                            <p class="text-slate-500 text-sm leading-relaxed italic">"Eingabe -> Verarbeitung -> Ausgabe -> Speicherung" – Die Landkarte der IT-Beratung.</p>
+                            <p class="text-slate-500 text-sm leading-relaxed italic">Beginnen Sie mit dem Grundgerüst jeder IT-Beratung (Basis: EVA).</p>
                         </div>
-                        <div onclick="switchTab('verarbeitung')" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer group">
-                            <i data-lucide="cpu" class="text-indigo-600 mb-4 w-10 h-10"></i>
-                            <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-600">Leistung verstehen</h3>
-                            <p class="text-slate-500 text-sm leading-relaxed italic">Erfahren Sie, wie CPU und RAM als Team arbeiten (Büro-Analogie).</p>
+                        <div onclick="switchTab('glossar')" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer group">
+                            <i data-lucide="list" class="text-indigo-600 mb-4 w-10 h-10"></i>
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-600">A-Z Index</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed italic">Finden Sie jeden Hardware-Begriff in Sekunden.</p>
                         </div>
                     </div>
 
@@ -217,10 +283,10 @@
                         <div class="relative z-10">
                             <div class="flex items-center gap-2 mb-4 text-indigo-300 font-bold uppercase tracking-widest text-xs">
                                 <i data-lucide="info" class="w-4 h-4"></i>
-                                <span>Verkaufs-Tipp des Tages</span>
+                                <span>Verkaufs-Tipp</span>
                             </div>
                             <p class="text-xl font-medium leading-relaxed">
-                                "Sagen Sie dem Kunden nicht: 'Das Mainboard hat den Formfaktor ATX'. Sagen Sie: 'Dieses Mainboard ist der perfekte Grundstein, falls Sie Ihren PC in zwei Jahren noch einmal aufrüsten möchten'."
+                                "Sagen Sie dem Kunden nicht: 'Das Mainboard hat den Formfaktor ATX'. Sagen Sie: 'Dieses Mainboard ist der perfekte Grundstein für zukünftige Upgrades'."
                             </p>
                         </div>
                         <i data-lucide="zap" class="absolute -bottom-10 -right-10 text-white/5 w-64 h-64"></i>
@@ -260,14 +326,20 @@
 
         function renderCategoryView() {
             const filtered = wikiData.filter(a => a.category === currentTab);
-            const cat = categories.find(c => c.id === currentTab);
+            let displayTitle = currentTab;
+            
+            categories.forEach(c => {
+                if (c.id === currentTab) displayTitle = c.name;
+                if (c.children) {
+                    const child = c.children.find(child => child.id === currentTab);
+                    if (child) displayTitle = child.name;
+                }
+            });
+
             viewContainer.innerHTML = `
                 <div class="space-y-6 animate-in fade-in duration-500">
                     <div class="flex items-center gap-4 mb-8">
-                        <div class="bg-indigo-100 p-3 rounded-2xl text-indigo-600">
-                            <i data-lucide="${cat.icon}" class="w-8 h-8"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold">${cat.name}</h2>
+                        <h2 class="text-3xl font-bold">${displayTitle}</h2>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         ${filtered.map(art => `
@@ -287,13 +359,11 @@
         function renderSearchView() {
             const filtered = wikiData.filter(a => 
                 a.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                a.definition.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                a.content.toLowerCase().includes(searchTerm.toLowerCase())
+                a.definition.toLowerCase().includes(searchTerm.toLowerCase())
             );
             viewContainer.innerHTML = `
                 <div class="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-                    <h2 class="text-2xl font-bold">Suchergebnisse für "${searchTerm}"</h2>
-                    <p class="text-sm text-slate-400">${filtered.length} Begriffe gefunden</p>
+                    <h2 class="text-2xl font-bold">Suche: "${searchTerm}"</h2>
                     <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                         ${filtered.length > 0 ? `
                             <div class="divide-y divide-slate-100">
@@ -307,7 +377,7 @@
                                     </div>
                                 `).join('')}
                             </div>
-                        ` : '<div class="p-20 text-center text-slate-400">Keine Einträge für diese Suche gefunden.</div>'}
+                        ` : '<div class="p-20 text-center text-slate-400">Nichts gefunden.</div>'}
                     </div>
                 </div>
             `;
@@ -320,38 +390,33 @@
             viewContainer.innerHTML = `
                 <article class="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-14 shadow-2xl animate-in zoom-in-95 duration-300">
                     <button onclick="selectedArticleId=null; renderView();" class="mb-12 text-indigo-600 text-sm font-black flex items-center gap-2 hover:translate-x-[-4px] transition-transform">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i> ZURÜCK ZUR AUSWAHL
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i> ZURÜCK
                     </button>
                     
                     <header class="mb-12">
-                        <div class="flex items-center gap-3 mb-4">
-                            <span class="bg-indigo-600 text-white text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-widest">
-                                ${categories.find(c => c.id === article.category)?.name}
-                            </span>
-                        </div>
                         <h1 class="text-5xl font-black text-slate-900 mb-6 tracking-tight">${article.title}</h1>
                         <p class="text-2xl text-slate-400 font-medium leading-relaxed italic border-l-8 border-indigo-500 pl-8">
-                            ${article.definition}
+                            ${article.definition.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
                         </p>
                     </header>
 
                     <div class="article-content text-slate-700 leading-relaxed text-lg mb-12 space-y-6">
                         <div class="bg-slate-50 rounded-3xl p-8 border border-slate-100">
                              <h4 class="text-sm font-black mb-4 text-slate-400 uppercase tracking-widest">Einfache Erklärung</h4>
-                             <p class="text-xl">${article.content}</p>
+                             <p class="text-xl whitespace-pre-line leading-relaxed">${article.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                         <div class="bg-indigo-900 p-8 rounded-3xl text-white shadow-xl shadow-indigo-100">
                             <h4 class="text-indigo-300 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
-                                <i data-lucide="shield-check" class="w-4 h-4"></i> Das Vertriebs-Argument
+                                <i data-lucide="shield-check" class="w-4 h-4"></i> Vertriebs-Argument
                             </h4>
-                            <p class="text-lg leading-relaxed font-medium">${article.businessValue}</p>
+                            <p class="text-lg leading-relaxed font-medium">${article.businessValue.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>
                         </div>
                         <div class="bg-white p-8 rounded-3xl border-2 border-slate-100">
                             <h4 class="text-slate-400 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
-                                <i data-lucide="arrow-right-left" class="w-4 h-4"></i> Verwandte Themen
+                                <i data-lucide="arrow-right-left" class="w-4 h-4"></i> Siehe auch
                             </h4>
                             <div class="flex flex-wrap gap-2">
                                 ${article.related.map(rel => {
@@ -369,7 +434,6 @@
             `;
         }
 
-        // Initialize on load
         window.onload = init;
     </script>
 </body>
