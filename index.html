@@ -40,8 +40,8 @@
             <!-- Sidebar Header -->
             <div class="flex items-center justify-between mb-10 shrink-0">
                 <div class="flex items-center gap-3">
-                   <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-indigo-200 shadow-lg">
-                    IT
+                   <div class="w-12 h-12 flex-shrink-0">
+                      <img src="all_around_it_logo_rund.png" alt="all around IT Logo" class="w-full h-full object-contain drop-shadow-sm rounded-full">
                    </div>
                    <div>
                       <h1 class="font-bold text-lg leading-tight">all around <span class="text-indigo-600 block italic">IT Wiki</span></h1>
@@ -156,7 +156,11 @@
                 name: 'EVA-S Prinzip', 
                 icon: 'layers', 
                 children: [
-                    { id: 'eva_uebersicht', name: 'Konzept & Übersicht', icon: 'info' }
+                    { id: 'eva_uebersicht', name: 'Konzept & Übersicht', icon: 'info' },
+                    { id: 'eva_eingabe', name: 'Eingabe', icon: 'mouse-pointer-2' },
+                    { id: 'eva_verarbeitung', name: 'Verarbeitung', icon: 'cpu' },
+                    { id: 'eva_ausgabe', name: 'Ausgabe', icon: 'monitor' },
+                    { id: 'eva_speicherung', name: 'Speicherung', icon: 'hard-drive' }
                 ]
             },
             {
@@ -316,6 +320,10 @@
                     let onclickAction = `app.handleNavigate('${item.id}')`;
                     const conceptMap = {
                         'eva_uebersicht': 'eva_konzept',
+                        'eva_eingabe': 'eingabe_konzept',
+                        'eva_verarbeitung': 'verarbeitung_konzept',
+                        'eva_ausgabe': 'ausgabe_konzept',
+                        'eva_speicherung': 'speicherung_konzept',
                         'sprint1': 'sprint1',
                         'sprint2': 'sprint2',
                         'retro': 'retro'
