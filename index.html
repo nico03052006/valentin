@@ -96,7 +96,7 @@
     <script>
         // --- DATA ---
         const WIKI_DATA = [
-            { id: "eva_konzept", title: "Das EVA-Prinzip (Einstieg)", category: "eva_uebersicht", definition: "Das **EVA-Prinzip** ist das Fundament der IT: **E**ingabe, **V**erarbeitung, **A**usgabe.", content: "Bevor wir über moderne Speicherlösungen sprechen, müssen wir verstehen, wie ein Computer grundsätzlich arbeitet. Das klassische **EVA-Modell** erklärt den logischen Fluss von Daten:\n\n1. **Eingabe**: Ein Mensch gibt Daten ein (z. B. durch einen Tastendruck).\n2. **Verarbeitung**: Der Computer rechnet und wandelt den Tastendruck in einen Befehl um.\n3. **Ausgabe**: Das System zeigt dem Menschen das Ergebnis (z. B. den Buchstaben auf dem Schirm).\n\n**Vom EVA zum EVA-S**:\nIn der heutigen Arbeitswelt reicht das nicht mehr aus. Wir wollen Daten nicht nur kurz sehen, sondern behalten. Deshalb wurde das Modell um das **S** für **Speicherung** erweitert. \n\nStellen Sie sich vor, Sie schreiben ein Angebot: Ohne **Speicherung** wäre Ihre Arbeit nach dem Ausschalten des PCs weg. Erst durch die **SSD** oder die **Cloud** wird der Kreislauf für den Vertrieb profitabel.", businessValue: "Nutzen Sie das einfache EVA-Modell, um Kunden zu erklären, dass Hardware immer als geschlossene Kette funktioniert. Reißt ein Glied (z.B. schlechte Ausgabe), leidet der ganze Workflow.", related: ["Zentraleinheit", "Software", "Speicherung"], tags: ["Grundlagen", "Einstieg"] },
+            { id: "eva_konzept", title: "Das EVA-Prinzip (Einstieg)", category: "eva_uebersicht", definition: "Das **EVA-Prinzip** ist das Fundament der IT: **E**ingabe, **V**erarbeitung, **A**usgabe.", content: "Bevor wir über moderne Speicherlösungen sprechen, müssen wir verstehen, wie ein Computer grundsätzlich arbeitet. Das klassische **EVA-Modell** erklärt den logischen Fluss von Daten:\n\n1. **Eingabe**: Ein Mensch gibt Daten ein (z. B. durch einen Tastendruck).\n2. **Verarbeitung**: Der Computer rechnet und wandelt den Tastendruck in einen Befehl um.\n3. **Ausgabe**: Das System zeigt dem Menschen das Ergebnis (z. B. den Buchstaben auf dem Schirm).\n\n**Vom EVA zum EVA-S**:\nIn der heutigen Arbeitswelt reicht das nicht mehr aus. Wir wollen Daten nicht nur kurz sehen, sondern behalten. Deshalb wurde das Modell um das **S** für **Speicherung** erweitert. \n\nStellen Sie sich vor, Sie schreiben ein Angebot: Ohne **Speicherung** wäre Ihre Arbeit nach dem Ausschalten PCs weg. Erst durch die **SSD** oder die **Cloud** wird der Kreislauf für den Vertrieb profitabel.", businessValue: "Nutzen Sie das einfache EVA-Modell, um Kunden zu erklären, dass Hardware immer als geschlossene Kette funktioniert. Reißt ein Glied (z.B. schlechte Ausgabe), leidet der ganze Workflow.", related: ["Zentraleinheit", "Software", "Speicherung"], tags: ["Grundlagen", "Einstieg"] },
             { id: "eingabe_konzept", title: "Eingabe (Das Tor zum System)", category: "eingabe", definition: "Die **Eingabe** ist die erste Phase des EVA-S Prinzips. Hier gelangen Befehle des Nutzers in das digitale System.", content: "In der **Eingabe-Phase** übersetzen wir menschliche Wünsche in eine Sprache, die der Computer versteht. Denken Sie an den **Posteingang** in einem Büro: Ohne Briefe oder E-Mails hat der Sachbearbeiter keine Aufgabe.\n\nWichtige Punkte für die Beratung:\n- **Präzision**: Nur wenn die **Eingabe** fehlerfrei funktioniert (z.B. eine präzise **Maus**), kann das System effektiv arbeiten.\n- **Ergonomie**: Da der Mensch hier physisch mit der Technik interagiert (**Tastatur**), ist der Gesundheitsschutz hier am wichtigsten.", businessValue: "Eine hochwertige **Eingabe-Peripherie** steigert die Motivation der Mitarbeiter, da Frust durch unpräzise Geräte vermieden wird.", related: ["Tastatur", "Maus", "Scanner"], tags: ["Input", "EVA-S"] },
             { id: "verarbeitung_konzept", title: "Verarbeitung (Das Herz der IT)", category: "verarbeitung", definition: "In der **Verarbeitung** werden die Rohdaten durch Rechenoperationen in nutzbare Informationen verwandelt.", content: "Dies ist der Moment, in dem die Magie passiert. In unserem Büro-Modell ist das die eigentliche Schreibtischarbeit:\n- Der **Prozessor (CPU)** ist der Sachbearbeiter. Er rechnet, vergleicht und entscheidet.\n- Der **Arbeitsspeicher (RAM)** ist die Schreibtischplatte. Je größer sie ist, desto mehr Akten können gleichzeitig bearbeitet werden.\n- Das **Mainboard** stellt die Infrastruktur dar – die Flure, über die die Daten von A nach B fließen.", businessValue: "Die Phase der **Verarbeitung** entscheidet über die Geschwindigkeit. Ein Kunde, der keine Wartezeiten ('Sanduhr') will, braucht hier die beste Hardware.", related: ["CPU", "RAM", "Mainboard", "Grafikkarte"], tags: ["Logik", "EVA-S"] },
             { id: "ausgabe_konzept", title: "Ausgabe (Das Sichtbare)", category: "ausgabe", definition: "Die **Ausgabe** ist die Präsentation der verarbeiteten Daten für Menschen.", content: "In der **Ausgabe-Phase** verlässt das Ergebnis den Computer. In unserem Büro ist das der Moment, in dem der Sachbearbeiter das fertige Dokument präsentiert:\n- Über den **Monitor** (visuell).\n- Über den **Drucker** (physisch).\n- Über **Lautsprecher** (akustisch).\n\nHier kommt es auf die **Qualität** an. Ein schlechter Monitor macht die beste CPU-Leistung unsichtbar.", businessValue: "Die **Ausgabe** ist das, was der Kunde am Ende 'sieht'. Eine brillante Darstellung auf einem 4K-Monitor erhöht die wahrgenommene Wertigkeit der gesamten IT.", related: ["Monitor", "Drucker", "Lautsprecher"], tags: ["Output", "EVA-S"] },
@@ -505,43 +505,86 @@
                 this.state.chatState.isLoading = true;
                 this.renderChat();
 
-                // --- SIMULIERTE LOKALE KI (Ohne API Key!) ---
-                // Leert das Eingabefeld sofort
-                if(inputEl) inputEl.value = '';
+                if (inputEl) inputEl.value = '';
 
-                // Simuliere eine "Denkpause" der KI von 1,5 Sekunden
-                setTimeout(() => {
-                    const lowerText = text.toLowerCase();
-                    let responseText = "Entschuldigung, dazu habe ich leider keine spezifischen Informationen gefunden. Frag mich am besten nach Hardware-Komponenten wie RAM, SSD, Monitoren oder dem EVA-Prinzip!";
+                // --- AUTOMATISCHE UMGEBUNGSERKENNUNG (Canvas vs. GitHub) ---
+                // Wir prüfen, ob die Seite hier in der Vorschau oder auf deiner GitHub-Seite läuft.
+                // In der Canvas-Vorschau blockiert das System fremde Keys und Modelle (daher der 404 Fehler).
+                const isCanvas = window.location.hostname.includes('usercontent.goog') || window.location.hostname === '';
+                
+                let apiKey = ""; 
+                let model = "gemini-2.5-flash-preview-09-2025"; 
 
-                    // 1. Spezielle Begrüßungen abfangen
-                    if (lowerText.includes("hallo") || lowerText.includes("hi ") || lowerText === "hi" || lowerText.includes("hey")) {
-                        responseText = "Hallo! Wie kann ich dir heute beim Thema Hardware-Vertrieb helfen?";
+                if (!isCanvas) {
+                    // Diese Werte greifen automatisch, sobald die Seite auf GitHub hochgeladen ist!
+                    apiKey = "AIzaSyAWMgA3l1X_G8Nvz6Dc02hLFUUFDGyMDEQ"; 
+                    model = "gemini-1.5-flash"; 
+                }
+
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+                
+                const contextData = WIKI_DATA.map(d => `- ${d.title}: ${d.definition}`).join('\n');
+                const systemInstruction = {
+                    parts: [{ text: `Du bist ein freundlicher, professioneller IT-Vertriebsassistent für das 'all around IT Wiki'. Beantworte Fragen auf Deutsch, prägnant (max. 3-4 Sätze) und direkt auf den Kundennutzen ausgerichtet. Nutze diese Wiki-Daten als dein Kernwissen:\n${contextData}` }]
+                };
+                
+                // FIX: Die Historie strikt abwechselnd aufbauen (Gemini API Vorgabe)
+                const validHistory = [];
+                this.state.chatState.messages.forEach((msg, idx) => {
+                    // Begrüßung und alte Fehlermeldungen überspringen
+                    if (idx === 0 && msg.role === 'model') return; 
+                    if (msg.role === 'model' && msg.text.includes('Fehler')) return;
+
+                    const lastValid = validHistory[validHistory.length - 1];
+                    if (!lastValid || lastValid.role !== msg.role) {
+                        validHistory.push({ role: msg.role === 'model' ? 'model' : 'user', text: msg.text });
                     } else {
-                        // 2. Suche nach passenden Artikeln in unserer WIKIbank
-                        // Wir suchen nach Schlagwörtern aus dem Titel oder den Tags
-                        const bestMatch = WIKI_DATA.find(item => {
-                            const titleWords = item.title.toLowerCase().replace(/[^a-zäöüß0-9-]/g, ' ').split(' ');
-                            return titleWords.some(word => word.length > 2 && lowerText.includes(word)) || 
-                                   item.tags.some(tag => lowerText.includes(tag.toLowerCase()));
-                        });
-
-                        if (bestMatch) {
-                            responseText = `Dazu habe ich etwas Passendes!\n\n**${bestMatch.title}**\n${bestMatch.definition}\n\n*Verkaufs-Tipp:* ${bestMatch.businessValue}`;
-                        } else {
-                            // 3. Fallback: Volltextsuche in Definitionen
-                            const partialMatch = WIKI_DATA.find(item => item.definition.toLowerCase().includes(lowerText));
-                            if (partialMatch) {
-                                responseText = `Meintest du vielleicht **${partialMatch.title}**?\n${partialMatch.definition}`;
-                            }
-                        }
+                        // Wenn der Nutzer z.B. 2x hintereinander schreibt, fassen wir das zusammen
+                        lastValid.text += "\n" + msg.text; 
                     }
+                });
 
-                    // Antwort hinzufügen und Lade-Status beenden
-                    this.state.chatState.messages.push({ role: 'model', text: responseText });
-                    this.state.chatState.isLoading = false;
-                    this.renderChat();
-                }, 1500);
+                // Die API verlangt, dass die erste Nachricht vom Nutzer kommt
+                while (validHistory.length > 0 && validHistory[0].role !== 'user') {
+                    validHistory.shift();
+                }
+
+                const contents = validHistory.map(msg => ({
+                    role: msg.role,
+                    parts: [{ text: msg.text }]
+                }));
+
+                const payload = { contents, systemInstruction };
+                const delays = [1000, 2000, 4000, 8000, 16000];
+                let responseText = "Entschuldigung, es gab einen Fehler bei der Kommunikation mit der KI.";
+
+                for (let attempt = 0; attempt < 5; attempt++) {
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (!response.ok) {
+                            const errData = await response.text();
+                            throw new Error(`Status ${response.status}: ${errData}`);
+                        }
+                        const data = await response.json();
+                        responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Keine Antwort erhalten.";
+                        break;
+                    } catch (error) {
+                        console.error("Chat API Fehler (Versuch " + (attempt+1) + "):", error);
+                        if (attempt === 4) {
+                            responseText = "Entschuldigung, es gab einen Fehler bei der Kommunikation. Details: " + error.message;
+                            break;
+                        }
+                        await new Promise(resolve => setTimeout(resolve, delays[attempt]));
+                    }
+                }
+
+                this.state.chatState.messages.push({ role: 'model', text: responseText });
+                this.state.chatState.isLoading = false;
+                this.renderChat();
             },
 
             // --- RENDERING ---
