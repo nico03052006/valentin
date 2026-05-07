@@ -18,15 +18,17 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8,0,1,1); } 50% { transform: none; animation-timing-function: cubic-bezier(0,0,0.2,1); } }
         
         .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
         .animate-slide-in { animation: slideInUp 0.4s ease-out forwards; }
         .animate-zoom-in { animation: zoomIn 0.3s ease-out forwards; }
+        .animate-bounce-custom { animation: bounce 1s infinite; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 flex font-sans h-screen w-full overflow-hidden relative">
 
-    <!-- Mobile Menu Toggle Button (Verschoben nach links!) -->
+    <!-- Mobile Menu Toggle Button -->
     <button id="mobile-toggle" onclick="app.toggleSidebar()" class="fixed bottom-6 left-6 z-50 p-4 bg-indigo-600 text-white rounded-full shadow-lg md:hidden hidden">
         <i data-lucide="menu" class="w-6 h-6"></i>
     </button>
@@ -37,12 +39,12 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="h-screen fixed inset-y-0 left-0 z-40 w-72 bg-white border-r border-slate-200 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 flex flex-col flex-shrink-0">
         
-        <!-- Sidebar Header (Fest verankert) -->
-        <div class="p-6 pb-4 shrink-0">
+        <!-- Sidebar Header -->
+        <div class="p-6 pb-4 shrink-0 border-b border-slate-100">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                    <div class="w-12 h-12 flex-shrink-0">
-                      <img src="all_around_it_logo_rund.png" alt="all around IT Logo" class="w-full h-full object-contain drop-shadow-sm rounded-full">
+                      <img src="all_around_it_logo_rund.png" alt="all around IT Logo" class="w-full h-full object-contain drop-shadow-sm rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/100x100/4f46e5/ffffff?text=IT'">
                    </div>
                    <div>
                       <h1 class="font-bold text-lg leading-tight">all around <span class="text-indigo-600 block italic">IT Wiki</span></h1>
@@ -56,25 +58,16 @@
         </div>
 
         <!-- Main Navigation (Scrollbar) -->
-        <div class="flex-1 overflow-y-auto px-6 pb-6 custom-scrollbar">
-            <nav id="main-nav" class="space-y-1">
-                <!-- Rendered by JS -->
-            </nav>
+        <div class="flex-1 overflow-y-auto px-6 py-6 custom-scrollbar" id="sidebar-nav-container">
+            <!-- Normal Navigation / Learning Navigation wird von JS gerendert -->
         </div>
 
-        <!-- Doc Navigation (Fest verankert am Boden) -->
-        <div class="p-6 pt-4 border-t border-slate-100 shrink-0 bg-slate-50/50">
-            <div id="doc-nav">
-                <!-- Rendered by JS -->
-            </div>
-        </div>
-        
     </aside>
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
         <!-- Header -->
-        <header class="h-20 bg-white border-b border-slate-200 flex items-center px-4 md:px-8 shadow-sm z-10 shrink-0">
+        <header id="main-header" class="h-20 bg-white border-b border-slate-200 flex items-center px-4 md:px-8 shadow-sm z-10 shrink-0">
             <div class="relative w-full max-w-2xl mx-auto md:mx-0">
                 <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-[18px] h-[18px]"></i>
                 <input 
@@ -108,7 +101,7 @@
             { id: "verarbeitung_konzept", title: "Verarbeitung (Das Herz der IT)", category: "verarbeitung", definition: "In der **Verarbeitung** werden die Rohdaten durch Rechenoperationen in nutzbare Informationen verwandelt.", content: "Dies ist der Moment, in dem die Magie passiert. In unserem Büro-Modell ist das die eigentliche Schreibtischarbeit:\n- Der **Prozessor (CPU)** ist der Sachbearbeiter. Er rechnet, vergleicht und entscheidet.\n- Der **Arbeitsspeicher (RAM)** ist die Schreibtischplatte. Je größer sie ist, desto mehr Akten können gleichzeitig bearbeitet werden.\n- Das **Mainboard** stellt die Infrastruktur dar – die Flure, über die die Daten von A nach B fließen.", businessValue: "Die Phase der **Verarbeitung** entscheidet über die Geschwindigkeit. Ein Kunde, der keine Wartezeiten ('Sanduhr') will, braucht hier die beste Hardware.", related: ["CPU", "RAM", "Mainboard", "Grafikkarte"], tags: ["Logik", "EVA-S"] },
             { id: "ausgabe_konzept", title: "Ausgabe (Das Sichtbare)", category: "ausgabe", definition: "Die **Ausgabe** ist die Präsentation der verarbeiteten Daten für Menschen.", content: "In der **Ausgabe-Phase** verlässt das Ergebnis den Computer. In unserem Büro ist das der Moment, in dem der Sachbearbeiter das fertige Dokument präsentiert:\n- Über den **Monitor** (visuell).\n- Über den **Drucker** (physisch).\n- Über **Lautsprecher** (akustisch).\n\nHier kommt es auf die **Qualität** an. Ein schlechter Monitor macht die beste CPU-Leistung unsichtbar.", businessValue: "Die **Ausgabe** ist das, was der Kunde am Ende 'sieht'. Eine brillante Darstellung auf einem 4K-Monitor erhöht die wahrgenommene Wertigkeit der gesamten IT.", related: ["Monitor", "Drucker", "Lautsprecher"], tags: ["Output", "EVA-S"] },
             { id: "speicherung_konzept", title: "Speicherung (Das Gedächtnis)", category: "speicherung", definition: "Die **Speicherung** sichert Daten dauerhaft, damit sie auch nach dem Ausschalten verfügbar bleiben.", content: "Ohne die **Speicherung** wäre der Computer nur eine Schreibmaschine mit Kurzzeitgedächtnis. Das **S** im EVA-S Prinzip ist das **Archiv** unseres Büros:\n- Die **SSD** ist der moderne, schnelle Aktenschrank.\n- Die **Cloud** ist das externe Lager, auf das man von überall zugreifen kann.\n\nWichtig: Die **Speicherung** muss sicher und schnell sein, damit die **Verarbeitung** nicht ausgebremst wird.", businessValue: "Datensicherheit ist das Top-Thema. Ein Kunde investiert in **Speicherung**, um sein wertvollstes Gut – seine Daten – niemals zu verlieren.", related: ["SSD", "HDD", "Cloud-Speicher"], tags: ["Archiv", "EVA-S"] },
-            { id: "doku_uebersicht", title: "Projekt-Doku: Übersicht", category: "sprint_berichte", definition: "Zentrale Übersicht über das IT-Wiki-Projekt und dessen Entwicklungsziele.", content: "<h3 class=\"text-xl font-bold text-slate-800 mb-4\">Scrum Ablauf</h3>\n<img src=\"Scrum_Ablauf.png\" alt=\"Scrum Ablauf Diagramm\" class=\"w-full max-w-4xl rounded-2xl shadow-md border border-slate-200 mb-10\">\n\nDieses IT-Wiki wurde als interaktives Nachschlagewerk für unser Vertriebsteam entwickelt.\n\n**Kernziele des Projekts:**\n- Schneller Zugriff auf fundiertes Hardware-Wissen während Kundengesprächen.\n- Bereitstellung einheitlicher, nutzenorientierter Verkaufsargumente (Pitches).\n- Strukturierte Erklärung durch das EVA-S Prinzip.\n\nIn diesem Dokumentationsbereich finden Sie alle Protokolle zu den Entwicklungs-Sprints und Retrospektiven, um den Fortschritt nachvollziehen zu können.\n\n<h3 class=\"text-xl font-bold text-slate-800 mb-4 mt-10\">Rollenverteilung</h3><div class=\"overflow-x-auto rounded-xl border border-slate-200 bg-white\"><table class=\"w-full text-left border-collapse text-sm\"><thead class=\"bg-slate-800 text-white\"><tr><th class=\"p-4 font-black\">ROLLE</th><th class=\"p-4 font-black\">NAME</th><th class=\"p-4 font-black\">AUFGABEN</th></tr></thead><tbody class=\"text-slate-700\"><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">PRODUCT OWNER</td><td class=\"p-4\">Malin</td><td class=\"p-4\">Anforderungen sammeln, Prioritäten festlegen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">SCRUM MASTER</td><td class=\"p-4\">Nico</td><td class=\"p-4\">Achtet auf SCRUM-Ablauf, moderiert Dailys</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">ENTWICKLUNGSTEAM</td><td class=\"p-4\">Erza, Nico, Malin, Kasija</td><td class=\"p-4\">Inhalte erarbeiten (Hardware, EVA usw.)</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">DOKUMENTATION</td><td class=\"p-4\">Erza, Malin</td><td class=\"p-4\">Pflegt die Wissensdatenbank, Pflegt das Word Dokument</td></tr><tr><td class=\"p-4 font-bold\">QUALITÄTSSICHERUNG</td><td class=\"p-4\">Erza, Kasija</td><td class=\"p-4\">Prüft Verständlichkeit & Vollständigkeit</td></tr></tbody></table></div>\n\n<h3 class=\"text-xl font-bold text-slate-800 mb-4 mt-10\">Risikoanalyse</h3><div class=\"overflow-x-auto rounded-xl border border-slate-200 bg-white\"><table class=\"w-full text-left border-collapse text-sm\"><thead class=\"bg-slate-800 text-white\"><tr><th class=\"p-4 font-black\">Risiko</th><th class=\"p-4 font-black\">Beschreibung</th><th class=\"p-4 font-black\">Mögliche Auswirkungen</th><th class=\"p-4 font-black\">Gegenmaßnahmen</th></tr></thead><tbody class=\"text-slate-700\"><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Unklare Aufgabenverteilung</td><td class=\"p-4\">Aufgaben und Verantwortlichkeiten sind nicht eindeutig festgelegt</td><td class=\"p-4\">Doppelarbeit, vergessene Aufgaben, Verzögerungen im Projekt</td><td class=\"p-4\">Klare Zuordnung von Features und Tasks, Pflege des Kanban-Boards, regelmäßige Weeklys</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Zeitmangel durch zu große Aufgaben</td><td class=\"p-4\">Tasks sind zu umfangreich oder schlecht eingeplant</td><td class=\"p-4\">Sprintziele werden nicht erreicht, Zeitdruck vor der Abgabe</td><td class=\"p-4\">Tasks klein und konkret formulieren, Aufgaben im Weekly nachschärfen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Fachlich falsche oder ungenaue Inhalte</td><td class=\"p-4\">Fehlendes technisches Wissen führt zu falschen Erklärungen</td><td class=\"p-4\">Wissensdatenbank ist unzuverlässig, falsche Kundenberatung</td><td class=\"p-4\">Gegenseitige Kontrolle im Team, Nutzung von Unterrichtsunterlagen, Rückfragen an Lehrkraft</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Inhalte zu technisch für den Vertrieb</td><td class=\"p-4\">Zu viele Fachbegriffe oder komplizierte Erklärungen</td><td class=\"p-4\">Zielgruppe versteht Inhalte nicht, geringe Nutzung der Datenbank</td><td class=\"p-4\">Einfache Sprache verwenden, Praxisbeispiele einbauen, Inhalte gegenlesen lassen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Uneinheitliche Struktur und Sprache</td><td class=\"p-4\">Unterschiedliche Schreibstile und Aufbauten</td><td class=\"p-4\">Unübersichtlicher Gesamteindruck, schlechte Lesbarkeit</td><td class=\"p-4\">Einheitliche Struktur festlegen (EVA-Prinzip), Abschluss-Review durchführen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Mangelnde Teamkommunikation</td><td class=\"p-4\">Fehlende oder unregelmäßige Abstimmungen</td><td class=\"p-4\">Missverständnisse, unklarer Projektstand</td><td class=\"p-4\">Regelmäßige Weeklys, offene Kommunikation, transparenter Fortschritt im Kanban-Board</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Technische Probleme mit Tools</td><td class=\"p-4\">Probleme mit Word, Conceptboard oder Dateizugriff</td><td class=\"p-4\">Zeitverlust, möglicher Datenverlust</td><td class=\"p-4\">Regelmäßiges Speichern, gemeinsame Ablage, klare Dateinamen</td></tr><tr><td class=\"p-4 font-bold\">Pflichtbegriffe nicht vollständig abgedeckt</td><td class=\"p-4\">Begriffe aus dem Dokument „Wichtige Begriffe“ fehlen</td><td class=\"p-4\">Anforderungen nicht erfüllt, Punktabzug</td><td class=\"p-4\">Checkliste verwenden, Vollständigkeit vor Abgabe prüfen</td></tr></tbody></table></div>", businessValue: "Eine transparente Dokumentation sichert das Projektwissen und beschleunigt das Onboarding neuer Vertriebsmitarbeiter.", related: ["sprint1", "sprint2", "retro"], tags: ["Projekt", "Übersicht"] },
+            { id: "doku_uebersicht", title: "Projekt-Doku: Übersicht", category: "sprint_berichte", definition: "Zentrale Übersicht über das IT-Wiki-Projekt und dessen Entwicklungsziele.", content: "<h3 class=\"text-xl font-bold text-slate-800 mb-4\">Scrum Ablauf</h3>\n<img src=\"Scrum_Ablauf.png\" alt=\"Scrum Ablauf Diagramm\" class=\"w-full max-w-4xl rounded-2xl shadow-md border border-slate-200 mb-10\" onerror=\"this.onerror=null; this.src='https://placehold.co/800x400/eef2ff/4f46e5?text=Scrum+Ablauf'\">\n\nDieses IT-Wiki wurde als interaktives Nachschlagewerk für unser Vertriebsteam entwickelt.\n\n**Kernziele des Projekts:**\n- Schneller Zugriff auf fundiertes Hardware-Wissen während Kundengesprächen.\n- Bereitstellung einheitlicher, nutzenorientierter Verkaufsargumente (Pitches).\n- Strukturierte Erklärung durch das EVA-S Prinzip.\n\nIn diesem Dokumentationsbereich finden Sie alle Protokolle zu den Entwicklungs-Sprints und Retrospektiven, um den Fortschritt nachvollziehen zu können.\n\n<h3 class=\"text-xl font-bold text-slate-800 mb-4 mt-10\">Rollenverteilung</h3><div class=\"overflow-x-auto rounded-xl border border-slate-200 bg-white\"><table class=\"w-full text-left border-collapse text-sm\"><thead class=\"bg-slate-800 text-white\"><tr><th class=\"p-4 font-black\">ROLLE</th><th class=\"p-4 font-black\">NAME</th><th class=\"p-4 font-black\">AUFGABEN</th></tr></thead><tbody class=\"text-slate-700\"><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">PRODUCT OWNER</td><td class=\"p-4\">Malin</td><td class=\"p-4\">Anforderungen sammeln, Prioritäten festlegen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">SCRUM MASTER</td><td class=\"p-4\">Nico</td><td class=\"p-4\">Achtet auf SCRUM-Ablauf, moderiert Dailys</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">ENTWICKLUNGSTEAM</td><td class=\"p-4\">Erza, Nico, Malin, Kasija</td><td class=\"p-4\">Inhalte erarbeiten (Hardware, EVA usw.)</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">DOKUMENTATION</td><td class=\"p-4\">Erza, Malin</td><td class=\"p-4\">Pflegt die Wissensdatenbank, Pflegt das Word Dokument</td></tr><tr><td class=\"p-4 font-bold\">QUALITÄTSSICHERUNG</td><td class=\"p-4\">Erza, Kasija</td><td class=\"p-4\">Prüft Verständlichkeit & Vollständigkeit</td></tr></tbody></table></div>\n\n<h3 class=\"text-xl font-bold text-slate-800 mb-4 mt-10\">Risikoanalyse</h3><div class=\"overflow-x-auto rounded-xl border border-slate-200 bg-white\"><table class=\"w-full text-left border-collapse text-sm\"><thead class=\"bg-slate-800 text-white\"><tr><th class=\"p-4 font-black\">Risiko</th><th class=\"p-4 font-black\">Beschreibung</th><th class=\"p-4 font-black\">Mögliche Auswirkungen</th><th class=\"p-4 font-black\">Gegenmaßnahmen</th></tr></thead><tbody class=\"text-slate-700\"><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Unklare Aufgabenverteilung</td><td class=\"p-4\">Aufgaben und Verantwortlichkeiten sind nicht eindeutig festgelegt</td><td class=\"p-4\">Doppelarbeit, vergessene Aufgaben, Verzögerungen im Projekt</td><td class=\"p-4\">Klare Zuordnung von Features und Tasks, Pflege des Kanban-Boards, regelmäßige Weeklys</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Zeitmangel durch zu große Aufgaben</td><td class=\"p-4\">Tasks sind zu umfangreich oder schlecht eingeplant</td><td class=\"p-4\">Sprintziele werden nicht erreicht, Zeitdruck vor der Abgabe</td><td class=\"p-4\">Tasks klein und konkret formulieren, Aufgaben im Weekly nachschärfen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Fachlich falsche oder ungenaue Inhalte</td><td class=\"p-4\">Fehlendes technisches Wissen führt zu falschen Erklärungen</td><td class=\"p-4\">Wissensdatenbank ist unzuverlässig, falsche Kundenberatung</td><td class=\"p-4\">Gegenseitige Kontrolle im Team, Nutzung von Unterrichtsunterlagen, Rückfragen an Lehrkraft</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Inhalte zu technisch für den Vertrieb</td><td class=\"p-4\">Zu viele Fachbegriffe oder komplizierte Erklärungen</td><td class=\"p-4\">Zielgruppe versteht Inhalte nicht, geringe Nutzung der Datenbank</td><td class=\"p-4\">Einfache Sprache verwenden, Praxisbeispiele einbauen, Inhalte gegenlesen lassen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Uneinheitliche Struktur und Sprache</td><td class=\"p-4\">Unterschiedliche Schreibstile und Aufbauten</td><td class=\"p-4\">Unübersichtlicher Gesamteindruck, schlechte Lesbarkeit</td><td class=\"p-4\">Einheitliche Struktur festlegen (EVA-Prinzip), Abschluss-Review durchführen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Mangelnde Teamkommunikation</td><td class=\"p-4\">Fehlende oder unregelmäßige Abstimmungen</td><td class=\"p-4\">Missverständnisse, unklarer Projektstand</td><td class=\"p-4\">Regelmäßige Weeklys, offene Kommunikation, transparenter Fortschritt im Kanban-Board</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Technische Probleme mit Tools</td><td class=\"p-4\">Probleme mit Word, Conceptboard oder Dateizugriff</td><td class=\"p-4\">Zeitverlust, möglicher Datenverlust</td><td class=\"p-4\">Regelmäßiges Speichern, gemeinsame Ablage, klare Dateinamen</td></tr><tr><td class=\"p-4 font-bold\">Pflichtbegriffe nicht vollständig abgedeckt</td><td class=\"p-4\">Begriffe aus dem Dokument „Wichtige Begriffe“ fehlen</td><td class=\"p-4\">Anforderungen nicht erfüllt, Punktabzug</td><td class=\"p-4\">Checkliste verwenden, Vollständigkeit vor Abgabe prüfen</td></tr></tbody></table></div>", businessValue: "Eine transparente Dokumentation sichert das Projektwissen und beschleunigt das Onboarding neuer Vertriebsmitarbeiter.", related: ["sprint1", "sprint2", "retro"], tags: ["Projekt", "Übersicht"] },
             { id: "sprint1", title: "Dokumentation: Sprint 1", category: "sprint_berichte", definition: "Zeitraum: Projektbeginn bis 30.04.2026. Fokus: Grundstruktur und Kernkonzepte.", content: "Im ersten Sprint haben wir die Basis für die Wissensdatenbank geschaffen.\n\n**Erreichte Meilensteine:**\n- Festlegung des **EVA-S Prinzips** als Navigationsstruktur.\n- Erstellung des **Glossars** mit allen geforderten Fachbegriffen.\n- Entwicklung der **Büro-Analogie** zur Erklärung komplexer Hardware-Vorgänge.\n- Implementierung der **Suchfunktion** und des interaktiven Designs.", businessValue: "Sprint 1 stellt sicher, dass das Team eine gemeinsame Sprache spricht und das Grundgerüst steht.", related: ["EVA-Prinzip", "Sprint 2"], tags: ["SCRUM", "Sprint 1"] },
             { id: "sprint2", title: "Dokumentation: Sprint 2", category: "sprint_berichte", definition: "Zeitraum: 01.05.2026 bis 21.05.2026. Fokus: Detailtiefe und Finalisierung.", content: "Der zweite Sprint dient der inhaltlichen Vertiefung und dem Feinschliff.\n\n**Geplante Aufgaben:**\n- Detaillierte Beschreibung von **Spezial-Hardware** (z.B. Plotter, Workstations).\n- Ausarbeitung technischer **Schnittstellen** (HDMI 2.1 vs DisplayPort 1.4).\n- Abschlusspräsentation und Projektabgabe am **21.05.2026**.", businessValue: "Ziel ist ein marktreifes Produkt, das sofort für neue Vertriebler als Nachschlagewerk genutzt werden kann.", related: ["Sprint 1", "Retrospektive"], tags: ["SCRUM", "Sprint 2"] },
             { id: "ram", title: "Arbeitsspeicher (RAM)", image: "RAM.png", category: "verarbeitung", definition: "Flüchtiger Kurzzeitspeicher für laufende Prozesse.", content: "Der RAM ist der 'Schreibtisch' des Computers. Alles, womit der PC gerade arbeitet, liegt hier bereit. Wird der Strom abgeschaltet, ist der Schreibtisch leer.", businessValue: "Viel RAM verhindert, dass der Rechner bei vielen offenen Programmen (Multitasking) ins Stocken gerät.", related: ["CPU", "SSD"], tags: ["Hardware", "Speed"] },
@@ -159,8 +152,26 @@
             { id: "webcam", title: "Webcam", category: "eingabe", definition: "Kamera zur Erfassung von Video-Signalen, essenziell für digitale Besprechungen.", content: "Oft bereits in Laptops integriert. Externe Webcams oder spezielle Konferenzraum-Kameras bieten jedoch eine deutlich höhere Bildqualität, besseren Autofokus, eine bessere Ausleuchtung und weite Sichtfelder für mehrere Personen.", businessValue: "Der professionelle Außenauftritt eines Unternehmens findet heute oft per Video-Call statt. Eine gute Kamera ist eine extrem günstige Investition in ein seriöses Firmen-Image.", related: ["Audio-Anschlüsse", "Laptop / Notebook"], tags: ["Kommunikation", "Peripherie"] }
         ];
 
+        // --- LERNMODUS DATEN ---
+        const LEARNING_PATH = [
+            { level: 1, articleId: 'eva_konzept', title: 'Start: Das EVA-Prinzip', question: 'Wofür steht das "S" in der erweiterten Form "EVA-S"?', options: ['Sicherheit', 'Speicherung', 'System'], answer: 1 },
+            { level: 2, articleId: 'verarbeitung_konzept', title: 'Die Verarbeitung', question: 'Welches Bauteil haben wir in der Analogie als "Sachbearbeiter" bezeichnet?', options: ['Festplatte', 'Arbeitsspeicher (RAM)', 'Prozessor (CPU)'], answer: 2 },
+            { level: 3, articleId: 'speicherung_konzept', title: 'Das Gedächtnis', question: 'Was ist der Hauptvorteil einer modernen SSD für den Kunden?', options: ['Sie ist günstiger als eine HDD', 'Sie hat keine beweglichen Teile und ist extrem schnell', 'Sie schützt automatisch vor Viren'], answer: 1 },
+            { level: 4, articleId: 'desktop', title: 'Bauformen', question: 'Was ist der größte Vorteil eines klassischen Desktop-PCs?', options: ['Maximale Mobilität im Zug', 'Bestes Preis-Leistungs-Verhältnis und leichte Aufrüstbarkeit', 'Kann direkt hinter dem Monitor versteckt werden'], answer: 1 },
+            { level: 5, articleId: 'cloud', title: 'Modernes Arbeiten', question: 'Warum ist Cloud-Speicher besonders für den Vertrieb wichtig?', options: ['Er erhöht die CPU-Leistung des Laptops', 'Präsentationen sind weltweit auf jedem Gerät verfügbar', 'Er ersetzt die physische Firewall im Büro'], answer: 1 }
+        ];
+
+        const FINAL_QUIZ = [
+            { q: 'Was ist die Hauptaufgabe eines Betriebssystems?', o: ['Bilder auf dem Monitor heller machen', 'Dolmetscher zwischen Hardware und Programmen sein', 'Netzwerkverkehr als Türsteher blockieren'], a: 1 },
+            { q: 'Welcher Anschluss vereint heute Bild, Ton, Daten und Strom?', o: ['USB-C', 'HDMI', 'LAN'], a: 0 },
+            { q: 'Warum ist Ergonomie in der IT ein starkes Verkaufsargument?', o: ['Weil ergonomische Geräte bunter sind', 'Weil es Krankheitstage durch Fehlhaltung reduziert', 'Weil sie weniger Strom verbrauchen'], a: 1 },
+            { q: 'Was zeichnet einen "Server" im Vergleich zu einem normalen PC aus?', o: ['Er hat immer einen größeren Monitor', 'Er ist für den 24/7 Dauerbetrieb ausgelegt', 'Er benötigt keine Software'], a: 1 },
+            { q: 'Was passiert mit den Daten im RAM (Arbeitsspeicher), wenn der Strom ausfällt?', o: ['Sie werden sicher in die Cloud geladen', 'Sie werden auf die SSD verschoben', 'Sie gehen komplett verloren'], a: 2 }
+        ];
+
         const NAVIGATION = [
             { id: 'dashboard', name: 'Zentrale', icon: 'home' },
+            { id: 'selbststudium', name: 'Selbststudium', icon: 'graduation-cap' },
             { id: 'glossar', name: 'A-Z Glossar', icon: 'list' },
             { id: 'grundlagen', name: 'Grundlagen', icon: 'book-open' },
             { 
@@ -211,6 +222,17 @@
                 isSidebarOpen: window.innerWidth >= 768,
                 openSubmenus: { evas: false, geraete: true, dokumentation: false },
                 
+                // Gamification State
+                learning: {
+                    active: false,
+                    maxUnlockedLevel: parseInt(localStorage.getItem('itWikiMaxLevel')) || 1,
+                    quizAnsweredIdx: null,
+                    quizCorrect: null,
+                    finalQuizAnswers: {},
+                    finalQuizSubmitted: false,
+                    finalScore: 0
+                },
+
                 // Chatbot State
                 chatState: {
                     isOpen: false,
@@ -248,7 +270,13 @@
                 this.state.currentTab = tabId;
                 this.state.selectedArticleId = articleId;
                 this.state.searchTerm = '';
-                document.getElementById('search-input').value = '';
+                
+                // Reset Quiz State on navigation
+                this.state.learning.quizAnsweredIdx = null;
+                this.state.learning.quizCorrect = null;
+
+                const searchInput = document.getElementById('search-input');
+                if(searchInput) searchInput.value = '';
                 
                 if (window.innerWidth < 768) {
                     this.closeSidebar();
@@ -256,10 +284,12 @@
                 
                 this.renderSidebar();
                 this.renderContent();
-                document.getElementById('content-area').scrollTo(0, 0);
+                const contentArea = document.getElementById('content-area');
+                if(contentArea) contentArea.scrollTo(0, 0);
             },
 
             handleSearch(term) {
+                if(this.state.learning.active) return; // Search disabled in learning mode
                 this.state.searchTerm = term;
                 this.renderContent();
             },
@@ -311,6 +341,154 @@
                 return displayTitle;
             },
 
+            // --- LEARNING MODE LOGIC ---
+            startLearningMode() {
+                this.state.learning.active = true;
+                const searchHeader = document.getElementById('main-header');
+                if(searchHeader) searchHeader.classList.add('hidden'); // Hide Search
+                
+                // Navigate to highest unlocked level or level 1
+                const maxLevelObj = LEARNING_PATH.find(l => l.level === this.state.learning.maxUnlockedLevel);
+                if (maxLevelObj) {
+                    this.handleNavigate(null, maxLevelObj.articleId);
+                } else {
+                    this.handleNavigate('selbstcheck');
+                }
+            },
+
+            stopLearningMode() {
+                this.state.learning.active = false;
+                const searchHeader = document.getElementById('main-header');
+                if(searchHeader) searchHeader.classList.remove('hidden');
+                this.handleNavigate('selbststudium');
+            },
+
+            answerMiniQuiz(level, selectedIdx) {
+                if (this.state.learning.quizAnsweredIdx !== null) return; // already answered
+                
+                const levelData = LEARNING_PATH.find(l => l.level === level);
+                const isCorrect = levelData.answer === selectedIdx;
+                
+                this.state.learning.quizAnsweredIdx = selectedIdx;
+                this.state.learning.quizCorrect = isCorrect;
+
+                if (isCorrect) {
+                    if (level === this.state.learning.maxUnlockedLevel) {
+                        this.state.learning.maxUnlockedLevel = level + 1;
+                        localStorage.setItem('itWikiMaxLevel', this.state.learning.maxUnlockedLevel);
+                    }
+                }
+                this.renderSidebar(); // Update locks
+                this.renderContent();
+            },
+
+            nextLevel(currentLevel) {
+                const nextLevelData = LEARNING_PATH.find(l => l.level === currentLevel + 1);
+                if (nextLevelData) {
+                    this.handleNavigate(null, nextLevelData.articleId);
+                } else {
+                    this.handleNavigate('selbstcheck');
+                }
+            },
+
+            answerFinalQuiz(questionIdx, answerIdx) {
+                if (this.state.learning.finalQuizSubmitted) return;
+                this.state.learning.finalQuizAnswers[questionIdx] = answerIdx;
+                this.renderContent();
+            },
+
+            submitFinalQuiz() {
+                let score = 0;
+                FINAL_QUIZ.forEach((q, idx) => {
+                    if (this.state.learning.finalQuizAnswers[idx] === q.a) score++;
+                });
+                this.state.learning.finalScore = score;
+                this.state.learning.finalQuizSubmitted = true;
+                this.renderContent();
+            },
+
+            generateCertificate() {
+                const nameInput = document.getElementById('cert-name');
+                const name = nameInput ? nameInput.value.trim() : '';
+                const errSpan = document.getElementById('cert-err');
+                
+                if (!name) {
+                    if(errSpan) errSpan.classList.remove('hidden');
+                    return;
+                }
+                if(errSpan) errSpan.classList.add('hidden');
+
+                const canvas = document.createElement('canvas');
+                canvas.width = 1200; 
+                canvas.height = 800;
+                const ctx = canvas.getContext('2d');
+                
+                // Background & Premium Border
+                ctx.fillStyle = '#f8fafc';
+                ctx.fillRect(0,0, 1200, 800);
+                
+                ctx.strokeStyle = '#4f46e5'; // Indigo-600
+                ctx.lineWidth = 15;
+                ctx.strokeRect(30, 30, 1140, 740);
+                ctx.strokeStyle = '#818cf8'; // Indigo-400
+                ctx.lineWidth = 2;
+                ctx.strokeRect(40, 40, 1120, 720);
+
+                // Watermark Logo
+                ctx.globalAlpha = 0.03;
+                ctx.fillStyle = '#4f46e5';
+                ctx.font = 'bold 300px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('IT', 600, 500);
+                ctx.globalAlpha = 1.0;
+
+                // Header
+                ctx.fillStyle = '#1e293b';
+                ctx.font = 'bold 60px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('ZERTIFIKAT', 600, 160);
+                
+                // Subtext
+                ctx.font = '30px Arial';
+                ctx.fillStyle = '#64748b';
+                ctx.fillText('Dieses Zertifikat bestätigt, dass', 600, 260);
+                
+                // Name
+                ctx.font = 'italic bold 55px Arial';
+                ctx.fillStyle = '#4f46e5';
+                ctx.fillText(name, 600, 380);
+                
+                // Course
+                ctx.font = '30px Arial';
+                ctx.fillStyle = '#64748b';
+                ctx.fillText('den Selbststudium-Kurs "Hardware-Grundlagen für den Vertrieb"', 600, 480);
+                ctx.fillText('erfolgreich mit Auszeichnung (' + this.state.learning.finalScore + '/5 Punkten) absolviert hat.', 600, 530);
+                
+                // Footer
+                const date = new Date().toLocaleDateString('de-DE');
+                ctx.font = '20px Arial';
+                ctx.fillStyle = '#94a3b8';
+                ctx.fillText('Ausgestellt am: ' + date, 300, 700);
+                
+                ctx.font = 'bold 24px Arial';
+                ctx.fillStyle = '#1e293b';
+                ctx.fillText('all around IT - Sales Academy', 900, 700);
+                
+                // Line for Signature
+                ctx.beginPath();
+                ctx.moveTo(750, 660);
+                ctx.lineTo(1050, 660);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = '#94a3b8';
+                ctx.stroke();
+
+                // Download Trigger
+                const link = document.createElement('a');
+                link.download = 'Zertifikat_' + name.replace(/\s+/g, '_') + '.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            },
+
             // --- CHATBOT LOGIC ---
             toggleChat() {
                 this.state.chatState.isOpen = !this.state.chatState.isOpen;
@@ -323,12 +501,11 @@
                 
                 if (!text || this.state.chatState.isLoading) return;
 
-                // User Nachricht hinzufügen
                 this.state.chatState.messages.push({ role: 'user', text: text });
                 this.state.chatState.isLoading = true;
                 this.renderChat();
 
-                const apiKey = ""; // API Key wird automatisch vom System bereitgestellt
+                const apiKey = ""; 
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
                 
                 const contextData = WIKI_DATA.map(d => `- ${d.title}: ${d.definition}`).join('\n');
@@ -449,66 +626,131 @@
                 container.innerHTML = html;
                 lucide.createIcons();
 
-                // Nach dem Rendern ans Ende des Chats scrollen und Fokus auf Input setzen
                 if (this.state.chatState.isOpen) {
                     const messagesDiv = document.getElementById('chat-messages');
                     if (messagesDiv) messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                    
                     const inputEl = document.getElementById('chat-input');
                     if (inputEl && !this.state.chatState.isLoading) inputEl.focus();
                 }
             },
 
             renderSidebar() {
-                const renderNavButton = (item, isChild = false) => {
-                    const isActive = this.state.currentTab === item.id && !this.state.searchTerm;
-                    if (item.children) {
-                        const isOpen = this.state.openSubmenus[item.id];
-                        return `
-                            <div>
-                                <button onclick="app.toggleSubmenu('${item.id}')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all text-left">
-                                    <div class="flex items-center gap-3 flex-1 overflow-hidden">
-                                        <i data-lucide="${item.icon}" class="w-5 h-5 shrink-0"></i>
-                                        <span class="text-sm font-semibold truncate">${item.name}</span>
+                const navContainer = document.getElementById('sidebar-nav-container');
+                if (!navContainer) return;
+                
+                let html = '';
+
+                if (this.state.learning.active) {
+                    // LEARNING MODE SIDEBAR
+                    html += `
+                        <div class="mb-6 px-4">
+                            <h3 class="text-xs font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 mb-4">
+                                <i data-lucide="graduation-cap" class="w-4 h-4"></i> LERN-PFAD
+                            </h3>
+                            <div class="space-y-3">
+                                ${LEARNING_PATH.map((l, i) => {
+                                    const isUnlocked = this.state.learning.maxUnlockedLevel >= l.level;
+                                    const isDone = this.state.learning.maxUnlockedLevel > l.level;
+                                    const isActive = this.state.selectedArticleId === l.articleId;
+                                    
+                                    let icon = 'lock';
+                                    let color = 'text-slate-400 bg-slate-100';
+                                    let clickAction = '';
+
+                                    if (isDone) {
+                                        icon = 'check-circle';
+                                        color = 'text-emerald-600 bg-emerald-50';
+                                        clickAction = `onclick="app.handleNavigate(null, '${l.articleId}')"`;
+                                    } else if (isUnlocked) {
+                                        icon = 'play-circle';
+                                        color = 'text-indigo-600 bg-indigo-50 border border-indigo-200';
+                                        clickAction = `onclick="app.handleNavigate(null, '${l.articleId}')"`;
+                                    }
+
+                                    return `
+                                    <button ${clickAction} class="w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left ${isActive ? 'ring-2 ring-indigo-500' : ''} ${isUnlocked ? 'hover:scale-[1.02] cursor-pointer' : 'opacity-60 cursor-not-allowed'}">
+                                        <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${color}">
+                                            <i data-lucide="${icon}" class="w-4 h-4"></i>
+                                        </div>
+                                        <div class="flex-1 overflow-hidden">
+                                            <div class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Level ${l.level}</div>
+                                            <div class="text-sm font-bold text-slate-800 truncate">${l.title}</div>
+                                        </div>
+                                    </button>
+                                    `;
+                                }).join('')}
+
+                                <!-- Final Check Button in Path -->
+                                <button ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? `onclick="app.handleNavigate('selbstcheck')"` : ''} class="w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left mt-6 ${this.state.currentTab === 'selbstcheck' ? 'ring-2 ring-indigo-500' : ''} ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'bg-slate-900 text-white hover:scale-[1.02] shadow-lg' : 'bg-slate-100 text-slate-400 opacity-60 cursor-not-allowed'}">
+                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'bg-indigo-600' : 'bg-slate-200'}">
+                                        <i data-lucide="award" class="w-4 h-4 ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'text-white' : 'text-slate-500'}"></i>
                                     </div>
-                                    <i data-lucide="chevron-down" class="w-4 h-4 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}"></i>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-bold truncate">Selbstcheck</div>
+                                    </div>
                                 </button>
-                                <div class="overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}">
-                                    <div class="pt-1 space-y-1">
-                                        ${item.children.map(child => renderNavButton(child, true)).join('')}
+
+                            </div>
+                        </div>
+                        <div class="mt-auto px-4 pt-6 border-t border-slate-100">
+                            <button onclick="app.stopLearningMode()" class="w-full py-3 bg-white border-2 border-slate-200 text-slate-600 rounded-xl font-bold text-sm hover:border-red-400 hover:text-red-600 transition-colors flex justify-center items-center gap-2">
+                                <i data-lucide="x-circle" class="w-4 h-4"></i> Lernmodus beenden
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    // NORMAL SIDEBAR
+                    const renderNavButton = (item, isChild = false) => {
+                        const isActive = this.state.currentTab === item.id && !this.state.searchTerm && !this.state.selectedArticleId;
+                        if (item.children) {
+                            const isOpen = this.state.openSubmenus[item.id];
+                            return `
+                                <div>
+                                    <button onclick="app.toggleSubmenu('${item.id}')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all text-left">
+                                        <div class="flex items-center gap-3 flex-1 overflow-hidden">
+                                            <i data-lucide="${item.icon}" class="w-5 h-5 shrink-0"></i>
+                                            <span class="text-sm font-semibold truncate">${item.name}</span>
+                                        </div>
+                                        <i data-lucide="chevron-down" class="w-4 h-4 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}"></i>
+                                    </button>
+                                    <div class="overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}">
+                                        <div class="pt-1 space-y-1">
+                                            ${item.children.map(child => renderNavButton(child, true)).join('')}
+                                        </div>
                                     </div>
-                                </div>
-                            </div>`;
-                    }
+                                </div>`;
+                        }
 
-                    let onclickAction = `app.handleNavigate('${item.id}')`;
-                    const conceptMap = {
-                        'eva_uebersicht': 'eva_konzept', 'eva_eingabe': 'eingabe_konzept',
-                        'eva_verarbeitung': 'verarbeitung_konzept', 'eva_ausgabe': 'ausgabe_konzept',
-                        'eva_speicherung': 'speicherung_konzept',
-                        'doku_uebersicht': 'doku_uebersicht',
-                        'sprint1': 'sprint1', 'sprint2': 'sprint2'
+                        let onclickAction = `app.handleNavigate('${item.id}')`;
+                        const conceptMap = {
+                            'eva_uebersicht': 'eva_konzept', 'eva_eingabe': 'eingabe_konzept',
+                            'eva_verarbeitung': 'verarbeitung_konzept', 'eva_ausgabe': 'ausgabe_konzept',
+                            'eva_speicherung': 'speicherung_konzept',
+                            'doku_uebersicht': 'doku_uebersicht',
+                            'sprint1': 'sprint1', 'sprint2': 'sprint2'
+                        };
+                        if (conceptMap[item.id]) {
+                            onclickAction = `app.handleNavigate('${item.id}', '${conceptMap[item.id]}')`;
+                        }
+
+                        const paddingClass = isChild ? 'pl-11 pr-4' : 'px-4';
+                        const activeClass = isActive ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900';
+                        const iconSize = isChild ? 'w-[18px] h-[18px]' : 'w-5 h-5';
+                        const alignmentClass = isChild ? 'items-start' : 'items-center';
+                        const iconMargin = isChild ? 'mt-0.5' : '';
+
+                        return `
+                            <button onclick="${onclickAction}" class="w-full flex ${alignmentClass} gap-3 py-2.5 rounded-xl transition-all ${paddingClass} ${activeClass} text-left">
+                                <i data-lucide="${item.icon}" class="${iconSize} shrink-0 ${iconMargin}"></i>
+                                <span class="text-sm font-medium flex-1 leading-snug">${item.name}</span>
+                            </button>`;
                     };
-                    if (conceptMap[item.id]) {
-                        onclickAction = `app.handleNavigate('${item.id}', '${conceptMap[item.id]}')`;
-                    }
 
-                    const paddingClass = isChild ? 'pl-11 pr-4' : 'px-4';
-                    const activeClass = isActive ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900';
-                    const iconSize = isChild ? 'w-[18px] h-[18px]' : 'w-5 h-5';
-                    
-                    const alignmentClass = isChild ? 'items-start' : 'items-center';
-                    const iconMargin = isChild ? 'mt-0.5' : '';
+                    html += `<nav class="space-y-1 flex-1">${NAVIGATION.map(item => renderNavButton(item)).join('')}</nav>`;
+                    html += `<div class="mt-8 pt-6 border-t border-slate-100">${renderNavButton(DOC_NAV)}</div>`;
+                }
 
-                    return `
-                        <button onclick="${onclickAction}" class="w-full flex ${alignmentClass} gap-3 py-2.5 rounded-xl transition-all ${paddingClass} ${activeClass} text-left">
-                            <i data-lucide="${item.icon}" class="${iconSize} shrink-0 ${iconMargin}"></i>
-                            <span class="text-sm font-medium flex-1 leading-snug">${item.name}</span>
-                        </button>`;
-                };
-
-                document.getElementById('main-nav').innerHTML = NAVIGATION.map(item => renderNavButton(item)).join('');
-                document.getElementById('doc-nav').innerHTML = renderNavButton(DOC_NAV);
+                navContainer.innerHTML = html;
                 lucide.createIcons();
             },
 
@@ -516,8 +758,8 @@
                 const container = document.getElementById('view-container');
                 let html = '';
 
-                // Search Results View
-                if (this.state.searchTerm) {
+                // 1. SEARCH
+                if (this.state.searchTerm && !this.state.learning.active) {
                     const term = this.state.searchTerm.toLowerCase();
                     const filtered = WIKI_DATA.filter(a => 
                         a.title.toLowerCase().includes(term) || 
@@ -553,27 +795,248 @@
                         </div>
                     `;
                 } 
-                // Article Detail View
+                // 2. SELBSTSTUDIUM DASHBOARD
+                else if (this.state.currentTab === 'selbststudium') {
+                    const progress = ((this.state.learning.maxUnlockedLevel - 1) / LEARNING_PATH.length) * 100;
+                    
+                    html = `
+                        <div class="space-y-10 animate-fade-in">
+                            <section class="bg-indigo-600 text-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                                <div class="relative z-10">
+                                    <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">IT-Wiki Selbststudium</h2>
+                                    <p class="text-indigo-100 text-lg md:text-xl max-w-2xl mb-8 leading-relaxed">Der geführte Weg vom Anfänger zum Hardware-Profi. Bestehe die Mini-Quizzes, schalte Level frei und verdiene dir dein Zertifikat.</p>
+                                    <button onclick="app.startLearningMode()" class="bg-white text-indigo-600 font-black px-8 py-4 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center gap-3">
+                                        <i data-lucide="play" class="w-5 h-5"></i> LERNMODUS STARTEN
+                                    </button>
+                                </div>
+                                <i data-lucide="graduation-cap" class="absolute -bottom-10 -right-10 text-white/10 w-80 h-80 rotate-12"></i>
+                            </section>
+
+                            <section>
+                                <h3 class="text-2xl font-black mb-6">Dein Fortschritt</h3>
+                                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                                    <div class="w-full bg-slate-100 rounded-full h-4 mb-2 overflow-hidden">
+                                        <div class="bg-emerald-500 h-4 rounded-full transition-all duration-1000" style="width: ${progress}%"></div>
+                                    </div>
+                                    <p class="text-right text-sm text-slate-500 font-bold mb-8">${this.state.learning.maxUnlockedLevel - 1} von ${LEARNING_PATH.length} Leveln abgeschlossen</p>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                                        ${LEARNING_PATH.map(l => {
+                                            const isDone = this.state.learning.maxUnlockedLevel > l.level;
+                                            return `
+                                            <div class="p-4 rounded-2xl border-2 ${isDone ? 'border-emerald-200 bg-emerald-50' : 'border-slate-100 bg-slate-50'} flex items-center gap-4">
+                                                <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isDone ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-400'}">
+                                                    <i data-lucide="${isDone ? 'check' : 'lock'}" class="w-5 h-5"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-[10px] font-black uppercase text-slate-400">Level ${l.level}</div>
+                                                    <div class="font-bold text-sm text-slate-800">${l.title}</div>
+                                                </div>
+                                            </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    `;
+                }
+                // 3. FINAL QUIZ & CERTIFICATE
+                else if (this.state.currentTab === 'selbstcheck') {
+                    if (!this.state.learning.finalQuizSubmitted) {
+                        // QUIZ VIEW
+                        const allAnswered = Object.keys(this.state.learning.finalQuizAnswers).length === FINAL_QUIZ.length;
+                        html = `
+                            <div class="space-y-8 animate-fade-in max-w-3xl mx-auto">
+                                <div class="text-center mb-12">
+                                    <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <i data-lucide="award" class="w-10 h-10"></i>
+                                    </div>
+                                    <h2 class="text-3xl md:text-4xl font-black mb-4">Abschluss-Check</h2>
+                                    <p class="text-slate-500 text-lg">Beweise dein Wissen in 5 Fragen, um dein Zertifikat freizuschalten.</p>
+                                </div>
+
+                                <div class="space-y-8">
+                                    ${FINAL_QUIZ.map((q, qIdx) => {
+                                        const selected = this.state.learning.finalQuizAnswers[qIdx];
+                                        return `
+                                            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm">
+                                                <h3 class="font-bold text-lg mb-6 flex gap-4">
+                                                    <span class="text-indigo-600 bg-indigo-50 w-8 h-8 flex items-center justify-center rounded-lg shrink-0">${qIdx + 1}</span>
+                                                    ${q.q}
+                                                </h3>
+                                                <div class="space-y-3">
+                                                    ${q.o.map((opt, oIdx) => `
+                                                        <button onclick="app.answerFinalQuiz(${qIdx}, ${oIdx})" class="w-full p-4 rounded-xl text-left border-2 transition-all ${selected === oIdx ? 'border-indigo-500 bg-indigo-50 text-indigo-800 font-bold' : 'border-slate-100 hover:border-indigo-200 bg-slate-50'}">
+                                                            ${opt}
+                                                        </button>
+                                                    `).join('')}
+                                                </div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+
+                                <div class="pt-8 border-t border-slate-200 text-center pb-20">
+                                    <button onclick="app.submitFinalQuiz()" ${!allAnswered ? 'disabled' : ''} class="bg-slate-900 text-white font-black px-12 py-5 rounded-full text-lg shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                                        Antworten Auswerten
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // RESULTS & CERTIFICATE VIEW
+                        const score = this.state.learning.finalScore;
+                        const passed = score >= 4; // 80% needed
+                        
+                        html = `
+                            <div class="max-w-2xl mx-auto text-center space-y-8 animate-zoom-in pt-10">
+                                <div class="w-32 h-32 rounded-full mx-auto flex items-center justify-center animate-bounce-custom ${passed ? 'bg-emerald-100 text-emerald-500' : 'bg-red-100 text-red-500'}">
+                                    <i data-lucide="${passed ? 'check-circle' : 'x-circle'}" class="w-16 h-16"></i>
+                                </div>
+                                
+                                <div>
+                                    <h2 class="text-4xl font-black mb-4">${passed ? 'Herzlichen Glückwunsch!' : 'Schade, das hat nicht ganz gereicht.'}</h2>
+                                    <p class="text-xl text-slate-500">Du hast <strong class="text-slate-800">${score} von 5</strong> Fragen richtig beantwortet.</p>
+                                </div>
+
+                                ${passed ? `
+                                    <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl mt-12 text-left">
+                                        <h3 class="font-black text-xl mb-2 text-indigo-600 flex items-center gap-2"><i data-lucide="award" class="w-6 h-6"></i> Zertifikat anfordern</h3>
+                                        <p class="text-slate-500 text-sm mb-6">Bitte gib deinen vollständigen Namen für das Zertifikat ein.</p>
+                                        
+                                        <input type="text" id="cert-name" placeholder="Vorname Nachname" class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl font-bold mb-2 focus:border-indigo-500 focus:outline-none">
+                                        <span id="cert-err" class="text-red-500 text-xs font-bold hidden mb-6 block">Bitte einen Namen eingeben!</span>
+                                        
+                                        <button onclick="app.generateCertificate()" class="w-full bg-indigo-600 text-white font-black py-4 rounded-xl shadow-lg mt-4 hover:bg-indigo-700 transition-colors flex justify-center items-center gap-2">
+                                            <i data-lucide="download" class="w-5 h-5"></i> Zertifikat als Bild herunterladen
+                                        </button>
+                                    </div>
+                                ` : `
+                                    <button onclick="app.state.learning.finalQuizSubmitted = false; app.state.learning.finalQuizAnswers = {}; app.renderContent();" class="bg-slate-900 text-white font-black px-8 py-4 rounded-full mt-8">
+                                        Quiz wiederholen
+                                    </button>
+                                `}
+                            </div>
+                        `;
+                    }
+                }
+                // 4. ARTICLE DETAIL VIEW
                 else if (this.state.selectedArticleId) {
                     const article = WIKI_DATA.find(a => a.id === this.state.selectedArticleId);
                     if (article) {
                         const cleanTitle = article.title.split('(')[0].split('/')[0].trim();
                         const imgSrc = article.image || '';
-                        const tagsHtml = article.tags.map(t => 
-                            `<span class="text-[10px] px-3 py-1 rounded-lg uppercase font-black tracking-widest bg-slate-900 text-white shadow-sm">${t}</span>`
-                        ).join('');
-
+                        const tagsHtml = article.tags.map(t => `<span class="text-[10px] px-3 py-1 rounded-lg uppercase font-black tracking-widest bg-slate-900 text-white shadow-sm">${t}</span>`).join('');
                         const relatedHtml = article.related.map(rel => {
                             const target = WIKI_DATA.find(a => a.title.toLowerCase().includes(rel.toLowerCase()));
                             const action = target ? `onclick="app.handleNavigate('${target.category}', '${target.id}')"` : '';
                             return `<button ${action} class="text-xs bg-slate-100 border border-slate-200 text-slate-600 px-4 py-2 rounded-full hover:border-indigo-400 hover:text-indigo-600 transition-all font-bold">${rel}</button>`;
                         }).join('');
 
+                        let specialFooterHtml = '';
+
+                        // In Learning Mode: Inject Quiz at the bottom instead of normal related topics
+                        if (this.state.learning.active) {
+                            const levelData = LEARNING_PATH.find(l => l.articleId === article.id);
+                            if (levelData) {
+                                const quizAns = this.state.learning.quizAnsweredIdx;
+                                const isCorrect = this.state.learning.quizCorrect;
+                                
+                                specialFooterHtml = `
+                                    <div class="mt-16 bg-slate-900 text-white rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                                        <div class="relative z-10">
+                                            <h3 class="text-indigo-400 font-black text-xs tracking-widest uppercase mb-4 flex items-center gap-2">
+                                                <i data-lucide="help-circle" class="w-4 h-4"></i> Wissenstest - Level ${levelData.level}
+                                            </h3>
+                                            <p class="text-2xl font-bold mb-8">${levelData.question}</p>
+                                            
+                                            <div class="space-y-3 mb-8">
+                                                ${levelData.options.map((opt, idx) => {
+                                                    let btnClass = 'bg-white/10 hover:bg-white/20 border-white/10';
+                                                    let icon = '';
+                                                    if (quizAns !== null) {
+                                                        if (idx === levelData.answer) {
+                                                            btnClass = 'bg-emerald-500 border-emerald-400 text-white font-bold';
+                                                            icon = '<i data-lucide="check" class="w-5 h-5 absolute right-4"></i>';
+                                                        } else if (idx === quizAns) {
+                                                            btnClass = 'bg-red-500 border-red-400 text-white opacity-50';
+                                                            icon = '<i data-lucide="x" class="w-5 h-5 absolute right-4"></i>';
+                                                        } else {
+                                                            btnClass = 'bg-white/5 border-transparent opacity-30';
+                                                        }
+                                                    }
+                                                    return `
+                                                        <button onclick="app.answerMiniQuiz(${levelData.level}, ${idx})" class="w-full text-left p-4 rounded-xl border-2 transition-all relative flex items-center ${btnClass}">
+                                                            ${opt} ${icon}
+                                                        </button>
+                                                    `;
+                                                }).join('')}
+                                            </div>
+
+                                            ${quizAns !== null ? `
+                                                <div class="animate-fade-in border-t border-white/20 pt-6 flex items-center justify-between">
+                                                    <span class="font-bold ${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isCorrect ? 'Richtig! Level abgeschlossen.' : 'Leider falsch. Versuch es nochmal!'}</span>
+                                                    ${isCorrect ? `
+                                                        <button onclick="app.nextLevel(${levelData.level})" class="bg-white text-slate-900 px-6 py-3 rounded-full font-black text-sm hover:scale-105 transition-transform shadow-lg flex items-center gap-2">
+                                                            Nächster Schritt <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                                        </button>
+                                                    ` : `
+                                                        <button onclick="app.state.learning.quizAnsweredIdx = null; app.renderContent();" class="text-white underline text-sm">Nochmal versuchen</button>
+                                                    `}
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                        <i data-lucide="graduation-cap" class="absolute -right-10 -bottom-10 w-64 h-64 text-white/5 rotate-12"></i>
+                                    </div>
+                                `;
+                            } else {
+                                // Fallback if article is not part of path
+                                specialFooterHtml = `
+                                    <div class="mt-10 p-6 bg-amber-50 text-amber-800 rounded-2xl border border-amber-200 flex items-center justify-between">
+                                        <div class="flex items-center gap-3 font-bold"><i data-lucide="info" class="w-5 h-5"></i> Dieser Artikel ist optional und kein Teil des Pflicht-Pfads.</div>
+                                        <button onclick="app.startLearningMode()" class="bg-amber-800 text-white px-4 py-2 rounded-xl text-sm font-bold">Zurück zum Pfad</button>
+                                    </div>
+                                `;
+                            }
+                        } else {
+                            // NORMAL FOOTER
+                            if (article.category !== 'sprint_berichte') {
+                                specialFooterHtml = `
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
+                                        <div class="bg-indigo-900 p-8 rounded-3xl text-white shadow-xl shadow-indigo-100 relative overflow-hidden">
+                                            <i data-lucide="shield-check" class="absolute -right-4 -bottom-4 w-24 h-24 text-white/5 rotate-12"></i>
+                                            <h4 class="text-indigo-300 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
+                                                <i data-lucide="shield-check" class="w-4 h-4"></i> VERTRIEBS-ARGUMENT
+                                            </h4>
+                                            <p class="text-lg leading-relaxed font-medium relative z-10">
+                                                ${article.businessValue.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white underline decoration-indigo-400">$1</strong>')}
+                                            </p>
+                                        </div>
+                                        
+                                        <div class="bg-white p-8 rounded-3xl border-2 border-slate-100">
+                                            <h4 class="text-slate-400 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
+                                                <i data-lucide="arrow-right-left" class="w-4 h-4"></i> VERWANDTE THEMEN
+                                            </h4>
+                                            <div class="flex flex-wrap gap-2">
+                                                ${relatedHtml}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3 pt-8 border-t border-slate-100 flex-wrap">
+                                        ${tagsHtml}
+                                    </div>
+                                `;
+                            }
+                        }
+
                         html = `
                             <article class="bg-white border border-slate-200 rounded-[2.5rem] p-6 md:p-14 shadow-xl animate-zoom-in">
+                                ${!this.state.learning.active ? `
                                 <button onclick="app.handleNavigate(app.state.currentTab)" class="mb-8 text-indigo-600 text-sm font-black flex items-center gap-2 hover:-translate-x-1 transition-transform">
                                     <i data-lucide="arrow-left" class="w-4 h-4"></i> ZURÜCK ZUR ÜBERSICHT
                                 </button>
+                                ` : ''}
                                 
                                 <header class="mb-10">
                                     <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">${article.title}</h1>
@@ -597,37 +1060,12 @@
                                     </div>
                                 </div>
 
-                                ${article.category !== 'sprint_berichte' ? `
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
-                                    <div class="bg-indigo-900 p-8 rounded-3xl text-white shadow-xl shadow-indigo-100 relative overflow-hidden">
-                                        <i data-lucide="shield-check" class="absolute -right-4 -bottom-4 w-24 h-24 text-white/5 rotate-12"></i>
-                                        <h4 class="text-indigo-300 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
-                                            <i data-lucide="shield-check" class="w-4 h-4"></i> VERTRIEBS-ARGUMENT
-                                        </h4>
-                                        <p class="text-lg leading-relaxed font-medium relative z-10">
-                                            ${article.businessValue.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white underline decoration-indigo-400">$1</strong>')}
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="bg-white p-8 rounded-3xl border-2 border-slate-100">
-                                        <h4 class="text-slate-400 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
-                                            <i data-lucide="arrow-right-left" class="w-4 h-4"></i> VERWANDTE THEMEN
-                                        </h4>
-                                        <div class="flex flex-wrap gap-2">
-                                            ${relatedHtml}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex gap-3 pt-8 border-t border-slate-100 flex-wrap">
-                                    ${tagsHtml}
-                                </div>
-                                ` : ''}
+                                ${specialFooterHtml}
                             </article>
                         `;
                     }
                 } 
-                // Dashboard View
+                // 5. DASHBOARD VIEW (Normal)
                 else if (this.state.currentTab === 'dashboard') {
                     html = `
                         <div class="space-y-10 animate-fade-in">
@@ -644,12 +1082,13 @@
                                     <h3 class="text-xl font-bold mb-2">Das EVA-S Prinzip</h3>
                                     <p class="text-slate-500 text-sm leading-relaxed italic">Beginnen Sie mit dem Grundgerüst jeder IT-Beratung. Einfach erklärt für Laien.</p>
                                 </div>
-                                <div onclick="app.handleNavigate('glossar')" class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group">
-                                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                                        <i data-lucide="list" class="w-6 h-6"></i>
+                                <div onclick="app.handleNavigate('selbststudium')" class="bg-indigo-600 text-white p-8 rounded-[2rem] shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group relative overflow-hidden">
+                                    <div class="w-12 h-12 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-indigo-600 transition-colors relative z-10">
+                                        <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">A-Z Index</h3>
-                                    <p class="text-slate-500 text-sm leading-relaxed italic">Alle Fachbegriffe von Arbeitsspeicher bis Zentraleinheit auf einen Blick.</p>
+                                    <h3 class="text-xl font-bold mb-2 relative z-10">Selbststudium Kurs</h3>
+                                    <p class="text-indigo-100 text-sm leading-relaxed italic relative z-10">Schalte Artikel durch Mini-Quizzes frei und hole dir dein IT-Zertifikat!</p>
+                                    <i data-lucide="graduation-cap" class="absolute -right-4 -bottom-4 w-32 h-32 text-white/10 rotate-12"></i>
                                 </div>
                             </div>
 
@@ -668,40 +1107,7 @@
                         </div>
                     `;
                 }
-                // Glossary A-Z View
-                else if (this.state.currentTab === 'glossar') {
-                    const sorted = [...WIKI_DATA].sort((a, b) => a.title.localeCompare(b.title, 'de'));
-                    const groups = {};
-                    sorted.forEach(item => {
-                        const letter = item.title.charAt(0).toUpperCase();
-                        if (!groups[letter]) groups[letter] = [];
-                        groups[letter].push(item);
-                    });
-
-                    const groupHtml = Object.keys(groups).sort().map(letter => `
-                        <section>
-                            <h3 class="text-xl font-bold text-indigo-700 mb-4 border-b border-indigo-100 pb-2">${letter}</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                ${groups[letter].map(art => `
-                                    <button onclick="app.handleNavigate('${art.category}', '${art.id}')" class="p-4 bg-white border border-slate-200 rounded-2xl hover:border-indigo-400 hover:shadow-md transition-all text-left flex items-center justify-between group">
-                                        <span class="font-bold text-slate-800">${art.title}</span>
-                                        <i data-lucide="chevron-right" class="text-slate-300 group-hover:text-indigo-600 w-4 h-4 transition-transform group-hover:translate-x-1 shrink-0"></i>
-                                    </button>
-                                `).join('')}
-                            </div>
-                        </section>
-                    `).join('');
-
-                    html = `
-                        <div class="space-y-12 animate-slide-in">
-                            <h2 class="text-3xl font-black">A-Z Glossar</h2>
-                            <div class="space-y-10">
-                                ${groupHtml}
-                            </div>
-                        </div>
-                    `;
-                }
-                // Kanban View (CryptPad iFrame)
+                // 6. KANBAN VIEW (CryptPad iFrame)
                 else if (this.state.currentTab === 'kanban') {
                     html = `
                         <div class="flex flex-col animate-fade-in h-full">
@@ -712,17 +1118,17 @@
                                 </div>
                             </div>
                             
-                            <div class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden" style="height: 1000px;">
+                            <div class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex min-h-[800px] md:min-h-[1000px]">
                                 <iframe 
                                     src="https://cryptpad.fr/kanban/#/2/kanban/view/DyBsTGMdamt4G02TtJl6OhRlVPNtzbqP0wwedvlLEIQ/embed/" 
-                                    style="width: 100%; height: 100%; border: none;"
+                                    class="w-full h-full border-none"
                                     allowfullscreen="true">
                                 </iframe>
                             </div>
                         </div>
                     `;
                 }
-                // Category View
+                // 7. CATEGORY VIEW
                 else {
                     const filtered = WIKI_DATA.filter(a => a.category === this.state.currentTab);
                     const title = this.getCategoryTitle();
@@ -767,7 +1173,7 @@
         // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
             app.init();
-            window.app = app; // Expose to global scope for inline onclick handlers
+            window.app = app; // Expose to global scope
         });
     </script>
 </body>
