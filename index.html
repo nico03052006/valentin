@@ -24,10 +24,10 @@
         .animate-zoom-in { animation: zoomIn 0.3s ease-out forwards; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 flex font-sans min-h-screen overflow-hidden">
+<body class="bg-slate-50 text-slate-900 flex font-sans h-screen w-full overflow-hidden relative">
 
-    <!-- Mobile Menu Toggle Button -->
-    <button id="mobile-toggle" onclick="app.toggleSidebar()" class="fixed bottom-6 right-6 z-50 p-4 bg-indigo-600 text-white rounded-full shadow-lg md:hidden hidden">
+    <!-- Mobile Menu Toggle Button (Verschoben nach links!) -->
+    <button id="mobile-toggle" onclick="app.toggleSidebar()" class="fixed bottom-6 left-6 z-50 p-4 bg-indigo-600 text-white rounded-full shadow-lg md:hidden hidden">
         <i data-lucide="menu" class="w-6 h-6"></i>
     </button>
 
@@ -35,10 +35,11 @@
     <div id="sidebar-overlay" onclick="app.closeSidebar()" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden transition-opacity opacity-0"></div>
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-white border-r border-slate-200 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 flex flex-col flex-shrink-0">
-        <div class="h-full flex flex-col p-6 overflow-y-auto custom-scrollbar">
-            <!-- Sidebar Header -->
-            <div class="flex items-center justify-between mb-10 shrink-0">
+    <aside id="sidebar" class="h-screen fixed inset-y-0 left-0 z-40 w-72 bg-white border-r border-slate-200 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 flex flex-col flex-shrink-0">
+        
+        <!-- Sidebar Header (Fest verankert) -->
+        <div class="p-6 pb-4 shrink-0">
+            <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                    <div class="w-12 h-12 flex-shrink-0">
                       <img src="all_around_it_logo_rund.png" alt="all around IT Logo" class="w-full h-full object-contain drop-shadow-sm rounded-full">
@@ -52,17 +53,22 @@
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
+        </div>
 
-            <!-- Main Navigation -->
-            <nav id="main-nav" class="space-y-1 flex-1">
+        <!-- Main Navigation (Scrollbar) -->
+        <div class="flex-1 overflow-y-auto px-6 pb-6 custom-scrollbar">
+            <nav id="main-nav" class="space-y-1">
                 <!-- Rendered by JS -->
             </nav>
+        </div>
 
-            <!-- Doc Navigation -->
-            <div id="doc-nav" class="mt-8 pt-6 border-t border-slate-100 shrink-0">
+        <!-- Doc Navigation (Fest verankert am Boden) -->
+        <div class="p-6 pt-4 border-t border-slate-100 shrink-0 bg-slate-50/50">
+            <div id="doc-nav">
                 <!-- Rendered by JS -->
             </div>
         </div>
+        
     </aside>
 
     <!-- Main Content -->
@@ -89,6 +95,11 @@
         </section>
     </main>
 
+    <!-- Chat Widget Container -->
+    <div id="chat-widget-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
+        <!-- Rendered by JS -->
+    </div>
+
     <script>
         // --- DATA ---
         const WIKI_DATA = [
@@ -97,6 +108,7 @@
             { id: "verarbeitung_konzept", title: "Verarbeitung (Das Herz der IT)", category: "verarbeitung", definition: "In der **Verarbeitung** werden die Rohdaten durch Rechenoperationen in nutzbare Informationen verwandelt.", content: "Dies ist der Moment, in dem die Magie passiert. In unserem Büro-Modell ist das die eigentliche Schreibtischarbeit:\n- Der **Prozessor (CPU)** ist der Sachbearbeiter. Er rechnet, vergleicht und entscheidet.\n- Der **Arbeitsspeicher (RAM)** ist die Schreibtischplatte. Je größer sie ist, desto mehr Akten können gleichzeitig bearbeitet werden.\n- Das **Mainboard** stellt die Infrastruktur dar – die Flure, über die die Daten von A nach B fließen.", businessValue: "Die Phase der **Verarbeitung** entscheidet über die Geschwindigkeit. Ein Kunde, der keine Wartezeiten ('Sanduhr') will, braucht hier die beste Hardware.", related: ["CPU", "RAM", "Mainboard", "Grafikkarte"], tags: ["Logik", "EVA-S"] },
             { id: "ausgabe_konzept", title: "Ausgabe (Das Sichtbare)", category: "ausgabe", definition: "Die **Ausgabe** ist die Präsentation der verarbeiteten Daten für den Menschen.", content: "In der **Ausgabe-Phase** verlässt das Ergebnis den Computer. In unserem Büro ist das der Moment, in dem der Sachbearbeiter das fertige Dokument präsentiert:\n- Über den **Monitor** (visuell).\n- Über den **Drucker** (physisch).\n- Über **Lautsprecher** (akustisch).\n\nHier kommt es auf die **Qualität** an. Ein schlechter Monitor macht die beste CPU-Leistung unsichtbar.", businessValue: "Die **Ausgabe** ist das, was der Kunde am Ende 'sieht'. Eine brillante Darstellung auf einem 4K-Monitor erhöht die wahrgenommene Wertigkeit der gesamten IT.", related: ["Monitor", "Drucker", "Lautsprecher"], tags: ["Output", "EVA-S"] },
             { id: "speicherung_konzept", title: "Speicherung (Das Gedächtnis)", category: "speicherung", definition: "Die **Speicherung** sichert Daten dauerhaft, damit sie auch nach dem Ausschalten verfügbar bleiben.", content: "Ohne die **Speicherung** wäre der Computer nur eine Schreibmaschine mit Kurzzeitgedächtnis. Das **S** im EVA-S Prinzip ist das **Archiv** unseres Büros:\n- Die **SSD** ist der moderne, schnelle Aktenschrank.\n- Die **Cloud** ist das externe Lager, auf das man von überall zugreifen kann.\n\nWichtig: Die **Speicherung** muss sicher und schnell sein, damit die **Verarbeitung** nicht ausgebremst wird.", businessValue: "Datensicherheit ist das Top-Thema. Ein Kunde investiert in **Speicherung**, um sein wertvollstes Gut – seine Daten – niemals zu verlieren.", related: ["SSD", "HDD", "Cloud-Speicher"], tags: ["Archiv", "EVA-S"] },
+            { id: "doku_uebersicht", title: "Projekt-Doku: Übersicht", category: "sprint_berichte", definition: "Zentrale Übersicht über das IT-Wiki-Projekt und dessen Entwicklungsziele.", content: "Dieses IT-Wiki wurde als interaktives Nachschlagewerk für unser Vertriebsteam entwickelt.\n\n**Kernziele des Projekts:**\n- Schneller Zugriff auf fundiertes Hardware-Wissen während Kundengesprächen.\n- Bereitstellung einheitlicher, nutzenorientierter Verkaufsargumente (Pitches).\n- KI-gestützte Einwandsbehandlung direkt in der App.\n\nIn diesem Dokumentationsbereich finden Sie alle Protokolle zu den Entwicklungs-Sprints und Retrospektiven, um den Fortschritt nachvollziehen zu können.", businessValue: "Eine transparente Dokumentation sichert das Projektwissen und beschleunigt das Onboarding neuer Vertriebsmitarbeiter.", related: ["sprint1", "sprint2", "retro"], tags: ["Projekt", "Übersicht"] },
             { id: "sprint1", title: "Dokumentation: Sprint 1", category: "sprint_berichte", definition: "Zeitraum: Projektbeginn bis 30.04.2026. Fokus: Grundstruktur und Kernkonzepte.", content: "Im ersten Sprint haben wir die Basis für die Wissensdatenbank geschaffen.\n\n**Erreichte Meilensteine:**\n- Festlegung des **EVA-S Prinzips** als Navigationsstruktur.\n- Erstellung des **Glossars** mit allen geforderten Fachbegriffen.\n- Entwicklung der **Büro-Analogie** zur Erklärung komplexer Hardware-Vorgänge.\n- Implementierung der **Suchfunktion** und des interaktiven Designs.", businessValue: "Sprint 1 stellt sicher, dass das Team eine gemeinsame Sprache spricht und das Grundgerüst steht.", related: ["EVA-Prinzip", "Sprint 2"], tags: ["SCRUM", "Sprint 1"] },
             { id: "sprint2", title: "Dokumentation: Sprint 2", category: "sprint_berichte", definition: "Zeitraum: 01.05.2026 bis 21.05.2026. Fokus: Detailtiefe und Finalisierung.", content: "Der zweite Sprint dient der inhaltlichen Vertiefung und dem Feinschliff.\n\n**Geplante Aufgaben:**\n- Detaillierte Beschreibung von **Spezial-Hardware** (z.B. Plotter, Workstations).\n- Ausarbeitung technischer **Schnittstellen** (HDMI 2.1 vs DisplayPort 1.4).\n- Abschlusspräsentation und Projektabgabe am **21.05.2026**.", businessValue: "Ziel ist ein marktreifes Produkt, das sofort für neue Vertriebler als Nachschlagewerk genutzt werden kann.", related: ["Sprint 1", "Retrospektive"], tags: ["SCRUM", "Sprint 2"] },
             { id: "ram", title: "Arbeitsspeicher (RAM)", image: "RAM.png", category: "verarbeitung", definition: "Flüchtiger Kurzzeitspeicher für laufende Prozesse.", content: "Der RAM ist der 'Schreibtisch' des Computers. Alles, womit der PC gerade arbeitet, liegt hier bereit. Wird der Strom abgeschaltet, ist der Schreibtisch leer.", businessValue: "Viel RAM verhindert, dass der Rechner bei vielen offenen Programmen (Multitasking) ins Stocken gerät.", related: ["CPU", "SSD"], tags: ["Hardware", "Speed"] },
@@ -183,6 +195,7 @@
             name: 'Projekt-Doku',
             icon: 'folder-kanban',
             children: [
+                { id: 'doku_uebersicht', name: 'Übersicht', icon: 'info' },
                 { id: 'sprint1', name: 'Sprint 1 Report', icon: 'check-circle' },
                 { id: 'sprint2', name: 'Sprint 2 Planung', icon: 'clock' },
                 { id: 'retro', name: 'Retrospektive', icon: 'refresh-ccw' }
@@ -196,12 +209,20 @@
                 selectedArticleId: null,
                 searchTerm: '',
                 isSidebarOpen: window.innerWidth >= 768,
-                openSubmenus: { evas: false, geraete: true, dokumentation: false }
+                openSubmenus: { evas: false, geraete: true, dokumentation: false },
+                
+                // Chatbot State
+                chatState: {
+                    isOpen: false,
+                    messages: [{ role: 'model', text: 'Hallo! Ich bin dein KI-Vertriebsassistent. Welche Hardware-Konzepte soll ich dir erklären oder welches Verkaufsargument suchst du?' }],
+                    isLoading: false
+                }
             },
 
             init() {
                 this.renderSidebar();
                 this.renderContent();
+                this.renderChat();
                 this.updateSidebarMobileVisibility();
                 
                 window.addEventListener('resize', () => {
@@ -290,7 +311,154 @@
                 return displayTitle;
             },
 
+            // --- CHATBOT LOGIC ---
+            toggleChat() {
+                this.state.chatState.isOpen = !this.state.chatState.isOpen;
+                this.renderChat();
+            },
+
+            async sendChatMessage() {
+                const inputEl = document.getElementById('chat-input');
+                const text = inputEl ? inputEl.value.trim() : '';
+                
+                if (!text || this.state.chatState.isLoading) return;
+
+                // User Nachricht hinzufügen
+                this.state.chatState.messages.push({ role: 'user', text: text });
+                this.state.chatState.isLoading = true;
+                this.renderChat();
+
+                const apiKey = ""; // API Key wird automatisch vom System bereitgestellt
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                
+                const contextData = WIKI_DATA.map(d => `- ${d.title}: ${d.definition}`).join('\n');
+                const systemInstruction = {
+                    parts: [{ text: `Du bist ein freundlicher, professioneller IT-Vertriebsassistent für das 'all around IT Wiki'. Beantworte Fragen auf Deutsch, prägnant (max. 3-4 Sätze) und direkt auf den Kundennutzen ausgerichtet. Nutze diese Wiki-Daten als dein Kernwissen:\n${contextData}` }]
+                };
+                
+                const contents = this.state.chatState.messages.map(msg => ({
+                    role: msg.role === 'model' ? 'model' : 'user',
+                    parts: [{ text: msg.text }]
+                }));
+
+                const payload = { contents, systemInstruction };
+                const delays = [1000, 2000, 4000, 8000, 16000];
+                let responseText = "Entschuldigung, es gab einen Fehler bei der Kommunikation mit der KI.";
+
+                for (let attempt = 0; attempt < 5; attempt++) {
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (!response.ok) throw new Error(`HTTP Fehler! Status: ${response.status}`);
+                        const data = await response.json();
+                        responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Keine Antwort erhalten.";
+                        break;
+                    } catch (error) {
+                        if (attempt === 4) break;
+                        await new Promise(resolve => setTimeout(resolve, delays[attempt]));
+                    }
+                }
+
+                this.state.chatState.messages.push({ role: 'model', text: responseText });
+                this.state.chatState.isLoading = false;
+                this.renderChat();
+            },
+
             // --- RENDERING ---
+            renderChat() {
+                const container = document.getElementById('chat-widget-container');
+                if (!container) return;
+                
+                let html = '';
+                
+                if (this.state.chatState.isOpen) {
+                    const messagesHtml = this.state.chatState.messages.map(msg => `
+                        <div class="flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm ${msg.role === 'user' ? 'bg-indigo-200 text-indigo-800' : 'bg-indigo-600 text-white'}">
+                                <i data-lucide="${msg.role === 'user' ? 'user' : 'bot'}" class="w-4 h-4"></i>
+                            </div>
+                            <div class="p-3 rounded-2xl text-sm leading-relaxed shadow-sm max-w-[80%] ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-tr-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm'}">
+                                ${this.formatText(msg.text)}
+                            </div>
+                        </div>
+                    `).join('');
+
+                    const loadingHtml = this.state.chatState.isLoading ? `
+                        <div class="flex gap-3 flex-row">
+                            <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                                <i data-lucide="bot" class="w-4 h-4"></i>
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-2xl rounded-tl-sm flex items-center gap-2 shadow-sm">
+                                <i data-lucide="loader-2" class="w-4 h-4 text-indigo-600 animate-spin"></i>
+                                <span class="text-sm text-slate-500">Tippt...</span>
+                            </div>
+                        </div>
+                    ` : '';
+
+                    html += `
+                        <div class="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-slide-in pointer-events-auto">
+                            <div class="bg-indigo-600 text-white p-4 flex items-center justify-between shrink-0">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="bot" class="w-5 h-5"></i>
+                                    <span class="font-bold">IT-Wiki KI</span>
+                                </div>
+                                <button onclick="app.toggleChat()" class="text-indigo-200 hover:text-white transition-colors">
+                                    <i data-lucide="x" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                            
+                            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto custom-scrollbar flex flex-col gap-4 bg-slate-50">
+                                ${messagesHtml}
+                                ${loadingHtml}
+                            </div>
+                            
+                            <div class="p-4 bg-white border-t border-slate-100 shrink-0">
+                                <div class="relative flex items-center">
+                                    <input 
+                                        type="text"
+                                        id="chat-input"
+                                        onkeydown="if(event.key === 'Enter') app.sendChatMessage()"
+                                        placeholder="Frag mich etwas..."
+                                        class="w-full bg-slate-100 border-none rounded-full pl-4 pr-12 py-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                                    />
+                                    <button 
+                                        onclick="app.sendChatMessage()"
+                                        ${this.state.chatState.isLoading ? 'disabled' : ''}
+                                        class="absolute right-2 p-2 text-indigo-600 hover:bg-indigo-100 rounded-full transition-colors disabled:opacity-50"
+                                    >
+                                        <i data-lucide="send" class="w-[18px] h-[18px]"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                html += `
+                    <button 
+                        onclick="app.toggleChat()"
+                        class="w-14 h-14 bg-slate-900 hover:bg-indigo-600 text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 pointer-events-auto"
+                    >
+                        <i data-lucide="${this.state.chatState.isOpen ? 'x' : 'message-circle'}" class="w-6 h-6"></i>
+                    </button>
+                `;
+
+                container.innerHTML = html;
+                lucide.createIcons();
+
+                // Nach dem Rendern ans Ende des Chats scrollen und Fokus auf Input setzen
+                if (this.state.chatState.isOpen) {
+                    const messagesDiv = document.getElementById('chat-messages');
+                    if (messagesDiv) messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    
+                    const inputEl = document.getElementById('chat-input');
+                    if (inputEl && !this.state.chatState.isLoading) inputEl.focus();
+                }
+            },
+
             renderSidebar() {
                 const renderNavButton = (item, isChild = false) => {
                     const isActive = this.state.currentTab === item.id && !this.state.searchTerm;
@@ -318,6 +486,7 @@
                         'eva_uebersicht': 'eva_konzept', 'eva_eingabe': 'eingabe_konzept',
                         'eva_verarbeitung': 'verarbeitung_konzept', 'eva_ausgabe': 'ausgabe_konzept',
                         'eva_speicherung': 'speicherung_konzept',
+                        'doku_uebersicht': 'doku_uebersicht',
                         'sprint1': 'sprint1', 'sprint2': 'sprint2', 'retro': 'retro'
                     };
                     if (conceptMap[item.id]) {
@@ -413,9 +582,11 @@
                                     </p>
                                 </header>
 
+                                ${article.category !== 'sprint_berichte' ? `
                                 <div class="mb-12 w-full h-64 md:h-96 rounded-3xl overflow-hidden border border-slate-100 shadow-inner relative bg-slate-50">
                                     <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/800x400/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-cover">
                                 </div>
+                                ` : ''}
 
                                 <div class="text-slate-700 leading-relaxed text-lg mb-12 space-y-6">
                                     <div class="bg-slate-50 rounded-3xl p-6 md:p-8 border border-slate-100">
@@ -426,6 +597,7 @@
                                     </div>
                                 </div>
 
+                                ${article.category !== 'sprint_berichte' ? `
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
                                     <div class="bg-indigo-900 p-8 rounded-3xl text-white shadow-xl shadow-indigo-100 relative overflow-hidden">
                                         <i data-lucide="shield-check" class="absolute -right-4 -bottom-4 w-24 h-24 text-white/5 rotate-12"></i>
@@ -450,6 +622,7 @@
                                 <div class="flex gap-3 pt-8 border-t border-slate-100 flex-wrap">
                                     ${tagsHtml}
                                 </div>
+                                ` : ''}
                             </article>
                         `;
                     }
@@ -544,9 +717,11 @@
                             <div class="p-6 flex flex-col flex-1">
                                 <h3 class="font-bold text-xl mb-3 text-slate-800 group-hover:text-indigo-600">${art.title}</h3>
                                 <p class="text-slate-500 text-sm line-clamp-2 mb-4 italic leading-relaxed">${art.definition.replace(/\*\*/g, '')}</p>
+                                ${art.category !== 'sprint_berichte' ? `
                                 <div class="mt-auto flex flex-wrap gap-2 pt-4 border-t border-slate-50">
                                     ${art.tags.map(t => `<span class="text-[10px] px-2 py-1 rounded-lg uppercase font-black tracking-widest bg-indigo-50 text-indigo-600">${t}</span>`).join('')}
                                 </div>
+                                ` : ''}
                             </div>
                         </div>`;
                     }).join('');
