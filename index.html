@@ -505,7 +505,8 @@
                 this.state.chatState.isLoading = true;
                 this.renderChat();
 
-                const apiKey = ""; 
+                // HIER IST DEIN EINGEFÜGTER GOOGLE GEMINI API KEY
+                const apiKey = "AIzaSyAWMgA3l1X_G8Nvz6Dc02hLFUUFDGyMDEQ"; 
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
                 
                 const contextData = WIKI_DATA.map(d => `- ${d.title}: ${d.definition}`).join('\n');
