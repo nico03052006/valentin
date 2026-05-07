@@ -143,7 +143,7 @@
             { id: "audio", title: "Audio-Anschlüsse", category: "peripherie", definition: "Schnittstellen zur Übertragung von Tonsignalen.", content: "Klassische Klinkenanschlüsse (3,5mm) oder USB für Headsets, Mikrofone und Lautsprecher.", businessValue: "Essenziell für professionelle Videokonferenzen und Support-Mitarbeiter im Home-Office.", related: ["Lautsprecher", "USB"], tags: ["Anschluss", "Kommunikation"] },
             { id: "aufloesung", title: "Auflösung", category: "ausgabe", definition: "Anzahl der Bildpunkte (Pixel) auf einem Monitor.", content: "Gibt an, wie scharf ein Bild ist. Gängige Standards sind Full-HD (1080p) oder 4K (UHD).", businessValue: "Höhere Auflösung bedeutet mehr Details und weniger Ermüdung der Augen bei Textarbeit.", related: ["Monitor", "Grafikkarte"], tags: ["Display", "Qualität"] },
             { id: "bildgroesse", title: "Bildschirmgröße", category: "ausgabe", definition: "Die Diagonale eines Monitors, meist in Zoll angegeben.", content: "Typische Büro-Größen sind 24 bis 27 Zoll. Größere Bildschirme erlauben das Nebeneinanderstellen von Fenstern.", businessValue: "Direkter Produktivitäts-Booster: Mehr Platz auf dem Schirm spart Zeit beim Fensterwechsel.", related: ["Monitor", "Auflösung"], tags: ["Hardware", "Ergonomie"] },
-            { id: "bildrate", title: "Bildwiederholrate", category: "ausgabe", definition: "Anzahl der Bilder, die ein Monitor pro Sekunde anzeigt (Hz).", content: "60 Hz ist Standard. Höhere Raten (120/144 Hz) machen Bewegungen flüssiger.", businessValue: "Sorgt für ein 'ruhigeres' Bild und schont die Augen bei langer Bildschirmarbeit.", related: ["Monitor", "Grafikkarte"], tags: ["Hardware", "Komfort"] },
+            { id: "bildrate", title: "Bildwiederholrate", category: "ausgabe", definition: "Anzahl der Bilder, die ein Monitor pro Sekunde anzeigt (Hz).", content: "60 Hz ist Standard. Höhere Raten (120/144 Hz) machen Bewegungen flüssiger.", businessValue: "Sorgt für 'ruhigeres' Bild und schont die Augen bei langer Bildschirmarbeit.", related: ["Monitor", "Grafikkarte"], tags: ["Hardware", "Komfort"] },
             { id: "laserdrucker", title: "Laserdrucker", category: "ausgabe", definition: "Drucker, der mit Tonerpulver und Laserstrahlen arbeitet.", content: "Sehr schnell, wischfest und günstig im Seitpreis bei hohem Textaufkommen.", businessValue: "Die beste Wahl für klassische Büros mit viel Korrespondenz und Rechnungsdruck.", related: ["Drucker", "Tintenstrahldrucker"], tags: ["Hardware", "Office"] },
             { id: "tintenstrahl", title: "Tintenstrahldrucker", category: "ausgabe", definition: "Drucker, flüssige Tinte auf das Papier sprüht.", content: "Ideal für Farbdrucke und Fotos. Günstiger in der Anschaffung als Laserdrucker.", businessValue: "Perfekt für Marketingabteilungen oder Kunden, die gelegentlich hochwertige Fotos drucken müssen.", related: ["Drucker", "Laserdrucker"], tags: ["Hardware", "Foto"] },
             { id: "plotter", title: "Plotter", category: "ausgabe", definition: "Großformatdrucker für technische Zeichnungen.", content: "Kann Papierrollen in Übergrößen (A1, A0) bedrucken. Wird oft mit Stiften oder Tintendüsen betrieben.", businessValue: "Unerlässlich für Architekten, Ingenieurbüros und Werbeagenturen.", related: ["Drucker", "Ausgabe"], tags: ["Spezial", "Hardware"] },
@@ -216,17 +216,6 @@
                     isOpen: false,
                     messages: [{ role: 'model', text: 'Hallo! Ich bin dein KI-Vertriebsassistent. Welche Hardware-Konzepte soll ich dir erklären oder welches Verkaufsargument suchst du?' }],
                     isLoading: false
-                },
-                
-                // Kanban State
-                kanbanState: {
-                    tasks: [
-                        { id: 't1', title: 'Glossar vervollständigen', desc: 'Alle Sicherheitsbegriffe in das A-Z aufnehmen.', assignee: 'Erza', status: 'done' },
-                        { id: 't2', title: 'Hardware-Bilder hochladen', desc: 'Passende Produktfotos und Illustrationen raussuchen.', assignee: 'Malin', status: 'inProgress' },
-                        { id: 't3', title: 'Qualitätssicherung', desc: 'Alle Artikel auf Verständlichkeit für Nicht-Techniker prüfen.', assignee: 'Kasija', status: 'todo' },
-                        { id: 't4', title: 'Sprint 3 planen', desc: 'Nächste Schritte und Erweiterungen definieren.', assignee: 'Nico', status: 'review' }
-                    ],
-                    modal: { isOpen: false, editingId: null, title: '', desc: '', assignee: '', status: 'todo' }
                 }
             },
 
@@ -320,78 +309,6 @@
                     }
                 });
                 return displayTitle;
-            },
-
-            // --- KANBAN LOGIC ---
-            openKanbanModal(taskId = null) {
-                if (taskId) {
-                    const t = this.state.kanbanState.tasks.find(x => x.id === taskId);
-                    this.state.kanbanState.modal = { isOpen: true, editingId: taskId, title: t.title, desc: t.desc, assignee: t.assignee, status: t.status };
-                } else {
-                    this.state.kanbanState.modal = { isOpen: true, editingId: null, title: '', desc: '', assignee: '', status: 'todo' };
-                }
-                this.renderContent();
-            },
-
-            closeKanbanModal() {
-                this.state.kanbanState.modal.isOpen = false;
-                this.renderContent();
-            },
-
-            saveKanbanTask() {
-                const title = document.getElementById('kb-title').value;
-                const desc = document.getElementById('kb-desc').value;
-                const assignee = document.getElementById('kb-assignee').value;
-                const status = document.getElementById('kb-status').value;
-
-                if (!title.trim()) return;
-
-                if (this.state.kanbanState.modal.editingId) {
-                    const t = this.state.kanbanState.tasks.find(x => x.id === this.state.kanbanState.modal.editingId);
-                    if (t) {
-                        t.title = title; t.desc = desc; t.assignee = assignee; t.status = status;
-                    }
-                } else {
-                    this.state.kanbanState.tasks.push({
-                        id: 'task_' + Date.now(),
-                        title, desc, assignee, status
-                    });
-                }
-                this.closeKanbanModal();
-            },
-
-            deleteKanbanTask(taskId) {
-                if (confirm('Aufgabe wirklich löschen?')) {
-                    this.state.kanbanState.tasks = this.state.kanbanState.tasks.filter(x => x.id !== taskId);
-                    this.renderContent();
-                }
-            },
-
-            dragStart(e, taskId) {
-                e.dataTransfer.setData('text/plain', taskId);
-                setTimeout(() => {
-                    const el = document.getElementById(taskId);
-                    if(el) el.classList.add('opacity-50');
-                }, 0);
-            },
-
-            dragEnd(e, taskId) {
-                const el = document.getElementById(taskId);
-                if(el) el.classList.remove('opacity-50');
-            },
-
-            dragOver(e) {
-                e.preventDefault();
-            },
-
-            drop(e, newStatus) {
-                e.preventDefault();
-                const taskId = e.dataTransfer.getData('text/plain');
-                const t = this.state.kanbanState.tasks.find(x => x.id === taskId);
-                if (t && t.status !== newStatus) {
-                    t.status = newStatus;
-                    this.renderContent();
-                }
             },
 
             // --- CHATBOT LOGIC ---
@@ -784,112 +701,26 @@
                         </div>
                     `;
                 }
-                // Kanban View
+                // Kanban View (CryptPad iFrame)
                 else if (this.state.currentTab === 'kanban') {
-                    const columns = [
-                        { id: 'todo', name: 'Zu Erledigen', color: 'border-slate-200', bg: 'bg-slate-100/70' },
-                        { id: 'inProgress', name: 'In Bearbeitung', color: 'border-blue-200', bg: 'bg-blue-50/70' },
-                        { id: 'review', name: 'Prüfung (QS)', color: 'border-amber-200', bg: 'bg-amber-50/70' },
-                        { id: 'done', name: 'Erledigt', color: 'border-emerald-200', bg: 'bg-emerald-50/70' }
-                    ];
-
-                    const renderTask = (task) => `
-                        <div id="${task.id}" draggable="true" 
-                             ondragstart="app.dragStart(event, '${task.id}')"
-                             ondragend="app.dragEnd(event, '${task.id}')"
-                             class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 cursor-grab hover:shadow-md transition-shadow relative group mb-3">
-                            <div class="flex justify-between items-start mb-2">
-                                <h4 class="font-bold text-slate-800 text-sm leading-snug pr-6">${task.title}</h4>
-                                <div class="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm rounded-lg p-1">
-                                    <button onclick="app.openKanbanModal('${task.id}')" class="text-slate-400 hover:text-indigo-600 p-1"><i data-lucide="edit-2" class="w-3.5 h-3.5"></i></button>
-                                    <button onclick="app.deleteKanbanTask('${task.id}')" class="text-slate-400 hover:text-red-600 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                                </div>
-                            </div>
-                            ${task.desc ? `<p class="text-xs text-slate-500 mb-4 line-clamp-2">${task.desc}</p>` : ''}
-                            <div class="flex items-center justify-between mt-auto">
-                                <span class="text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded ${task.assignee ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-100 text-slate-500'}">${task.assignee || 'Nicht zugewiesen'}</span>
-                            </div>
-                        </div>
-                    `;
-
                     html = `
-                        <div class="h-full flex flex-col animate-fade-in min-h-[calc(100vh-10rem)]">
+                        <div class="flex flex-col animate-fade-in">
                             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shrink-0">
                                 <div>
                                     <h2 class="text-3xl font-black capitalize">Kanban Board</h2>
-                                    <p class="text-slate-500 mt-1">Plane und verfolge Team-Aufgaben in Echtzeit. (Drag & Drop fähig)</p>
+                                    <p class="text-slate-500 mt-1">Gemeinsames Projektboard über CryptPad.</p>
                                 </div>
-                                <button onclick="app.openKanbanModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors shadow-sm">
-                                    <i data-lucide="plus" class="w-5 h-5"></i> Aufgabe erstellen
-                                </button>
                             </div>
                             
-                            <div class="flex-1 flex gap-4 overflow-x-auto pb-4 custom-scrollbar items-start">
-                                ${columns.map(col => `
-                                    <div class="flex-shrink-0 w-[280px] md:w-80 max-h-full flex flex-col rounded-2xl ${col.bg} border ${col.color} overflow-hidden"
-                                         ondragover="app.dragOver(event)"
-                                         ondrop="app.drop(event, '${col.id}')">
-                                        <div class="p-4 border-b border-black/5 shrink-0 flex items-center justify-between">
-                                            <h3 class="font-bold text-slate-700">${col.name}</h3>
-                                            <span class="bg-white text-slate-600 shadow-sm text-xs font-black px-2.5 py-1 rounded-full">${this.state.kanbanState.tasks.filter(t => t.status === col.id).length}</span>
-                                        </div>
-                                        <div class="p-3 flex-1 overflow-y-auto custom-scrollbar">
-                                            ${this.state.kanbanState.tasks.filter(t => t.status === col.id).map(renderTask).join('')}
-                                        </div>
-                                    </div>
-                                `).join('')}
+                            <div class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex min-h-[800px] md:min-h-[1000px]">
+                                <iframe 
+                                    src="https://cryptpad.fr/kanban/#/2/kanban/view/DyBsTGMdamt4G02TtJl6OhRlVPNtzbqP0wwedvlLEIQ/embed/" 
+                                    class="w-full h-full border-none"
+                                    allowfullscreen="true">
+                                </iframe>
                             </div>
                         </div>
                     `;
-
-                    if (this.state.kanbanState.modal.isOpen) {
-                        const m = this.state.kanbanState.modal;
-                        html += `
-                            <div class="fixed inset-0 bg-slate-900/40 z-[100] flex items-center justify-center p-4 animate-fade-in backdrop-blur-sm">
-                                <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden animate-zoom-in">
-                                    <div class="p-6 border-b border-slate-100 flex items-center justify-between">
-                                        <h3 class="text-xl font-black">${m.editingId ? 'Aufgabe bearbeiten' : 'Neue Aufgabe'}</h3>
-                                        <button onclick="app.closeKanbanModal()" class="text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
-                                    </div>
-                                    <div class="p-6 space-y-4">
-                                        <div>
-                                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Titel</label>
-                                            <input type="text" id="kb-title" value="${m.title}" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all" placeholder="Was muss getan werden?">
-                                        </div>
-                                        <div>
-                                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Beschreibung</label>
-                                            <textarea id="kb-desc" rows="3" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all resize-none" placeholder="Details zur Aufgabe...">${m.desc}</textarea>
-                                        </div>
-                                        <div class="flex gap-4">
-                                            <div class="flex-1">
-                                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Zuweisung</label>
-                                                <select id="kb-assignee" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none cursor-pointer">
-                                                    <option value="" ${!m.assignee ? 'selected' : ''}>Niemand</option>
-                                                    <option value="Malin" ${m.assignee === 'Malin' ? 'selected' : ''}>Malin (PO)</option>
-                                                    <option value="Nico" ${m.assignee === 'Nico' ? 'selected' : ''}>Nico (SM)</option>
-                                                    <option value="Erza" ${m.assignee === 'Erza' ? 'selected' : ''}>Erza</option>
-                                                    <option value="Kasija" ${m.assignee === 'Kasija' ? 'selected' : ''}>Kasija</option>
-                                                </select>
-                                            </div>
-                                            <div class="flex-1">
-                                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Status</label>
-                                                <select id="kb-status" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none cursor-pointer">
-                                                    <option value="todo" ${m.status === 'todo' ? 'selected' : ''}>Zu Erledigen</option>
-                                                    <option value="inProgress" ${m.status === 'inProgress' ? 'selected' : ''}>In Bearbeitung</option>
-                                                    <option value="review" ${m.status === 'review' ? 'selected' : ''}>Prüfung (QS)</option>
-                                                    <option value="done" ${m.status === 'done' ? 'selected' : ''}>Erledigt</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="p-6 bg-slate-50 border-t border-slate-100 flex justify-end gap-3">
-                                        <button onclick="app.closeKanbanModal()" class="px-5 py-2.5 rounded-xl text-slate-600 font-bold hover:bg-slate-200 transition-colors">Abbrechen</button>
-                                        <button onclick="app.saveKanbanTask()" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-colors shadow-sm">Speichern</button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }
                 }
                 // Category View
                 else {
