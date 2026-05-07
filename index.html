@@ -513,7 +513,10 @@
                     parts: [{ text: `Du bist ein freundlicher, professioneller IT-Vertriebsassistent für das 'all around IT Wiki'. Beantworte Fragen auf Deutsch, prägnant (max. 3-4 Sätze) und direkt auf den Kundennutzen ausgerichtet. Nutze diese Wiki-Daten als dein Kernwissen:\n${contextData}` }]
                 };
                 
-                const contents = this.state.chatState.messages.map(msg => ({
+                // FIX: Die erste Begrüßungsnachricht der KI herausfiltern, da die API mit einer User-Nachricht beginnen muss!
+                const apiMessages = this.state.chatState.messages.filter((msg, idx) => !(idx === 0 && msg.role === 'model'));
+
+                const contents = apiMessages.map(msg => ({
                     role: msg.role === 'model' ? 'model' : 'user',
                     parts: [{ text: msg.text }]
                 }));
