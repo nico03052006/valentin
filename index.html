@@ -21,7 +21,7 @@
         @keyframes bounce { 0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8,0,1,1); } 50% { transform: none; animation-timing-function: cubic-bezier(0,0,0.2,1); } }
         
         .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        .animate-slide-in { animation: slideInUp 0.4s ease-out forwards; }
+        .animate-slide-in { animation: slideInUp 0.4s forwards; }
         .animate-zoom-in { animation: zoomIn 0.3s ease-out forwards; }
         .animate-bounce-custom { animation: bounce 1s infinite; }
     </style>
@@ -505,72 +505,43 @@
                 this.state.chatState.isLoading = true;
                 this.renderChat();
 
-                // HIER IST DEIN EINGEFÜGTER GOOGLE GEMINI API KEY
-                const apiKey = "AIzaSyAWMgA3l1X_G8Nvz6Dc02hLFUUFDGyMDEQ"; 
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-                
-                const contextData = WIKI_DATA.map(d => `- ${d.title}: ${d.definition}`).join('\n');
-                const systemInstruction = {
-                    parts: [{ text: `Du bist ein freundlicher, professioneller IT-Vertriebsassistent für das 'all around IT Wiki'. Beantworte Fragen auf Deutsch, prägnant (max. 3-4 Sätze) und direkt auf den Kundennutzen ausgerichtet. Nutze diese Wiki-Daten als dein Kernwissen:\n${contextData}` }]
-                };
-                
-                // FIX: Die Historie strikt abwechselnd aufbauen (Gemini API Vorgabe)
-                const validHistory = [];
-                this.state.chatState.messages.forEach((msg, idx) => {
-                    // Begrüßung und alte Fehlermeldungen überspringen
-                    if (idx === 0 && msg.role === 'model') return; 
-                    if (msg.role === 'model' && msg.text.includes('Fehler')) return;
+                // --- SIMULIERTE LOKALE KI (Ohne API Key!) ---
+                // Leert das Eingabefeld sofort
+                if(inputEl) inputEl.value = '';
 
-                    const lastValid = validHistory[validHistory.length - 1];
-                    if (!lastValid || lastValid.role !== msg.role) {
-                        validHistory.push({ role: msg.role === 'model' ? 'model' : 'user', text: msg.text });
+                // Simuliere eine "Denkpause" der KI von 1,5 Sekunden
+                setTimeout(() => {
+                    const lowerText = text.toLowerCase();
+                    let responseText = "Entschuldigung, dazu habe ich leider keine spezifischen Informationen gefunden. Frag mich am besten nach Hardware-Komponenten wie RAM, SSD, Monitoren oder dem EVA-Prinzip!";
+
+                    // 1. Spezielle Begrüßungen abfangen
+                    if (lowerText.includes("hallo") || lowerText.includes("hi ") || lowerText === "hi" || lowerText.includes("hey")) {
+                        responseText = "Hallo! Wie kann ich dir heute beim Thema Hardware-Vertrieb helfen?";
                     } else {
-                        // Wenn der Nutzer z.B. 2x hintereinander schreibt, fassen wir das zusammen
-                        lastValid.text += "\n" + msg.text; 
-                    }
-                });
-
-                // Die API verlangt, dass die erste Nachricht vom Nutzer kommt
-                while (validHistory.length > 0 && validHistory[0].role !== 'user') {
-                    validHistory.shift();
-                }
-
-                const contents = validHistory.map(msg => ({
-                    role: msg.role,
-                    parts: [{ text: msg.text }]
-                }));
-
-                const payload = { contents, systemInstruction };
-                const delays = [1000, 2000, 4000, 8000, 16000];
-                let responseText = "Entschuldigung, es gab einen Fehler bei der Kommunikation mit der KI.";
-
-                for (let attempt = 0; attempt < 5; attempt++) {
-                    try {
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
+                        // 2. Suche nach passenden Artikeln in unserer WIKIbank
+                        // Wir suchen nach Schlagwörtern aus dem Titel oder den Tags
+                        const bestMatch = WIKI_DATA.find(item => {
+                            const titleWords = item.title.toLowerCase().replace(/[^a-zäöüß0-9-]/g, ' ').split(' ');
+                            return titleWords.some(word => word.length > 2 && lowerText.includes(word)) || 
+                                   item.tags.some(tag => lowerText.includes(tag.toLowerCase()));
                         });
-                        if (!response.ok) {
-                            const errData = await response.text();
-                            throw new Error(`Status ${response.status}: ${errData}`);
-                        }
-                        const data = await response.json();
-                        responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Keine Antwort erhalten.";
-                        break;
-                    } catch (error) {
-                        console.error("Chat API Fehler (Versuch " + (attempt+1) + "):", error);
-                        if (attempt === 4) {
-                            responseText = "Entschuldigung, es gab einen Fehler bei der Kommunikation. Details: " + error.message;
-                            break;
-                        }
-                        await new Promise(resolve => setTimeout(resolve, delays[attempt]));
-                    }
-                }
 
-                this.state.chatState.messages.push({ role: 'model', text: responseText });
-                this.state.chatState.isLoading = false;
-                this.renderChat();
+                        if (bestMatch) {
+                            responseText = `Dazu habe ich etwas Passendes!\n\n**${bestMatch.title}**\n${bestMatch.definition}\n\n*Verkaufs-Tipp:* ${bestMatch.businessValue}`;
+                        } else {
+                            // 3. Fallback: Volltextsuche in Definitionen
+                            const partialMatch = WIKI_DATA.find(item => item.definition.toLowerCase().includes(lowerText));
+                            if (partialMatch) {
+                                responseText = `Meintest du vielleicht **${partialMatch.title}**?\n${partialMatch.definition}`;
+                            }
+                        }
+                    }
+
+                    // Antwort hinzufügen und Lade-Status beenden
+                    this.state.chatState.messages.push({ role: 'model', text: responseText });
+                    this.state.chatState.isLoading = false;
+                    this.renderChat();
+                }, 1500);
             },
 
             // --- RENDERING ---
