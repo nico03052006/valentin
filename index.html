@@ -704,7 +704,7 @@
                 // Kanban View (CryptPad iFrame)
                 else if (this.state.currentTab === 'kanban') {
                     html = `
-                        <div class="flex flex-col animate-fade-in">
+                        <div class="flex flex-col animate-fade-in h-full">
                             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shrink-0">
                                 <div>
                                     <h2 class="text-3xl font-black capitalize">Kanban Board</h2>
@@ -712,10 +712,10 @@
                                 </div>
                             </div>
                             
-                            <div class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex min-h-[800px] md:min-h-[1000px]">
+                            <div class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden" style="height: 1000px;">
                                 <iframe 
                                     src="https://cryptpad.fr/kanban/#/2/kanban/view/DyBsTGMdamt4G02TtJl6OhRlVPNtzbqP0wwedvlLEIQ/embed/" 
-                                    class="w-full h-full border-none"
+                                    style="width: 100%; height: 100%; border: none;"
                                     allowfullscreen="true">
                                 </iframe>
                             </div>
