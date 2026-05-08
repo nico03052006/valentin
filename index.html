@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>all around IT Wiki</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Aktiviert den Dark Mode über CSS-Klassen
+        }
+    </script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -13,6 +18,8 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
         
         /* Animation Classes */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -26,7 +33,7 @@
         .animate-bounce-custom { animation: bounce 1s infinite; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 flex font-sans h-screen w-full overflow-hidden relative">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 flex font-sans h-screen w-full overflow-hidden relative transition-colors duration-300">
 
     <!-- Mobile Menu Toggle Button -->
     <button id="mobile-toggle" onclick="app.toggleSidebar()" class="fixed bottom-6 left-6 z-50 p-4 bg-indigo-600 text-white rounded-full shadow-lg md:hidden hidden">
@@ -37,21 +44,21 @@
     <div id="sidebar-overlay" onclick="app.closeSidebar()" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden transition-opacity opacity-0"></div>
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="h-screen fixed inset-y-0 left-0 z-40 w-72 bg-white border-r border-slate-200 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 flex flex-col flex-shrink-0">
+    <aside id="sidebar" class="h-screen fixed inset-y-0 left-0 z-40 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 flex flex-col flex-shrink-0">
         
         <!-- Sidebar Header -->
-        <div class="p-6 pb-4 shrink-0 border-b border-slate-100">
+        <div class="p-6 pb-4 shrink-0 border-b border-slate-100 dark:border-slate-700">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
                    <div class="w-12 h-12 flex-shrink-0">
                       <img src="all_around_it_logo_rund.png" alt="all around IT Logo" class="w-full h-full object-contain drop-shadow-sm rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/100x100/4f46e5/ffffff?text=IT'">
                    </div>
                    <div>
-                      <h1 class="font-bold text-lg leading-tight">all around <span class="text-indigo-600 block italic">IT Wiki</span></h1>
-                      <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Sales Edition</p>
+                      <h1 class="font-bold text-lg leading-tight dark:text-white">all around <span class="text-indigo-600 dark:text-indigo-400 block italic">IT Wiki</span></h1>
+                      <p class="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold">Sales Edition</p>
                    </div>
                 </div>
-                <button onclick="app.closeSidebar()" class="md:hidden text-slate-400 hover:bg-slate-100 p-2 rounded-lg">
+                <button onclick="app.closeSidebar()" class="md:hidden text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-lg">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -67,16 +74,41 @@
     <!-- Main Content -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
         <!-- Header -->
-        <header id="main-header" class="h-20 bg-white border-b border-slate-200 flex items-center px-4 md:px-8 shadow-sm z-10 shrink-0">
-            <div class="relative w-full max-w-2xl mx-auto md:mx-0">
-                <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-[18px] h-[18px]"></i>
-                <input 
-                    type="text" 
-                    id="search-input"
-                    placeholder="Hardware-Begriff suchen..." 
-                    oninput="app.handleSearch(this.value)"
-                    class="w-full pl-12 pr-4 py-3 bg-slate-100 border-none rounded-2xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all outline-none"
-                >
+        <header id="main-header" class="h-20 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center px-4 md:px-8 shadow-sm z-10 shrink-0 transition-colors duration-300">
+            <div class="w-full flex items-center justify-between gap-2 md:gap-4">
+                
+                <!-- Search Input (nimmt restlichen Platz ein) -->
+                <div class="relative flex-1 max-w-2xl">
+                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-[18px] h-[18px]"></i>
+                    <input 
+                        type="text" 
+                        id="search-input"
+                        placeholder="Hardware-Begriff suchen..." 
+                        oninput="app.handleSearch(this.value)"
+                        class="w-full pl-12 pr-4 py-3 bg-slate-100 dark:bg-slate-900/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all outline-none"
+                    >
+                </div>
+                
+                <!-- Top Right Actions -->
+                <div class="flex items-center gap-2 shrink-0 ml-auto">
+                    
+                    <!-- Favoriten Button -->
+                    <button onclick="app.handleNavigate('favoriten')" title="Meine Favoriten" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center">
+                        <i data-lucide="star" class="w-5 h-5"></i>
+                    </button>
+
+                    <!-- Selbststudium Button -->
+                    <button onclick="app.handleNavigate('selbststudium')" title="Selbststudium" class="flex items-center gap-2 px-4 py-3 rounded-2xl bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/30 transition-colors font-bold text-sm">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                        <span class="hidden md:inline">Selbststudium</span>
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="app.toggleDarkMode()" title="Dark Mode umschalten" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center">
+                        <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -88,11 +120,6 @@
         </section>
     </main>
 
-    <!-- Chat Widget Container -->
-    <div id="chat-widget-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
-        <!-- Rendered by JS -->
-    </div>
-
     <script>
         // --- DATA ---
         const WIKI_DATA = [
@@ -101,7 +128,7 @@
             { id: "verarbeitung_konzept", title: "Verarbeitung (Das Herz der IT)", category: "verarbeitung", definition: "In der **Verarbeitung** werden die Rohdaten durch Rechenoperationen in nutzbare Informationen verwandelt.", content: "Dies ist der Moment, in dem die Magie passiert. In unserem Büro-Modell ist das die eigentliche Schreibtischarbeit:\n- Der **Prozessor (CPU)** ist der Sachbearbeiter. Er rechnet, vergleicht und entscheidet.\n- Der **Arbeitsspeicher (RAM)** ist die Schreibtischplatte. Je größer sie ist, desto mehr Akten können gleichzeitig bearbeitet werden.\n- Das **Mainboard** stellt die Infrastruktur dar – die Flure, über die die Daten von A nach B fließen.", businessValue: "Die Phase der **Verarbeitung** entscheidet über die Geschwindigkeit. Ein Kunde, der keine Wartezeiten ('Sanduhr') will, braucht hier die beste Hardware.", related: ["CPU", "RAM", "Mainboard", "Grafikkarte"], tags: ["Logik", "EVA-S"] },
             { id: "ausgabe_konzept", title: "Ausgabe (Das Sichtbare)", category: "ausgabe", definition: "Die **Ausgabe** ist die Präsentation der verarbeiteten Daten für Menschen.", content: "In der **Ausgabe-Phase** verlässt das Ergebnis den Computer. In unserem Büro ist das der Moment, in dem der Sachbearbeiter das fertige Dokument präsentiert:\n- Über den **Monitor** (visuell).\n- Über den **Drucker** (physisch).\n- Über **Lautsprecher** (akustisch).\n\nHier kommt es auf die **Qualität** an. Ein schlechter Monitor macht die beste CPU-Leistung unsichtbar.", businessValue: "Die **Ausgabe** ist das, was der Kunde am Ende 'sieht'. Eine brillante Darstellung auf einem 4K-Monitor erhöht die wahrgenommene Wertigkeit der gesamten IT.", related: ["Monitor", "Drucker", "Lautsprecher"], tags: ["Output", "EVA-S"] },
             { id: "speicherung_konzept", title: "Speicherung (Das Gedächtnis)", category: "speicherung", definition: "Die **Speicherung** sichert Daten dauerhaft, damit sie auch nach dem Ausschalten verfügbar bleiben.", content: "Ohne die **Speicherung** wäre der Computer nur eine Schreibmaschine mit Kurzzeitgedächtnis. Das **S** im EVA-S Prinzip ist das **Archiv** unseres Büros:\n- Die **SSD** ist der moderne, schnelle Aktenschrank.\n- Die **Cloud** ist das externe Lager, auf das man von überall zugreifen kann.\n\nWichtig: Die **Speicherung** muss sicher und schnell sein, damit die **Verarbeitung** nicht ausgebremst wird.", businessValue: "Datensicherheit ist das Top-Thema. Ein Kunde investiert in **Speicherung**, um sein wertvollstes Gut – seine Daten – niemals zu verlieren.", related: ["SSD", "HDD", "Cloud-Speicher"], tags: ["Archiv", "EVA-S"] },
-            { id: "doku_uebersicht", title: "Projekt-Doku: Übersicht", category: "sprint_berichte", definition: "Zentrale Übersicht über das IT-Wiki-Projekt und dessen Entwicklungsziele.", content: "<h3 class=\"text-xl font-bold text-slate-800 mb-4\">Scrum Ablauf</h3>\n<img src=\"Scrum_Ablauf.png\" alt=\"Scrum Ablauf Diagramm\" class=\"w-full max-w-4xl rounded-2xl shadow-md border border-slate-200 mb-10\" onerror=\"this.onerror=null; this.src='https://placehold.co/800x400/eef2ff/4f46e5?text=Scrum+Ablauf'\">\n\nDieses IT-Wiki wurde als interaktives Nachschlagewerk für unser Vertriebsteam entwickelt.\n\n**Kernziele des Projekts:**\n- Schneller Zugriff auf fundiertes Hardware-Wissen während Kundengesprächen.\n- Bereitstellung einheitlicher, nutzenorientierter Verkaufsargumente (Pitches).\n- Strukturierte Erklärung durch das EVA-S Prinzip.\n\nIn diesem Dokumentationsbereich finden Sie alle Protokolle zu den Entwicklungs-Sprints und Retrospektiven, um den Fortschritt nachvollziehen zu können.\n\n<h3 class=\"text-xl font-bold text-slate-800 mb-4 mt-10\">Rollenverteilung</h3><div class=\"overflow-x-auto rounded-xl border border-slate-200 bg-white\"><table class=\"w-full text-left border-collapse text-sm\"><thead class=\"bg-slate-800 text-white\"><tr><th class=\"p-4 font-black\">ROLLE</th><th class=\"p-4 font-black\">NAME</th><th class=\"p-4 font-black\">AUFGABEN</th></tr></thead><tbody class=\"text-slate-700\"><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">PRODUCT OWNER</td><td class=\"p-4\">Malin</td><td class=\"p-4\">Anforderungen sammeln, Prioritäten festlegen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">SCRUM MASTER</td><td class=\"p-4\">Nico</td><td class=\"p-4\">Achtet auf SCRUM-Ablauf, moderiert Dailys</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">ENTWICKLUNGSTEAM</td><td class=\"p-4\">Erza, Nico, Malin, Kasija</td><td class=\"p-4\">Inhalte erarbeiten (Hardware, EVA usw.)</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">DOKUMENTATION</td><td class=\"p-4\">Erza, Malin</td><td class=\"p-4\">Pflegt die Wissensdatenbank, Pflegt das Word Dokument</td></tr><tr><td class=\"p-4 font-bold\">QUALITÄTSSICHERUNG</td><td class=\"p-4\">Erza, Kasija</td><td class=\"p-4\">Prüft Verständlichkeit & Vollständigkeit</td></tr></tbody></table></div>\n\n<h3 class=\"text-xl font-bold text-slate-800 mb-4 mt-10\">Risikoanalyse</h3><div class=\"overflow-x-auto rounded-xl border border-slate-200 bg-white\"><table class=\"w-full text-left border-collapse text-sm\"><thead class=\"bg-slate-800 text-white\"><tr><th class=\"p-4 font-black\">Risiko</th><th class=\"p-4 font-black\">Beschreibung</th><th class=\"p-4 font-black\">Mögliche Auswirkungen</th><th class=\"p-4 font-black\">Gegenmaßnahmen</th></tr></thead><tbody class=\"text-slate-700\"><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Unklare Aufgabenverteilung</td><td class=\"p-4\">Aufgaben und Verantwortlichkeiten sind nicht eindeutig festgelegt</td><td class=\"p-4\">Doppelarbeit, vergessene Aufgaben, Verzögerungen im Projekt</td><td class=\"p-4\">Klare Zuordnung von Features und Tasks, Pflege des Kanban-Boards, regelmäßige Weeklys</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Zeitmangel durch zu große Aufgaben</td><td class=\"p-4\">Tasks sind zu umfangreich oder schlecht eingeplant</td><td class=\"p-4\">Sprintziele werden nicht erreicht, Zeitdruck vor der Abgabe</td><td class=\"p-4\">Tasks klein und konkret formulieren, Aufgaben im Weekly nachschärfen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Fachlich falsche oder ungenaue Inhalte</td><td class=\"p-4\">Fehlendes technisches Wissen führt zu falschen Erklärungen</td><td class=\"p-4\">Wissensdatenbank ist unzuverlässig, falsche Kundenberatung</td><td class=\"p-4\">Gegenseitige Kontrolle im Team, Nutzung von Unterrichtsunterlagen, Rückfragen an Lehrkraft</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Inhalte zu technisch für den Vertrieb</td><td class=\"p-4\">Zu viele Fachbegriffe oder komplizierte Erklärungen</td><td class=\"p-4\">Zielgruppe versteht Inhalte nicht, geringe Nutzung der Datenbank</td><td class=\"p-4\">Einfache Sprache verwenden, Praxisbeispiele einbauen, Inhalte gegenlesen lassen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Uneinheitliche Struktur und Sprache</td><td class=\"p-4\">Unterschiedliche Schreibstile und Aufbauten</td><td class=\"p-4\">Unübersichtlicher Gesamteindruck, schlechte Lesbarkeit</td><td class=\"p-4\">Einheitliche Struktur festlegen (EVA-Prinzip), Abschluss-Review durchführen</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Mangelnde Teamkommunikation</td><td class=\"p-4\">Fehlende oder unregelmäßige Abstimmungen</td><td class=\"p-4\">Missverständnisse, unklarer Projektstand</td><td class=\"p-4\">Regelmäßige Weeklys, offene Kommunikation, transparenter Fortschritt im Kanban-Board</td></tr><tr class=\"border-b border-slate-100\"><td class=\"p-4 font-bold\">Technische Probleme mit Tools</td><td class=\"p-4\">Probleme mit Word, Conceptboard oder Dateizugriff</td><td class=\"p-4\">Zeitverlust, möglicher Datenverlust</td><td class=\"p-4\">Regelmäßiges Speichern, gemeinsame Ablage, klare Dateinamen</td></tr><tr><td class=\"p-4 font-bold\">Pflichtbegriffe nicht vollständig abgedeckt</td><td class=\"p-4\">Begriffe aus dem Dokument „Wichtige Begriffe“ fehlen</td><td class=\"p-4\">Anforderungen nicht erfüllt, Punktabzug</td><td class=\"p-4\">Checkliste verwenden, Vollständigkeit vor Abgabe prüfen</td></tr></tbody></table></div>", businessValue: "Eine transparente Dokumentation sichert das Projektwissen und beschleunigt das Onboarding neuer Vertriebsmitarbeiter.", related: ["sprint1", "sprint2", "retro"], tags: ["Projekt", "Übersicht"] },
+            { id: "doku_uebersicht", title: "Projekt-Doku: Übersicht", category: "sprint_berichte", definition: "Zentrale Übersicht über das IT-Wiki-Projekt und dessen Entwicklungsziele.", content: "<h3 class=\"text-xl font-bold text-slate-800 dark:text-slate-100 mb-4\">Scrum Ablauf</h3>\n<img src=\"Scrum_Ablauf.png\" alt=\"Scrum Ablauf Diagramm\" class=\"w-full max-w-4xl rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 mb-10\" onerror=\"this.onerror=null; this.src='https://placehold.co/800x400/eef2ff/4f46e5?text=Scrum+Ablauf'\">\n\nDieses IT-Wiki wurde als interaktives Nachschlagewerk für unser Vertriebsteam entwickelt.\n\n**Kernziele des Projekts:**\n- Schneller Zugriff auf fundiertes Hardware-Wissen während Kundengesprächen.\n- Bereitstellung einheitlicher, nutzenorientierter Verkaufsargumente (Pitches).\n- Strukturierte Erklärung durch das EVA-S Prinzip.\n\nIn diesem Dokumentationsbereich finden Sie alle Protokolle zu den Entwicklungs-Sprints und Retrospektiven, um den Fortschritt nachvollziehen zu können.\n\n<h3 class=\"text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 mt-10\">Rollenverteilung</h3><div class=\"overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800\"><table class=\"w-full text-left border-collapse text-sm\"><thead class=\"bg-slate-800 dark:bg-slate-900 text-white\"><tr><th class=\"p-4 font-black\">ROLLE</th><th class=\"p-4 font-black\">NAME</th><th class=\"p-4 font-black\">AUFGABEN</th></tr></thead><tbody class=\"text-slate-700 dark:text-slate-300\"><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">PRODUCT OWNER</td><td class=\"p-4\">Malin</td><td class=\"p-4\">Anforderungen sammeln, Prioritäten festlegen</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">SCRUM MASTER</td><td class=\"p-4\">Nico</td><td class=\"p-4\">Achtet auf SCRUM-Ablauf, moderiert Dailys</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">ENTWICKLUNGSTEAM</td><td class=\"p-4\">Erza, Nico, Malin, Kasija</td><td class=\"p-4\">Inhalte erarbeiten (Hardware, EVA usw.)</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">DOKUMENTATION</td><td class=\"p-4\">Erza, Malin</td><td class=\"p-4\">Pflegt die Wissensdatenbank, Pflegt das Word Dokument</td></tr><tr><td class=\"p-4 font-bold\">QUALITÄTSSICHERUNG</td><td class=\"p-4\">Erza, Kasija</td><td class=\"p-4\">Prüft Verständlichkeit & Vollständigkeit</td></tr></tbody></table></div>\n\n<h3 class=\"text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 mt-10\">Risikoanalyse</h3><div class=\"overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800\"><table class=\"w-full text-left border-collapse text-sm\"><thead class=\"bg-slate-800 dark:bg-slate-900 text-white\"><tr><th class=\"p-4 font-black\">Risiko</th><th class=\"p-4 font-black\">Beschreibung</th><th class=\"p-4 font-black\">Mögliche Auswirkungen</th><th class=\"p-4 font-black\">Gegenmaßnahmen</th></tr></thead><tbody class=\"text-slate-700 dark:text-slate-300\"><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Unklare Aufgabenverteilung</td><td class=\"p-4\">Aufgaben und Verantwortlichkeiten sind nicht eindeutig festgelegt</td><td class=\"p-4\">Doppelarbeit, vergessene Aufgaben, Verzögerungen im Projekt</td><td class=\"p-4\">Klare Zuordnung von Features und Tasks, Pflege des Kanban-Boards, regelmäßige Weeklys</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Zeitmangel durch zu große Aufgaben</td><td class=\"p-4\">Tasks sind zu umfangreich oder schlecht eingeplant</td><td class=\"p-4\">Sprintziele werden nicht erreicht, Zeitdruck vor der Abgabe</td><td class=\"p-4\">Tasks klein und konkret formulieren, Aufgaben im Weekly nachschärfen</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Fachlich falsche oder ungenaue Inhalte</td><td class=\"p-4\">Fehlendes technisches Wissen führt zu falschen Erklärungen</td><td class=\"p-4\">Wissensdatenbank ist unzuverlässig, falsche Kundenberatung</td><td class=\"p-4\">Gegenseitige Kontrolle im Team, Nutzung von Unterrichtsunterlagen, Rückfragen an Lehrkraft</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Inhalte zu technisch für den Vertrieb</td><td class=\"p-4\">Zu viele Fachbegriffe oder komplizierte Erklärungen</td><td class=\"p-4\">Zielgruppe versteht Inhalte nicht, geringe Nutzung der Datenbank</td><td class=\"p-4\">Einfache Sprache verwenden, Praxisbeispiele einbauen, Inhalte gegenlesen lassen</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Uneinheitliche Struktur und Sprache</td><td class=\"p-4\">Unterschiedliche Schreibstile und Aufbauten</td><td class=\"p-4\">Unübersichtlicher Gesamteindruck, schlechte Lesbarkeit</td><td class=\"p-4\">Einheitliche Struktur festlegen (EVA-Prinzip), Abschluss-Review durchführen</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Mangelnde Teamkommunikation</td><td class=\"p-4\">Fehlende oder unregelmäßige Abstimmungen</td><td class=\"p-4\">Missverständnisse, unklarer Projektstand</td><td class=\"p-4\">Regelmäßige Weeklys, offene Kommunikation, transparenter Fortschritt im Kanban-Board</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Technische Probleme mit Tools</td><td class=\"p-4\">Probleme mit Word, Conceptboard oder Dateizugriff</td><td class=\"p-4\">Zeitverlust, möglicher Datenverlust</td><td class=\"p-4\">Regelmäßiges Speichern, gemeinsame Ablage, klare Dateinamen</td></tr><tr><td class=\"p-4 font-bold\">Pflichtbegriffe nicht vollständig abgedeckt</td><td class=\"p-4\">Begriffe aus dem Dokument „Wichtige Begriffe“ fehlen</td><td class=\"p-4\">Anforderungen nicht erfüllt, Punktabzug</td><td class=\"p-4\">Checkliste verwenden, Vollständigkeit vor Abgabe prüfen</td></tr></tbody></table></div>", businessValue: "Eine transparente Dokumentation sichert das Projektwissen und beschleunigt das Onboarding neuer Vertriebsmitarbeiter.", related: ["sprint1", "sprint2", "retro"], tags: ["Projekt", "Übersicht"] },
             { id: "sprint1", title: "Dokumentation: Sprint 1", category: "sprint_berichte", definition: "Zeitraum: Projektbeginn bis 30.04.2026. Fokus: Grundstruktur und Kernkonzepte.", content: "Im ersten Sprint haben wir die Basis für die Wissensdatenbank geschaffen.\n\n**Erreichte Meilensteine:**\n- Festlegung des **EVA-S Prinzips** als Navigationsstruktur.\n- Erstellung des **Glossars** mit allen geforderten Fachbegriffen.\n- Entwicklung der **Büro-Analogie** zur Erklärung komplexer Hardware-Vorgänge.\n- Implementierung der **Suchfunktion** und des interaktiven Designs.\n\n**Sprint-Retrospektive**\n\n**Was lief gut?**\n- Die Zusammenarbeit im Team hat sehr gut funktioniert. Aufgaben wurden zuverlässig bearbeitet und im Team abgestimmt.\n- Das Kanban-Board hat dabei geholfen, den Überblick über den aktuellen Stand der Aufgaben zu behalten.\n- Auch die Umsetzung als Website ist gut gelungen und die Inhalte konnten verständlich dargestellt werden.\n\n**Was lief nicht optimal?**\n- Im Projektverlauf hat sich die ursprüngliche Planung leicht verändert, da sich die Umsetzungsform angepasst hat.\n- Dadurch mussten einige Aufgaben neu priorisiert und teilweise überarbeitet werden.\n\n**Was können wir verbessern?**\n- Die Aufgaben können noch etwas klarer priorisiert werden, um schneller zu erkennen, was aktuell am wichtigsten ist.\n- Außerdem könnten Änderungen im Projekt noch früher abgestimmt werden, um den Arbeitsfluss weiter zu verbessern.\n\n**Konkrete Maßnahmen für den nächsten Sprint**\n- Aufgaben im Kanban-Board klar priorisieren\n- Änderungen frühzeitig im Team abstimmen\n- Regelmäßige kurze Abstimmungen beibehalten", businessValue: "Sprint 1 stellt sicher, dass das Team eine gemeinsame Sprache spricht und das Grundgerüst steht.", related: ["EVA-Prinzip", "Sprint 2"], tags: ["SCRUM", "Sprint 1"] },
             { id: "sprint2", title: "Dokumentation: Sprint 2", category: "sprint_berichte", definition: "Zeitraum: 01.05.2026 bis 21.05.2026. Fokus: Detailtiefe und Finalisierung.", content: "Der zweite Sprint dient der inhaltlichen Vertiefung und dem Feinschliff.\n\n**Geplante Aufgaben:**\n- Detaillierte Beschreibung von **Spezial-Hardware** (z.B. Plotter, Workstations).\n- Ausarbeitung technischer **Schnittstellen** (HDMI 2.1 vs DisplayPort 1.4).\n- Abschlusspräsentation und Projektabgabe am **21.05.2026**.", businessValue: "Ziel ist ein marktreifes Produkt, das sofort für neue Vertriebler als Nachschlagewerk genutzt werden kann.", related: ["Sprint 1", "Retrospektive"], tags: ["SCRUM", "Sprint 2"] },
             { id: "ram", title: "Arbeitsspeicher (RAM)", image: "RAM.png", category: "verarbeitung", definition: "Flüchtiger Kurzzeitspeicher für laufende Prozesse.", content: "Der RAM ist der 'Schreibtisch' des Computers. Alles, womit der PC gerade arbeitet, liegt hier bereit. Wird der Strom abgeschaltet, ist der Schreibtisch leer.", businessValue: "Viel RAM verhindert, dass der Rechner bei vielen offenen Programmen (Multitasking) ins Stocken gerät.", related: ["CPU", "SSD"], tags: ["Hardware", "Speed"] },
@@ -129,8 +156,8 @@
             { id: "minipc", title: "Mini-PC", category: "bauformen", definition: "Extrem kompakter Computer für Büroanwendungen.", content: "Oft kaum größer als ein Buch. Kann oft direkt hinter dem Monitor montiert werden.", businessValue: "Spart Platz auf dem Schreibtisch und verbraucht deutlich weniger Energie als große Tower-PCs.", related: ["Desktop-PC", "Laptop"], tags: ["System", "Platzsparend"] },
             { id: "netzteil", title: "Netzteil", category: "verarbeitung", definition: "Bauteil zur Stromversorgung aller PC-Komponenten.", content: "Wandelt den Strom aus der Steckdose in die benötigten Spannungen für den PC um.", businessValue: "Ein effizientes Netzteil (80 Plus Zertifikat) senkt die monatlichen Stromkosten des Unternehmens.", related: ["Hardware", "Mainboard"], tags: ["Hardware", "Energie"] },
             { id: "formfaktor", title: "Formfaktor (z. B. ATX)", category: "bauformen", definition: "Standardisierte Größenangabe für Hardware-Bauteile.", content: "Gibt an, ob ein Mainboard in ein Gehäuse passt (z.B. ATX, Micro-ATX).", businessValue: "Entscheidend für die Kompatibilität beim Zusammenbau oder Aufrüsten von Kundensystemen.", related: ["Mainboard", "Desktop-PC"], tags: ["Standard", "Technik"] },
-            { id: "usb", title: "USB (USB-A, USB-C)", category: "peripherie", definition: "Universeller Anschluss für fast alle Geräte.", content: "USB-A ist der alte Standard, USB-C der neue, verdrehsichere Alleskönner.", businessValue: "USB-C kann gleichzeitig laden, Daten übertragen und Monitore ansteuern – weniger Kabelsalat.", related: ["Laptop"], tags: ["Anschluss", "Standard"] },
-            { id: "hdmi", title: "HDMI", category: "peripherie", definition: "Universeller Anschluss für Bild und Ton.", content: "Standard an fast allen Monitoren, Fernsehern und Beamern.", businessValue: "Ermöglicht einfaches Plug-and-Play bei Präsentationen in Besprechungsräumen.", related: ["DisplayPort", "Monitor"], tags: ["Anschluss", "Video"] },
+            { id: "usb", title: "USB (USB-A, USB-C)", image: "USB.png", category: "peripherie", definition: "Universeller Anschluss für fast alle Geräte.", content: "USB-A ist der alte Standard, USB-C der neue, verdrehsichere Alleskönner.", businessValue: "USB-C kann gleichzeitig laden, Daten übertragen und Monitore ansteuern – weniger Kabelsalat.", related: ["Laptop"], tags: ["Anschluss", "Standard"] },
+            { id: "hdmi", title: "HDMI", image: "HDMI.png", category: "peripherie", definition: "Universeller Anschluss für Bild und Ton.", content: "Standard an fast allen Monitoren, Fernsehern und Beamern.", businessValue: "Ermöglicht einfaches Plug-and-Play bei Präsentationen in Besprechungsräumen.", related: ["DisplayPort", "Monitor"], tags: ["Anschluss", "Video"] },
             { id: "displayport", title: "DisplayPort", category: "peripherie", definition: "Ein digitaler Anschlussstandard für Video und Audio.", content: "Ähnlich wie HDMI, aber im Profi-Bereich verbreiteter für den Anschluss hochauflösender Monitore.", businessValue: "Unterstützt sehr hohe Auflösungen und Bildraten – ideal für moderne Workstations.", related: ["HDMI", "Monitor"], tags: ["Anschluss", "Video"] },
             { id: "lan", title: "LAN (Ethernet)", category: "peripherie", definition: "Kabelgebundene Netzwerkverbindung.", content: "Wird über ein RJ45-Kabel hergestellt. Stabiler und schneller als WLAN.", businessValue: "Empfehlenswert für stationäre Büro-Arbeitsplätze, um Verbindungsabbrüche in Meetings zu vermeiden.", related: ["USB"], tags: ["Netzwerk", "Speed"] },
             { id: "audio", title: "Audio-Anschlüsse", category: "peripherie", definition: "Schnittstellen zur Übertragung von Tonsignalen.", content: "Klassische Klinkenanschlüsse (3,5mm) oder USB für Headsets, Mikrofone und Lautsprecher.", businessValue: "Essenziell für professionelle Videokonferenzen und Support-Mitarbeiter im Home-Office.", related: ["Lautsprecher", "USB"], tags: ["Anschluss", "Kommunikation"] },
@@ -171,7 +198,6 @@
 
         const NAVIGATION = [
             { id: 'dashboard', name: 'Zentrale', icon: 'home' },
-            { id: 'selbststudium', name: 'Selbststudium', icon: 'graduation-cap' },
             { id: 'glossar', name: 'A-Z Glossar', icon: 'list' },
             { id: 'grundlagen', name: 'Grundlagen', icon: 'book-open' },
             { 
@@ -221,6 +247,8 @@
                 searchTerm: '',
                 isSidebarOpen: window.innerWidth >= 768,
                 openSubmenus: { evas: false, geraete: true, dokumentation: false },
+                favorites: JSON.parse(localStorage.getItem('itWikiFavorites')) || [],
+                isDarkMode: localStorage.getItem('itWikiDarkMode') === 'true',
                 
                 // Gamification State
                 learning: {
@@ -231,20 +259,16 @@
                     finalQuizAnswers: {},
                     finalQuizSubmitted: false,
                     finalScore: 0
-                },
-
-                // Chatbot State
-                chatState: {
-                    isOpen: false,
-                    messages: [{ role: 'model', text: 'Hallo! Ich bin dein KI-Vertriebsassistent. Welche Hardware-Konzepte soll ich dir erklären oder welches Verkaufsargument suchst du?' }],
-                    isLoading: false
                 }
             },
 
             init() {
+                if (this.state.isDarkMode) {
+                    document.documentElement.classList.add('dark');
+                }
+
                 this.renderSidebar();
                 this.renderContent();
-                this.renderChat();
                 this.updateSidebarMobileVisibility();
                 
                 window.addEventListener('resize', () => {
@@ -263,6 +287,28 @@
                 return text
                     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                     .replace(/\n/g, '<br/>');
+            },
+
+            toggleDarkMode() {
+                this.state.isDarkMode = !this.state.isDarkMode;
+                localStorage.setItem('itWikiDarkMode', this.state.isDarkMode);
+                
+                if (this.state.isDarkMode) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            },
+
+            toggleFavorite(id) {
+                const idx = this.state.favorites.indexOf(id);
+                if (idx > -1) {
+                    this.state.favorites.splice(idx, 1);
+                } else {
+                    this.state.favorites.push(id);
+                }
+                localStorage.setItem('itWikiFavorites', JSON.stringify(this.state.favorites));
+                this.renderContent(); // UI neu laden für das Sternchen
             },
 
             // --- NAVIGATION ---
@@ -489,194 +535,7 @@
                 link.click();
             },
 
-            // --- CHATBOT LOGIC ---
-            toggleChat() {
-                this.state.chatState.isOpen = !this.state.chatState.isOpen;
-                this.renderChat();
-            },
-
-            async sendChatMessage() {
-                const inputEl = document.getElementById('chat-input');
-                const text = inputEl ? inputEl.value.trim() : '';
-                
-                if (!text || this.state.chatState.isLoading) return;
-
-                this.state.chatState.messages.push({ role: 'user', text: text });
-                this.state.chatState.isLoading = true;
-                this.renderChat();
-
-                if (inputEl) inputEl.value = '';
-
-                // --- AUTOMATISCHE UMGEBUNGSERKENNUNG (Canvas vs. GitHub) ---
-                // Wir prüfen, ob die Seite hier in der Vorschau oder auf deiner GitHub-Seite läuft.
-                // In der Canvas-Vorschau blockiert das System fremde Keys und Modelle (daher der 404 Fehler).
-                const isCanvas = window.location.hostname.includes('usercontent.goog') || window.location.hostname === '';
-                
-                let apiKey = ""; 
-                let model = "gemini-2.5-flash-preview-09-2025"; 
-
-                if (!isCanvas) {
-                    // Diese Werte greifen automatisch, sobald die Seite auf GitHub hochgeladen ist!
-                    apiKey = "AIzaSyAWMgA3l1X_G8Nvz6Dc02hLFUUFDGyMDEQ"; 
-                    model = "gemini-pro"; 
-                }
-
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-                
-                const contextData = WIKI_DATA.map(d => `- ${d.title}: ${d.definition}`).join('\n');
-                const systemInstruction = {
-                    parts: [{ text: `Du bist ein freundlicher, professioneller IT-Vertriebsassistent für das 'all around IT Wiki'. Beantworte Fragen auf Deutsch, prägnant (max. 3-4 Sätze) und direkt auf den Kundennutzen ausgerichtet. Nutze diese Wiki-Daten als dein Kernwissen:\n${contextData}` }]
-                };
-                
-                // FIX: Die Historie strikt abwechselnd aufbauen (Gemini API Vorgabe)
-                const validHistory = [];
-                this.state.chatState.messages.forEach((msg, idx) => {
-                    // Begrüßung und alte Fehlermeldungen überspringen
-                    if (idx === 0 && msg.role === 'model') return; 
-                    if (msg.role === 'model' && msg.text.includes('Fehler')) return;
-
-                    const lastValid = validHistory[validHistory.length - 1];
-                    if (!lastValid || lastValid.role !== msg.role) {
-                        validHistory.push({ role: msg.role === 'model' ? 'model' : 'user', text: msg.text });
-                    } else {
-                        // Wenn der Nutzer z.B. 2x hintereinander schreibt, fassen wir das zusammen
-                        lastValid.text += "\n" + msg.text; 
-                    }
-                });
-
-                // Die API verlangt, dass die erste Nachricht vom Nutzer kommt
-                while (validHistory.length > 0 && validHistory[0].role !== 'user') {
-                    validHistory.shift();
-                }
-
-                const contents = validHistory.map(msg => ({
-                    role: msg.role,
-                    parts: [{ text: msg.text }]
-                }));
-
-                const payload = { contents, systemInstruction };
-                const delays = [1000, 2000, 4000, 8000, 16000];
-                let responseText = "Entschuldigung, es gab einen Fehler bei der Kommunikation mit der KI.";
-
-                for (let attempt = 0; attempt < 5; attempt++) {
-                    try {
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        if (!response.ok) {
-                            const errData = await response.text();
-                            throw new Error(`Status ${response.status}: ${errData}`);
-                        }
-                        const data = await response.json();
-                        responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Keine Antwort erhalten.";
-                        break;
-                    } catch (error) {
-                        console.error("Chat API Fehler (Versuch " + (attempt+1) + "):", error);
-                        if (attempt === 4) {
-                            responseText = "Entschuldigung, es gab einen Fehler bei der Kommunikation. Details: " + error.message;
-                            break;
-                        }
-                        await new Promise(resolve => setTimeout(resolve, delays[attempt]));
-                    }
-                }
-
-                this.state.chatState.messages.push({ role: 'model', text: responseText });
-                this.state.chatState.isLoading = false;
-                this.renderChat();
-            },
-
             // --- RENDERING ---
-            renderChat() {
-                const container = document.getElementById('chat-widget-container');
-                if (!container) return;
-                
-                let html = '';
-                
-                if (this.state.chatState.isOpen) {
-                    const messagesHtml = this.state.chatState.messages.map(msg => `
-                        <div class="flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}">
-                            <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm ${msg.role === 'user' ? 'bg-indigo-200 text-indigo-800' : 'bg-indigo-600 text-white'}">
-                                <i data-lucide="${msg.role === 'user' ? 'user' : 'bot'}" class="w-4 h-4"></i>
-                            </div>
-                            <div class="p-3 rounded-2xl text-sm leading-relaxed shadow-sm max-w-[80%] ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-tr-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm'}">
-                                ${this.formatText(msg.text)}
-                            </div>
-                        </div>
-                    `).join('');
-
-                    const loadingHtml = this.state.chatState.isLoading ? `
-                        <div class="flex gap-3 flex-row">
-                            <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-                                <i data-lucide="bot" class="w-4 h-4"></i>
-                            </div>
-                            <div class="p-3 bg-white border border-slate-200 rounded-2xl rounded-tl-sm flex items-center gap-2 shadow-sm">
-                                <i data-lucide="loader-2" class="w-4 h-4 text-indigo-600 animate-spin"></i>
-                                <span class="text-sm text-slate-500">Tippt...</span>
-                            </div>
-                        </div>
-                    ` : '';
-
-                    html += `
-                        <div class="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-slide-in pointer-events-auto">
-                            <div class="bg-indigo-600 text-white p-4 flex items-center justify-between shrink-0">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="bot" class="w-5 h-5"></i>
-                                    <span class="font-bold">IT-Wiki KI</span>
-                                </div>
-                                <button onclick="app.toggleChat()" class="text-indigo-200 hover:text-white transition-colors">
-                                    <i data-lucide="x" class="w-5 h-5"></i>
-                                </button>
-                            </div>
-                            
-                            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto custom-scrollbar flex flex-col gap-4 bg-slate-50">
-                                ${messagesHtml}
-                                ${loadingHtml}
-                            </div>
-                            
-                            <div class="p-4 bg-white border-t border-slate-100 shrink-0">
-                                <div class="relative flex items-center">
-                                    <input 
-                                        type="text"
-                                        id="chat-input"
-                                        onkeydown="if(event.key === 'Enter') app.sendChatMessage()"
-                                        placeholder="Frag mich etwas..."
-                                        class="w-full bg-slate-100 border-none rounded-full pl-4 pr-12 py-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-                                    />
-                                    <button 
-                                        onclick="app.sendChatMessage()"
-                                        ${this.state.chatState.isLoading ? 'disabled' : ''}
-                                        class="absolute right-2 p-2 text-indigo-600 hover:bg-indigo-100 rounded-full transition-colors disabled:opacity-50"
-                                    >
-                                        <i data-lucide="send" class="w-[18px] h-[18px]"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                html += `
-                    <button 
-                        onclick="app.toggleChat()"
-                        class="w-14 h-14 bg-slate-900 hover:bg-indigo-600 text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 pointer-events-auto"
-                    >
-                        <i data-lucide="${this.state.chatState.isOpen ? 'x' : 'message-circle'}" class="w-6 h-6"></i>
-                    </button>
-                `;
-
-                container.innerHTML = html;
-                lucide.createIcons();
-
-                if (this.state.chatState.isOpen) {
-                    const messagesDiv = document.getElementById('chat-messages');
-                    if (messagesDiv) messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                    const inputEl = document.getElementById('chat-input');
-                    if (inputEl && !this.state.chatState.isLoading) inputEl.focus();
-                }
-            },
-
             renderSidebar() {
                 const navContainer = document.getElementById('sidebar-nav-container');
                 if (!navContainer) return;
@@ -687,7 +546,7 @@
                     // LEARNING MODE SIDEBAR
                     html += `
                         <div class="mb-6 px-4">
-                            <h3 class="text-xs font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2 mb-4">
+                            <h3 class="text-xs font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest flex items-center gap-2 mb-4">
                                 <i data-lucide="graduation-cap" class="w-4 h-4"></i> LERN-PFAD
                             </h3>
                             <div class="space-y-3">
@@ -697,16 +556,16 @@
                                     const isActive = this.state.selectedArticleId === l.articleId;
                                     
                                     let icon = 'lock';
-                                    let color = 'text-slate-400 bg-slate-100';
+                                    let color = 'text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800';
                                     let clickAction = '';
 
                                     if (isDone) {
                                         icon = 'check-circle';
-                                        color = 'text-emerald-600 bg-emerald-50';
+                                        color = 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/20';
                                         clickAction = `onclick="app.handleNavigate(null, '${l.articleId}')"`;
                                     } else if (isUnlocked) {
                                         icon = 'play-circle';
-                                        color = 'text-indigo-600 bg-indigo-50 border border-indigo-200';
+                                        color = 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/20 border border-indigo-200 dark:border-indigo-500/50';
                                         clickAction = `onclick="app.handleNavigate(null, '${l.articleId}')"`;
                                     }
 
@@ -716,27 +575,27 @@
                                             <i data-lucide="${icon}" class="w-4 h-4"></i>
                                         </div>
                                         <div class="flex-1 overflow-hidden">
-                                            <div class="text-[10px] font-black uppercase text-slate-400 tracking-wider">Level ${l.level}</div>
-                                            <div class="text-sm font-bold text-slate-800 truncate">${l.title}</div>
+                                            <div class="text-[10px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider">Level ${l.level}</div>
+                                            <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${l.title}</div>
                                         </div>
                                     </button>
                                     `;
                                 }).join('')}
 
                                 <!-- Final Check Button in Path -->
-                                <button ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? `onclick="app.handleNavigate('selbstcheck')"` : ''} class="w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left mt-6 ${this.state.currentTab === 'selbstcheck' ? 'ring-2 ring-indigo-500' : ''} ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'bg-slate-900 text-white hover:scale-[1.02] shadow-lg' : 'bg-slate-100 text-slate-400 opacity-60 cursor-not-allowed'}">
-                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'bg-indigo-600' : 'bg-slate-200'}">
+                                <button ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? `onclick="app.handleNavigate('selbstcheck')"` : ''} class="w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left mt-6 ${this.state.currentTab === 'selbstcheck' ? 'ring-2 ring-indigo-500' : ''} ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'bg-slate-900 dark:bg-slate-700 text-white hover:scale-[1.02] shadow-lg' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 opacity-60 cursor-not-allowed'}">
+                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'bg-indigo-600' : 'bg-slate-200 dark:bg-slate-700'}">
                                         <i data-lucide="award" class="w-4 h-4 ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'text-white' : 'text-slate-500'}"></i>
                                     </div>
                                     <div class="flex-1">
-                                        <div class="text-sm font-bold truncate">Selbstcheck</div>
+                                        <div class="text-sm font-bold truncate dark:text-slate-100">Selbstcheck</div>
                                     </div>
                                 </button>
 
                             </div>
                         </div>
-                        <div class="mt-auto px-4 pt-6 border-t border-slate-100">
-                            <button onclick="app.stopLearningMode()" class="w-full py-3 bg-white border-2 border-slate-200 text-slate-600 rounded-xl font-bold text-sm hover:border-red-400 hover:text-red-600 transition-colors flex justify-center items-center gap-2">
+                        <div class="mt-auto px-4 pt-6 border-t border-slate-100 dark:border-slate-700">
+                            <button onclick="app.stopLearningMode()" class="w-full py-3 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-xl font-bold text-sm hover:border-red-400 dark:hover:border-red-500 hover:text-red-600 dark:hover:text-red-500 transition-colors flex justify-center items-center gap-2">
                                 <i data-lucide="x-circle" class="w-4 h-4"></i> Lernmodus beenden
                             </button>
                         </div>
@@ -749,7 +608,7 @@
                             const isOpen = this.state.openSubmenus[item.id];
                             return `
                                 <div>
-                                    <button onclick="app.toggleSubmenu('${item.id}')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-all text-left">
+                                    <button onclick="app.toggleSubmenu('${item.id}')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-100 transition-all text-left">
                                         <div class="flex items-center gap-3 flex-1 overflow-hidden">
                                             <i data-lucide="${item.icon}" class="w-5 h-5 shrink-0"></i>
                                             <span class="text-sm font-semibold truncate">${item.name}</span>
@@ -777,7 +636,7 @@
                         }
 
                         const paddingClass = isChild ? 'pl-11 pr-4' : 'px-4';
-                        const activeClass = isActive ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900';
+                        const activeClass = isActive ? 'bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-100';
                         const iconSize = isChild ? 'w-[18px] h-[18px]' : 'w-5 h-5';
                         const alignmentClass = isChild ? 'items-start' : 'items-center';
                         const iconMargin = isChild ? 'mt-0.5' : '';
@@ -790,7 +649,7 @@
                     };
 
                     html += `<nav class="space-y-1 flex-1">${NAVIGATION.map(item => renderNavButton(item)).join('')}</nav>`;
-                    html += `<div class="mt-8 pt-6 border-t border-slate-100">${renderNavButton(DOC_NAV)}</div>`;
+                    html += `<div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-700">${renderNavButton(DOC_NAV)}</div>`;
                 }
 
                 navContainer.innerHTML = html;
@@ -800,6 +659,33 @@
             renderContent() {
                 const container = document.getElementById('view-container');
                 let html = '';
+
+                // Hilfsfunktion zum Rendern der Hardware-Karten (wird mehrfach gebraucht)
+                const renderArticleCard = (art) => {
+                    const cleanTitle = art.title.split('(')[0].split('/')[0].trim();
+                    const imgSrc = art.image || '';
+                    const isFav = this.state.favorites.includes(art.id);
+                    const favIconClass = isFav ? 'fill-amber-400 text-amber-400' : 'text-slate-400 dark:text-slate-500';
+                    
+                    return `
+                    <div onclick="app.handleNavigate('${art.category}', '${art.id}')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl dark:hover:border-indigo-500 hover:border-indigo-200 cursor-pointer transition-all flex flex-col group relative">
+                        <div class="h-40 bg-slate-100 dark:bg-slate-700 relative overflow-hidden border-b border-slate-100 dark:border-slate-700">
+                            <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/600x300/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <button onclick="event.stopPropagation(); app.toggleFavorite('${art.id}')" class="absolute top-4 right-4 p-2 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur shadow-sm hover:scale-110 transition-transform z-10">
+                                <i data-lucide="star" class="w-5 h-5 ${favIconClass}"></i>
+                            </button>
+                        </div>
+                        <div class="p-6 flex flex-col flex-1">
+                            <h3 class="font-bold text-xl mb-3 text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${art.title}</h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2 mb-4 italic leading-relaxed">${art.definition.replace(/\*\*/g, '')}</p>
+                            ${art.category !== 'sprint_berichte' ? `
+                            <div class="mt-auto flex flex-wrap gap-2 pt-4 border-t border-slate-50 dark:border-slate-700">
+                                ${art.tags.map(t => `<span class="text-[10px] px-2 py-1 rounded-lg uppercase font-black tracking-widest bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300">${t}</span>`).join('')}
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>`;
+                };
 
                 // 1. SEARCH
                 if (this.state.searchTerm && !this.state.learning.active) {
@@ -812,27 +698,27 @@
                     html = `
                         <div class="space-y-6 animate-slide-in">
                             <h2 class="text-2xl font-black">Ergebnisse für "${this.state.searchTerm}"</h2>
-                            <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+                            <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl overflow-hidden shadow-sm">
                                 ${filtered.length > 0 ? `
-                                    <div class="divide-y divide-slate-100">
+                                    <div class="divide-y divide-slate-100 dark:divide-slate-700">
                                         ${filtered.map(art => {
                                             const cleanTitle = art.title.split('(')[0].split('/')[0].trim();
                                             const imgSrc = art.image || '';
                                             return `
-                                            <button onclick="app.handleNavigate('${art.category}', '${art.id}')" class="w-full text-left p-6 hover:bg-slate-50 flex items-center gap-6 group transition-colors">
-                                                <div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-slate-100 hidden sm:block">
+                                            <button onclick="app.handleNavigate('${art.category}', '${art.id}')" class="w-full text-left p-6 hover:bg-slate-50 dark:hover:bg-slate-700/50 flex items-center gap-6 group transition-colors">
+                                                <div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-slate-100 dark:bg-slate-700 hidden sm:block">
                                                     <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/100x100/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                                 </div>
                                                 <div class="flex-1">
-                                                    <span class="font-bold text-lg text-slate-800 block mb-1 group-hover:text-indigo-600">${art.title}</span>
-                                                    <p class="text-sm text-slate-500 line-clamp-1">${art.definition.replace(/\*\*/g, '')}</p>
+                                                    <span class="font-bold text-lg text-slate-800 dark:text-slate-100 block mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${art.title}</span>
+                                                    <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">${art.definition.replace(/\*\*/g, '')}</p>
                                                 </div>
-                                                <i data-lucide="chevron-right" class="text-slate-300 group-hover:text-indigo-600 w-5 h-5 transition-transform group-hover:translate-x-1 shrink-0"></i>
+                                                <i data-lucide="chevron-right" class="text-slate-300 dark:text-slate-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 w-5 h-5 transition-transform group-hover:translate-x-1 shrink-0"></i>
                                             </button>
                                         `}).join('')}
                                     </div>
                                 ` : `
-                                    <div class="p-20 text-center text-slate-400">Keine passenden Begriffe gefunden.</div>
+                                    <div class="p-20 text-center text-slate-400 dark:text-slate-500">Keine passenden Begriffe gefunden.</div>
                                 `}
                             </div>
                         </div>
@@ -857,23 +743,23 @@
 
                             <section>
                                 <h3 class="text-2xl font-black mb-6">Dein Fortschritt</h3>
-                                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-                                    <div class="w-full bg-slate-100 rounded-full h-4 mb-2 overflow-hidden">
+                                <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                                    <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-4 mb-2 overflow-hidden">
                                         <div class="bg-emerald-500 h-4 rounded-full transition-all duration-1000" style="width: ${progress}%"></div>
                                     </div>
-                                    <p class="text-right text-sm text-slate-500 font-bold mb-8">${this.state.learning.maxUnlockedLevel - 1} von ${LEARNING_PATH.length} Leveln abgeschlossen</p>
+                                    <p class="text-right text-sm text-slate-500 dark:text-slate-400 font-bold mb-8">${this.state.learning.maxUnlockedLevel - 1} von ${LEARNING_PATH.length} Leveln abgeschlossen</p>
 
                                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                                         ${LEARNING_PATH.map(l => {
                                             const isDone = this.state.learning.maxUnlockedLevel > l.level;
                                             return `
-                                            <div class="p-4 rounded-2xl border-2 ${isDone ? 'border-emerald-200 bg-emerald-50' : 'border-slate-100 bg-slate-50'} flex items-center gap-4">
-                                                <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isDone ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-400'}">
+                                            <div class="p-4 rounded-2xl border-2 ${isDone ? 'border-emerald-200 dark:border-emerald-500/50 bg-emerald-50 dark:bg-emerald-500/10' : 'border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800'} flex items-center gap-4">
+                                                <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isDone ? 'bg-emerald-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500'}">
                                                     <i data-lucide="${isDone ? 'check' : 'lock'}" class="w-5 h-5"></i>
                                                 </div>
                                                 <div>
-                                                    <div class="text-[10px] font-black uppercase text-slate-400">Level ${l.level}</div>
-                                                    <div class="font-bold text-sm text-slate-800">${l.title}</div>
+                                                    <div class="text-[10px] font-black uppercase text-slate-400 dark:text-slate-500">Level ${l.level}</div>
+                                                    <div class="font-bold text-sm text-slate-800 dark:text-slate-100">${l.title}</div>
                                                 </div>
                                             </div>
                                             `;
@@ -892,25 +778,25 @@
                         html = `
                             <div class="space-y-8 animate-fade-in max-w-3xl mx-auto">
                                 <div class="text-center mb-12">
-                                    <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <div class="w-20 h-20 bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center mx-auto mb-6">
                                         <i data-lucide="award" class="w-10 h-10"></i>
                                     </div>
                                     <h2 class="text-3xl md:text-4xl font-black mb-4">Abschluss-Check</h2>
-                                    <p class="text-slate-500 text-lg">Beweise dein Wissen in 5 Fragen, um dein Zertifikat freizuschalten.</p>
+                                    <p class="text-slate-500 dark:text-slate-400 text-lg">Beweise dein Wissen in 5 Fragen, um dein Zertifikat freizuschalten.</p>
                                 </div>
 
                                 <div class="space-y-8">
                                     ${FINAL_QUIZ.map((q, qIdx) => {
                                         const selected = this.state.learning.finalQuizAnswers[qIdx];
                                         return `
-                                            <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm">
-                                                <h3 class="font-bold text-lg mb-6 flex gap-4">
-                                                    <span class="text-indigo-600 bg-indigo-50 w-8 h-8 flex items-center justify-center rounded-lg shrink-0">${qIdx + 1}</span>
+                                            <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                                                <h3 class="font-bold text-lg mb-6 flex gap-4 text-slate-900 dark:text-slate-100">
+                                                    <span class="text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/20 w-8 h-8 flex items-center justify-center rounded-lg shrink-0">${qIdx + 1}</span>
                                                     ${q.q}
                                                 </h3>
                                                 <div class="space-y-3">
                                                     ${q.o.map((opt, oIdx) => `
-                                                        <button onclick="app.answerFinalQuiz(${qIdx}, ${oIdx})" class="w-full p-4 rounded-xl text-left border-2 transition-all ${selected === oIdx ? 'border-indigo-500 bg-indigo-50 text-indigo-800 font-bold' : 'border-slate-100 hover:border-indigo-200 bg-slate-50'}">
+                                                        <button onclick="app.answerFinalQuiz(${qIdx}, ${oIdx})" class="w-full p-4 rounded-xl text-left border-2 transition-all ${selected === oIdx ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/20 text-indigo-800 dark:text-indigo-300 font-bold' : 'border-slate-100 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-500/50 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300'}">
                                                             ${opt}
                                                         </button>
                                                     `).join('')}
@@ -920,8 +806,8 @@
                                     }).join('')}
                                 </div>
 
-                                <div class="pt-8 border-t border-slate-200 text-center pb-20">
-                                    <button onclick="app.submitFinalQuiz()" ${!allAnswered ? 'disabled' : ''} class="bg-slate-900 text-white font-black px-12 py-5 rounded-full text-lg shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                                <div class="pt-8 border-t border-slate-200 dark:border-slate-700 text-center pb-20">
+                                    <button onclick="app.submitFinalQuiz()" ${!allAnswered ? 'disabled' : ''} class="bg-slate-900 dark:bg-indigo-600 text-white font-black px-12 py-5 rounded-full text-lg shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                                         Antworten Auswerten
                                     </button>
                                 </div>
@@ -934,21 +820,21 @@
                         
                         html = `
                             <div class="max-w-2xl mx-auto text-center space-y-8 animate-zoom-in pt-10">
-                                <div class="w-32 h-32 rounded-full mx-auto flex items-center justify-center animate-bounce-custom ${passed ? 'bg-emerald-100 text-emerald-500' : 'bg-red-100 text-red-500'}">
+                                <div class="w-32 h-32 rounded-full mx-auto flex items-center justify-center animate-bounce-custom ${passed ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-500 dark:text-emerald-400' : 'bg-red-100 dark:bg-red-500/20 text-red-500 dark:text-red-400'}">
                                     <i data-lucide="${passed ? 'check-circle' : 'x-circle'}" class="w-16 h-16"></i>
                                 </div>
                                 
                                 <div>
                                     <h2 class="text-4xl font-black mb-4">${passed ? 'Herzlichen Glückwunsch!' : 'Schade, das hat nicht ganz gereicht.'}</h2>
-                                    <p class="text-xl text-slate-500">Du hast <strong class="text-slate-800">${score} von 5</strong> Fragen richtig beantwortet.</p>
+                                    <p class="text-xl text-slate-500 dark:text-slate-400">Du hast <strong class="text-slate-800 dark:text-slate-100">${score} von 5</strong> Fragen richtig beantwortet.</p>
                                 </div>
 
                                 ${passed ? `
-                                    <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl mt-12 text-left">
-                                        <h3 class="font-black text-xl mb-2 text-indigo-600 flex items-center gap-2"><i data-lucide="award" class="w-6 h-6"></i> Zertifikat anfordern</h3>
-                                        <p class="text-slate-500 text-sm mb-6">Bitte gib deinen vollständigen Namen für das Zertifikat ein.</p>
+                                    <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl mt-12 text-left">
+                                        <h3 class="font-black text-xl mb-2 text-indigo-600 dark:text-indigo-400 flex items-center gap-2"><i data-lucide="award" class="w-6 h-6"></i> Zertifikat anfordern</h3>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Bitte gib deinen vollständigen Namen für das Zertifikat ein.</p>
                                         
-                                        <input type="text" id="cert-name" placeholder="Vorname Nachname" class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl font-bold mb-2 focus:border-indigo-500 focus:outline-none">
+                                        <input type="text" id="cert-name" placeholder="Vorname Nachname" class="w-full p-4 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl font-bold mb-2 focus:border-indigo-500 focus:outline-none">
                                         <span id="cert-err" class="text-red-500 text-xs font-bold hidden mb-6 block">Bitte einen Namen eingeben!</span>
                                         
                                         <button onclick="app.generateCertificate()" class="w-full bg-indigo-600 text-white font-black py-4 rounded-xl shadow-lg mt-4 hover:bg-indigo-700 transition-colors flex justify-center items-center gap-2">
@@ -956,7 +842,7 @@
                                         </button>
                                     </div>
                                 ` : `
-                                    <button onclick="app.state.learning.finalQuizSubmitted = false; app.state.learning.finalQuizAnswers = {}; app.renderContent();" class="bg-slate-900 text-white font-black px-8 py-4 rounded-full mt-8">
+                                    <button onclick="app.state.learning.finalQuizSubmitted = false; app.state.learning.finalQuizAnswers = {}; app.renderContent();" class="bg-slate-900 dark:bg-slate-700 text-white font-black px-8 py-4 rounded-full mt-8">
                                         Quiz wiederholen
                                     </button>
                                 `}
@@ -964,20 +850,49 @@
                         `;
                     }
                 }
+                // 3.5 FAVORITEN VIEW
+                else if (this.state.currentTab === 'favoriten') {
+                    const favArticles = WIKI_DATA.filter(a => this.state.favorites.includes(a.id));
+                    
+                    html = `
+                        <div class="space-y-8 animate-fade-in">
+                            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-6">
+                                <h2 class="text-3xl font-black capitalize flex items-center gap-3">
+                                    <i data-lucide="star" class="w-8 h-8 text-amber-400 fill-amber-400"></i> Meine Favoriten
+                                </h2>
+                            </div>
+                            
+                            ${favArticles.length > 0 ? `
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    ${favArticles.map(art => renderArticleCard(art)).join('')}
+                                </div>
+                            ` : `
+                                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-12 text-center shadow-sm">
+                                    <div class="w-20 h-20 bg-slate-100 dark:bg-slate-700 text-slate-300 dark:text-slate-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                                        <i data-lucide="star" class="w-10 h-10"></i>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">Noch keine Favoriten</h3>
+                                    <p class="text-slate-500 dark:text-slate-400">Klicke auf das Stern-Symbol bei einem Hardware-Artikel, um ihn dir für später zu merken!</p>
+                                </div>
+                            `}
+                        </div>
+                    `;
+                }
                 // 4. ARTICLE DETAIL VIEW
                 else if (this.state.selectedArticleId) {
                     const article = WIKI_DATA.find(a => a.id === this.state.selectedArticleId);
                     if (article) {
                         const cleanTitle = article.title.split('(')[0].split('/')[0].trim();
                         const imgSrc = article.image || '';
-                        const tagsHtml = article.tags.map(t => `<span class="text-[10px] px-3 py-1 rounded-lg uppercase font-black tracking-widest bg-slate-900 text-white shadow-sm">${t}</span>`).join('');
+                        const tagsHtml = article.tags.map(t => `<span class="text-[10px] px-3 py-1 rounded-lg uppercase font-black tracking-widest bg-slate-900 dark:bg-slate-700 text-white shadow-sm">${t}</span>`).join('');
                         const relatedHtml = article.related.map(rel => {
                             const target = WIKI_DATA.find(a => a.title.toLowerCase().includes(rel.toLowerCase()));
                             const action = target ? `onclick="app.handleNavigate('${target.category}', '${target.id}')"` : '';
-                            return `<button ${action} class="text-xs bg-slate-100 border border-slate-200 text-slate-600 px-4 py-2 rounded-full hover:border-indigo-400 hover:text-indigo-600 transition-all font-bold">${rel}</button>`;
+                            return `<button ${action} class="text-xs bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 px-4 py-2 rounded-full hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all font-bold">${rel}</button>`;
                         }).join('');
 
                         let specialFooterHtml = '';
+                        const isFav = this.state.favorites.includes(article.id);
 
                         // In Learning Mode: Inject Quiz at the bottom instead of normal related topics
                         if (this.state.learning.active) {
@@ -987,7 +902,7 @@
                                 const isCorrect = this.state.learning.quizCorrect;
                                 
                                 specialFooterHtml = `
-                                    <div class="mt-16 bg-slate-900 text-white rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                                    <div class="mt-16 bg-slate-900 dark:bg-slate-950 border border-transparent dark:border-slate-800 text-white rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
                                         <div class="relative z-10">
                                             <h3 class="text-indigo-400 font-black text-xs tracking-widest uppercase mb-4 flex items-center gap-2">
                                                 <i data-lucide="help-circle" class="w-4 h-4"></i> Wissenstest - Level ${levelData.level}
@@ -1036,9 +951,9 @@
                             } else {
                                 // Fallback if article is not part of path
                                 specialFooterHtml = `
-                                    <div class="mt-10 p-6 bg-amber-50 text-amber-800 rounded-2xl border border-amber-200 flex items-center justify-between">
+                                    <div class="mt-10 p-6 bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-500 rounded-2xl border border-amber-200 dark:border-amber-500/20 flex items-center justify-between">
                                         <div class="flex items-center gap-3 font-bold"><i data-lucide="info" class="w-5 h-5"></i> Dieser Artikel ist optional und kein Teil des Pflicht-Pfads.</div>
-                                        <button onclick="app.startLearningMode()" class="bg-amber-800 text-white px-4 py-2 rounded-xl text-sm font-bold">Zurück zum Pfad</button>
+                                        <button onclick="app.startLearningMode()" class="bg-amber-800 dark:bg-amber-500 text-white px-4 py-2 rounded-xl text-sm font-bold">Zurück zum Pfad</button>
                                     </div>
                                 `;
                             }
@@ -1047,18 +962,18 @@
                             if (article.category !== 'sprint_berichte') {
                                 specialFooterHtml = `
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
-                                        <div class="bg-indigo-900 p-8 rounded-3xl text-white shadow-xl shadow-indigo-100 relative overflow-hidden">
+                                        <div class="bg-indigo-900 dark:bg-indigo-950 p-8 rounded-3xl text-white shadow-xl shadow-indigo-100 dark:shadow-none border dark:border-indigo-900 relative overflow-hidden">
                                             <i data-lucide="shield-check" class="absolute -right-4 -bottom-4 w-24 h-24 text-white/5 rotate-12"></i>
-                                            <h4 class="text-indigo-300 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
+                                            <h4 class="text-indigo-300 dark:text-indigo-400 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
                                                 <i data-lucide="shield-check" class="w-4 h-4"></i> VERTRIEBS-ARGUMENT
                                             </h4>
                                             <p class="text-lg leading-relaxed font-medium relative z-10">
-                                                ${article.businessValue.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white underline decoration-indigo-400">$1</strong>')}
+                                                ${article.businessValue.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white underline decoration-indigo-400 dark:decoration-indigo-500">$1</strong>')}
                                             </p>
                                         </div>
                                         
-                                        <div class="bg-white p-8 rounded-3xl border-2 border-slate-100">
-                                            <h4 class="text-slate-400 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
+                                        <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border-2 border-slate-100 dark:border-slate-700">
+                                            <h4 class="text-slate-400 dark:text-slate-500 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
                                                 <i data-lucide="arrow-right-left" class="w-4 h-4"></i> VERWANDTE THEMEN
                                             </h4>
                                             <div class="flex flex-wrap gap-2">
@@ -1066,7 +981,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="flex gap-3 pt-8 border-t border-slate-100 flex-wrap">
+                                    <div class="flex gap-3 pt-8 border-t border-slate-100 dark:border-slate-700 flex-wrap">
                                         ${tagsHtml}
                                     </div>
                                 `;
@@ -1074,30 +989,36 @@
                         }
 
                         html = `
-                            <article class="bg-white border border-slate-200 rounded-[2.5rem] p-6 md:p-14 shadow-xl animate-zoom-in">
-                                ${!this.state.learning.active ? `
-                                <button onclick="app.handleNavigate(app.state.currentTab)" class="mb-8 text-indigo-600 text-sm font-black flex items-center gap-2 hover:-translate-x-1 transition-transform">
-                                    <i data-lucide="arrow-left" class="w-4 h-4"></i> ZURÜCK ZUR ÜBERSICHT
-                                </button>
-                                ` : ''}
+                            <article class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[2.5rem] p-6 md:p-14 shadow-xl animate-zoom-in">
+                                <div class="flex items-center justify-between mb-8">
+                                    ${!this.state.learning.active ? `
+                                    <button onclick="app.handleNavigate(app.state.currentTab)" class="text-indigo-600 dark:text-indigo-400 text-sm font-black flex items-center gap-2 hover:-translate-x-1 transition-transform">
+                                        <i data-lucide="arrow-left" class="w-4 h-4"></i> ZURÜCK
+                                    </button>
+                                    ` : '<div></div>'}
+                                    
+                                    <button onclick="app.toggleFavorite('${article.id}')" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-700 text-sm font-bold hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors ${isFav ? 'text-amber-500 dark:text-amber-400' : 'text-slate-500 dark:text-slate-300'}">
+                                        <i data-lucide="star" class="w-4 h-4 ${isFav ? 'fill-current' : ''}"></i> ${isFav ? 'Gespeichert' : 'Merken'}
+                                    </button>
+                                </div>
                                 
                                 <header class="mb-10">
-                                    <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">${article.title}</h1>
-                                    <p class="text-xl md:text-2xl text-slate-400 font-medium leading-relaxed italic border-l-8 border-indigo-500 pl-6 md:pl-8">
+                                    <h1 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">${article.title}</h1>
+                                    <p class="text-xl md:text-2xl text-slate-400 dark:text-slate-300 font-medium leading-relaxed italic border-l-8 border-indigo-500 dark:border-indigo-400 pl-6 md:pl-8">
                                         ${this.formatText(article.definition)}
                                     </p>
                                 </header>
 
                                 ${article.category !== 'sprint_berichte' ? `
-                                <div class="mb-12 w-full h-64 md:h-96 rounded-3xl overflow-hidden border border-slate-100 shadow-inner relative bg-slate-50">
+                                <div class="mb-12 w-full h-64 md:h-96 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700 shadow-inner relative bg-slate-50 dark:bg-slate-900">
                                     <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/800x400/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-cover">
                                 </div>
                                 ` : ''}
 
-                                <div class="text-slate-700 leading-relaxed text-lg mb-12 space-y-6">
-                                    <div class="bg-slate-50 rounded-3xl p-6 md:p-8 border border-slate-100">
-                                        <h4 class="text-sm font-black mb-4 text-slate-400 uppercase tracking-widest">Technischer Hintergrund</h4>
-                                        <div class="whitespace-pre-line leading-relaxed text-slate-600">
+                                <div class="text-slate-700 dark:text-slate-300 leading-relaxed text-lg mb-12 space-y-6">
+                                    <div class="bg-slate-50 dark:bg-slate-900/50 rounded-3xl p-6 md:p-8 border border-slate-100 dark:border-slate-700">
+                                        <h4 class="text-sm font-black mb-4 text-slate-400 dark:text-slate-500 uppercase tracking-widest">Technischer Hintergrund</h4>
+                                        <div class="whitespace-pre-line leading-relaxed">
                                             ${this.formatText(article.content)}
                                         </div>
                                     </div>
@@ -1113,17 +1034,17 @@
                     html = `
                         <div class="space-y-10 animate-fade-in">
                             <section>
-                                <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4 underline decoration-indigo-200 underline-offset-8">Vertriebs-Wiki Hardware</h2>
-                                <p class="text-slate-500 text-lg md:text-xl">Wissen kompakt aufbereitet für Verkaufsalltag. Verstehen Sie die Technik – begeistern Sie den Kunden.</p>
+                                <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-4 underline decoration-indigo-200 dark:decoration-indigo-500/50 underline-offset-8">Vertriebs-Wiki Hardware</h2>
+                                <p class="text-slate-500 dark:text-slate-400 text-lg md:text-xl">Wissen kompakt aufbereitet für Verkaufsalltag. Verstehen Sie die Technik – begeistern Sie den Kunden.</p>
                             </section>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div onclick="app.handleNavigate('eva_uebersicht', 'eva_konzept')" class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group">
-                                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                <div onclick="app.handleNavigate('eva_uebersicht', 'eva_konzept')" class="bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl dark:hover:border-indigo-500 transition-all cursor-pointer group">
+                                    <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                                         <i data-lucide="layers" class="w-6 h-6"></i>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">Das EVA-S Prinzip</h3>
-                                    <p class="text-slate-500 text-sm leading-relaxed italic">Beginnen Sie mit dem Grundgerüst jeder IT-Beratung. Einfach erklärt für Laien.</p>
+                                    <h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">Das EVA-S Prinzip</h3>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed italic">Beginnen Sie mit dem Grundgerüst jeder IT-Beratung. Einfach erklärt für Laien.</p>
                                 </div>
                                 <div onclick="app.handleNavigate('selbststudium')" class="bg-indigo-600 text-white p-8 rounded-[2rem] shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group relative overflow-hidden">
                                     <div class="w-12 h-12 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-indigo-600 transition-colors relative z-10">
@@ -1135,7 +1056,7 @@
                                 </div>
                             </div>
 
-                            <div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-2xl">
+                            <div class="bg-slate-900 dark:bg-slate-950 dark:border dark:border-slate-800 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-2xl">
                                 <div class="relative z-10">
                                     <div class="flex items-center gap-2 mb-6 text-indigo-300 font-black uppercase tracking-[0.2em] text-xs">
                                         <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
@@ -1156,12 +1077,12 @@
                         <div class="flex flex-col animate-fade-in h-full">
                             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shrink-0">
                                 <div>
-                                    <h2 class="text-3xl font-black capitalize">Kanban Board</h2>
-                                    <p class="text-slate-500 mt-1">Gemeinsames Projektboard über CryptPad.</p>
+                                    <h2 class="text-3xl font-black capitalize text-slate-900 dark:text-white">Kanban Board</h2>
+                                    <p class="text-slate-500 dark:text-slate-400 mt-1">Gemeinsames Projektboard über CryptPad.</p>
                                 </div>
                             </div>
                             
-                            <div class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex min-h-[800px] md:min-h-[1000px]">
+                            <div class="w-full bg-white rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex min-h-[800px] md:min-h-[1000px]">
                                 <iframe 
                                     src="https://cryptpad.fr/kanban/#/2/kanban/view/DyBsTGMdamt4G02TtJl6OhRlVPNtzbqP0wwedvlLEIQ/embed/" 
                                     class="w-full h-full border-none"
@@ -1176,33 +1097,13 @@
                     const filtered = WIKI_DATA.filter(a => a.category === this.state.currentTab);
                     const title = this.getCategoryTitle();
 
-                    const cardsHtml = filtered.map(art => {
-                        const cleanTitle = art.title.split('(')[0].split('/')[0].trim();
-                        const imgSrc = art.image || '';
-                        return `
-                        <div onclick="app.handleNavigate('${art.category}', '${art.id}')" class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:border-indigo-200 cursor-pointer transition-all flex flex-col group">
-                            <div class="h-40 bg-slate-100 relative overflow-hidden border-b border-slate-100">
-                                <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/600x300/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            </div>
-                            <div class="p-6 flex flex-col flex-1">
-                                <h3 class="font-bold text-xl mb-3 text-slate-800 group-hover:text-indigo-600">${art.title}</h3>
-                                <p class="text-slate-500 text-sm line-clamp-2 mb-4 italic leading-relaxed">${art.definition.replace(/\*\*/g, '')}</p>
-                                ${art.category !== 'sprint_berichte' ? `
-                                <div class="mt-auto flex flex-wrap gap-2 pt-4 border-t border-slate-50">
-                                    ${art.tags.map(t => `<span class="text-[10px] px-2 py-1 rounded-lg uppercase font-black tracking-widest bg-indigo-50 text-indigo-600">${t}</span>`).join('')}
-                                </div>
-                                ` : ''}
-                            </div>
-                        </div>`;
-                    }).join('');
-
                     html = `
                         <div class="space-y-8 animate-fade-in">
-                            <div class="flex items-center justify-between border-b border-slate-200 pb-6">
-                                <h2 class="text-3xl font-black capitalize">${title}</h2>
+                            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-6">
+                                <h2 class="text-3xl font-black capitalize text-slate-900 dark:text-white">${title}</h2>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                ${cardsHtml}
+                                ${filtered.map(art => renderArticleCard(art)).join('')}
                             </div>
                         </div>
                     `;
