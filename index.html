@@ -669,8 +669,8 @@
                     
                     return `
                     <div onclick="app.handleNavigate('${art.category}', '${art.id}')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl dark:hover:border-indigo-500 hover:border-indigo-200 cursor-pointer transition-all flex flex-col group relative">
-                        <div class="h-40 bg-slate-100 dark:bg-slate-700 relative overflow-hidden border-b border-slate-100 dark:border-slate-700">
-                            <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/600x300/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="h-48 flex items-center justify-center p-6 bg-slate-100 dark:bg-slate-700 relative overflow-hidden border-b border-slate-100 dark:border-slate-700">
+                            <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/600x300/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500">
                             <button onclick="event.stopPropagation(); app.toggleFavorite('${art.id}')" class="absolute top-4 right-4 p-2 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur shadow-sm hover:scale-110 transition-transform z-10">
                                 <i data-lucide="star" class="w-5 h-5 ${favIconClass}"></i>
                             </button>
@@ -1010,8 +1010,8 @@
                                 </header>
 
                                 ${article.category !== 'sprint_berichte' ? `
-                                <div class="mb-12 w-full h-64 md:h-96 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700 shadow-inner relative bg-slate-50 dark:bg-slate-900">
-                                    <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/800x400/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-cover">
+                                <div class="mb-12 w-full h-64 md:h-96 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700 shadow-inner relative bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-8">
+                                    <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/800x400/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-contain drop-shadow-md">
                                 </div>
                                 ` : ''}
 
