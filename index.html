@@ -6,9 +6,7 @@
     <title>all around IT Wiki</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class', // Aktiviert den Dark Mode über CSS-Klassen
-        }
+        tailwind.config = { darkMode: 'class' };
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -21,90 +19,58 @@
         .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
         .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
         
-        /* Animation Classes */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        @keyframes bounce { 0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8,0,1,1); } 50% { transform: none; animation-timing-function: cubic-bezier(0,0,0.2,1); } }
-        
         .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
         .animate-slide-in { animation: slideInUp 0.4s forwards; }
-        .animate-zoom-in { animation: zoomIn 0.3s ease-out forwards; }
-        .animate-bounce-custom { animation: bounce 1s infinite; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 flex font-sans h-screen w-full overflow-hidden relative transition-colors duration-300">
 
-    <!-- Mobile Menu Toggle Button -->
-    <button id="mobile-toggle" onclick="app.toggleSidebar()" class="fixed bottom-6 left-6 z-50 p-4 bg-indigo-600 text-white rounded-full shadow-lg md:hidden hidden">
+    <button id="mobile-toggle" onclick="app.toggleSidebar();" class="fixed bottom-6 left-6 z-50 p-4 bg-indigo-600 text-white rounded-full shadow-lg md:hidden hidden">
         <i data-lucide="menu" class="w-6 h-6"></i>
     </button>
 
-    <!-- Sidebar Overlay (Mobile) -->
-    <div id="sidebar-overlay" onclick="app.closeSidebar()" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden transition-opacity opacity-0"></div>
+    <div id="sidebar-overlay" onclick="app.closeSidebar();" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden transition-opacity opacity-0"></div>
 
-    <!-- Sidebar -->
     <aside id="sidebar" class="h-screen fixed inset-y-0 left-0 z-40 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 flex flex-col flex-shrink-0">
-        
-        <!-- Sidebar Header -->
         <div class="p-6 pb-4 shrink-0 border-b border-slate-100 dark:border-slate-700">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                   <div class="w-12 h-12 flex-shrink-0">
-                      <img src="all_around_it_logo_rund.png" alt="all around IT Logo" class="w-full h-full object-contain drop-shadow-sm rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/100x100/4f46e5/ffffff?text=IT'">
+                   <div class="w-12 h-12 flex-shrink-0 bg-indigo-100 rounded-full flex items-center justify-center">
+                      <i data-lucide="cpu" class="text-indigo-600 w-6 h-6"></i>
                    </div>
                    <div>
                       <h1 class="font-bold text-lg leading-tight dark:text-white">all around <span class="text-indigo-600 dark:text-indigo-400 block italic">IT Wiki</span></h1>
                       <p class="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold">Sales Edition</p>
                    </div>
                 </div>
-                <button onclick="app.closeSidebar()" class="md:hidden text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-lg">
+                <button onclick="app.closeSidebar();" class="md:hidden text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-lg">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
         </div>
-
-        <!-- Main Navigation (Scrollbar) -->
-        <div class="flex-1 overflow-y-auto px-6 py-6 custom-scrollbar flex flex-col" id="sidebar-nav-container">
-            <!-- Normal Navigation / Learning Navigation wird von JS gerendert -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 custom-scrollbar flex flex-col gap-2" id="sidebar-nav-container">
+            <!-- Rendered by JS -->
         </div>
-
     </aside>
 
-    <!-- Main Content -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
-        <!-- Header -->
         <header id="main-header" class="h-20 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center px-4 md:px-8 shadow-sm z-10 shrink-0 transition-colors duration-300">
             <div class="w-full flex items-center justify-between gap-2 md:gap-4">
-                
-                <!-- Search Input (nimmt restlichen Platz ein) -->
                 <div class="relative flex-1 max-w-2xl">
                     <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-[18px] h-[18px]"></i>
-                    <input 
-                        type="text" 
-                        id="search-input"
-                        placeholder="Hardware-Begriff suchen..." 
-                        oninput="app.handleSearch(this.value)"
-                        class="w-full pl-12 pr-4 py-3 bg-slate-100 dark:bg-slate-900/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all outline-none"
-                    >
+                    <input type="text" id="search-input" placeholder="Hardware-Begriff suchen..." oninput="app.handleSearch(this.value);" class="w-full pl-12 pr-4 py-3 bg-slate-100 dark:bg-slate-900/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all outline-none">
                 </div>
-                
-                <!-- Top Right Actions -->
                 <div class="flex items-center gap-2 shrink-0 ml-auto">
-                    
-                    <!-- Favoriten Button -->
-                    <button onclick="app.handleNavigate('favoriten')" title="Meine Favoriten" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center">
+                    <button onclick="app.handleNavigate('favoriten');" title="Meine Favoriten" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-900/50 text-slate-500 hover:text-amber-500 hover:bg-slate-200 transition-colors flex items-center justify-center">
                         <i data-lucide="star" class="w-5 h-5"></i>
                     </button>
-
-                    <!-- Selbststudium Button -->
-                    <button onclick="app.handleNavigate('selbststudium')" title="Selbststudium" class="flex items-center gap-2 px-4 py-3 rounded-2xl bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/30 transition-colors font-bold text-sm">
+                    <button onclick="app.startLearningMode();" title="Selbststudium" class="flex items-center gap-2 px-4 py-3 rounded-2xl bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 transition-colors font-bold text-sm">
                         <i data-lucide="graduation-cap" class="w-5 h-5"></i>
                         <span class="hidden md:inline">Selbststudium</span>
                     </button>
-
-                    <!-- Dark Mode Toggle -->
-                    <button onclick="app.toggleDarkMode()" title="Dark Mode umschalten" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center">
+                    <button onclick="app.toggleDarkMode();" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-900/50 text-slate-500 hover:text-indigo-600 hover:bg-slate-200 transition-colors flex items-center justify-center">
                         <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
                         <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
                     </button>
@@ -112,137 +78,37 @@
             </div>
         </header>
 
-        <!-- Content Area -->
         <section id="content-area" class="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar scroll-smooth">
-            <div id="view-container" class="max-w-4xl mx-auto">
+            <div id="view-container" class="max-w-4xl mx-auto pb-20">
                 <!-- Rendered by JS -->
             </div>
         </section>
     </main>
 
-    <!-- Chat Widget Container -->
-    <div id="chat-widget-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
-        <!-- Rendered by JS -->
-    </div>
-
     <script>
         // --- DATA ---
         const WIKI_DATA = [
-            { id: "eva_konzept", title: "Das EVA-Prinzip (Einstieg)", category: "eva_uebersicht", definition: "Das **EVA-Prinzip** ist das Fundament der IT: **E**ingabe, **V**erarbeitung, **A**usgabe.", content: "Bevor wir über moderne Speicherlösungen sprechen, müssen wir verstehen, wie ein Computer grundsätzlich arbeitet. Das klassische **EVA-Modell** erklärt den logischen Fluss von Daten:\n\n1. **Eingabe**: Ein Mensch gibt Daten ein (z. B. durch einen Tastendruck).\n2. **Verarbeitung**: Der Computer rechnet und wandelt den Tastendruck in einen Befehl um.\n3. **Ausgabe**: Das System zeigt dem Menschen das Ergebnis (z. B. den Buchstaben auf dem Schirm).\n\n**Vom EVA zum EVA-S**:\nIn der heutigen Arbeitswelt reicht das nicht mehr aus. Wir wollen Daten nicht nur kurz sehen, sondern behalten. Deshalb wurde das Modell um das **S** für **Speicherung** erweitert. \n\nStellen Sie sich vor, Sie schreiben ein Angebot: Ohne **Speicherung** wäre Ihre Arbeit nach dem Ausschalten PCs weg. Erst durch die **SSD** oder die **Cloud** wird der Kreislauf für den Vertrieb profitabel.", businessValue: "Nutzen Sie das einfache EVA-Modell, um Kunden zu erklären, dass Hardware immer als geschlossene Kette funktioniert. Reißt ein Glied (z.B. schlechte Ausgabe), leidet der ganze Workflow.", related: ["Zentraleinheit", "Software", "Speicherung"], tags: ["Grundlagen", "Einstieg"] },
-            { id: "eingabe_konzept", title: "Eingabe (Das Tor zum System)", category: "eingabe", definition: "Die **Eingabe** ist die erste Phase des EVA-S Prinzips. Hier gelangen Befehle des Nutzers in das digitale System.", content: "In der **Eingabe-Phase** übersetzen wir menschliche Wünsche in eine Sprache, die der Computer versteht. Denken Sie an den **Posteingang** in einem Büro: Ohne Briefe oder E-Mails hat der Sachbearbeiter keine Aufgabe.\n\nWichtige Punkte für die Beratung:\n- **Präzision**: Nur wenn die **Eingabe** fehlerfrei funktioniert (z.B. eine präzise **Maus**), kann das System effektiv arbeiten.\n- **Ergonomie**: Da der Mensch hier physisch mit der Technik interagiert (**Tastatur**), ist der Gesundheitsschutz hier am wichtigsten.", businessValue: "Eine hochwertige **Eingabe-Peripherie** steigert die Motivation der Mitarbeiter, da Frust durch unpräzise Geräte vermieden wird.", related: ["Tastatur", "Maus", "Scanner"], tags: ["Input", "EVA-S"] },
-            { id: "verarbeitung_konzept", title: "Verarbeitung (Das Herz der IT)", category: "verarbeitung", definition: "In der **Verarbeitung** werden die Rohdaten durch Rechenoperationen in nutzbare Informationen verwandelt.", content: "Dies ist der Moment, in dem die Magie passiert. In unserem Büro-Modell ist das die eigentliche Schreibtischarbeit:\n- Der **Prozessor (CPU)** ist der Sachbearbeiter. Er rechnet, vergleicht und entscheidet.\n- Der **Arbeitsspeicher (RAM)** ist die Schreibtischplatte. Je größer sie ist, desto mehr Akten können gleichzeitig bearbeitet werden.\n- Das **Mainboard** stellt die Infrastruktur dar – die Flure, über die die Daten von A nach B fließen.", businessValue: "Die Phase der **Verarbeitung** entscheidet über die Geschwindigkeit. Ein Kunde, der keine Wartezeiten ('Sanduhr') will, braucht hier die beste Hardware.", related: ["CPU", "RAM", "Mainboard", "Grafikkarte"], tags: ["Logik", "EVA-S"] },
-            { id: "ausgabe_konzept", title: "Ausgabe (Das Sichtbare)", category: "ausgabe", definition: "Die **Ausgabe** ist die Präsentation der verarbeiteten Daten für Menschen.", content: "In der **Ausgabe-Phase** verlässt das Ergebnis den Computer. In unserem Büro ist das der Moment, in dem der Sachbearbeiter das fertige Dokument präsentiert:\n- Über den **Monitor** (visuell).\n- Über den **Drucker** (physisch).\n- Über **Lautsprecher** (akustisch).\n\nHier kommt es auf die **Qualität** an. Ein schlechter Monitor macht die beste CPU-Leistung unsichtbar.", businessValue: "Die **Ausgabe** ist das, was der Kunde am Ende 'sieht'. Eine brillante Darstellung auf einem 4K-Monitor erhöht die wahrgenommene Wertigkeit der gesamten IT.", related: ["Monitor", "Drucker", "Lautsprecher"], tags: ["Output", "EVA-S"] },
-            { id: "speicherung_konzept", title: "Speicherung (Das Gedächtnis)", category: "speicherung", definition: "Die **Speicherung** sichert Daten dauerhaft, damit sie auch nach dem Ausschalten verfügbar bleiben.", content: "Ohne die **Speicherung** wäre der Computer nur eine Schreibmaschine mit Kurzzeitgedächtnis. Das **S** im EVA-S Prinzip ist das **Archiv** unseres Büros:\n- Die **SSD** ist der moderne, schnelle Aktenschrank.\n- Die **Cloud** ist das externe Lager, auf das man von überall zugreifen kann.\n\nWichtig: Die **Speicherung** muss sicher und schnell sein, damit die **Verarbeitung** nicht ausgebremst wird.", businessValue: "Datensicherheit ist das Top-Thema. Ein Kunde investiert in **Speicherung**, um sein wertvollstes Gut – seine Daten – niemals zu verlieren.", related: ["SSD", "HDD", "Cloud-Speicher"], tags: ["Archiv", "EVA-S"] },
-            { id: "doku_uebersicht", title: "Projekt-Doku: Übersicht", category: "sprint_berichte", definition: "Zentrale Übersicht über das IT-Wiki-Projekt und dessen Entwicklungsziele.", content: "<h3 class=\"text-xl font-bold text-slate-800 dark:text-slate-100 mb-4\">Scrum Ablauf</h3>\n<img src=\"Scrum_Ablauf.png\" alt=\"Scrum Ablauf Diagramm\" class=\"w-full max-w-4xl rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 mb-10\" onerror=\"this.onerror=null; this.src='https://placehold.co/800x400/eef2ff/4f46e5?text=Scrum+Ablauf'\">\n\nDieses IT-Wiki wurde als interaktives Nachschlagewerk für unser Vertriebsteam entwickelt.\n\n**Kernziele des Projekts:**\n- Schneller Zugriff auf fundiertes Hardware-Wissen während Kundengesprächen.\n- Bereitstellung einheitlicher, nutzenorientierter Verkaufsargumente (Pitches).\n- Strukturierte Erklärung durch das EVA-S Prinzip.\n\nIn diesem Dokumentationsbereich finden Sie alle Protokolle zu den Entwicklungs-Sprints und Retrospektiven, um den Fortschritt nachvollziehen zu können.\n\n<h3 class=\"text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 mt-10\">Rollenverteilung</h3><div class=\"overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800\"><table class=\"w-full text-left border-collapse text-sm\"><thead class=\"bg-slate-800 dark:bg-slate-900 text-white\"><tr><th class=\"p-4 font-black\">ROLLE</th><th class=\"p-4 font-black\">NAME</th><th class=\"p-4 font-black\">AUFGABEN</th></tr></thead><tbody class=\"text-slate-700 dark:text-slate-300\"><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">PRODUCT OWNER</td><td class=\"p-4\">Malin</td><td class=\"p-4\">Anforderungen sammeln, Prioritäten festlegen</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">SCRUM MASTER</td><td class=\"p-4\">Nico</td><td class=\"p-4\">Achtet auf SCRUM-Ablauf, moderiert Dailys</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">ENTWICKLUNGSTEAM</td><td class=\"p-4\">Erza, Nico, Malin, Kasija</td><td class=\"p-4\">Inhalte erarbeiten (Hardware, EVA usw.)</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">DOKUMENTATION</td><td class=\"p-4\">Erza, Malin</td><td class=\"p-4\">Pflegt die Wissensdatenbank, Pflegt das Word Dokument</td></tr><tr><td class=\"p-4 font-bold\">QUALITÄTSSICHERUNG</td><td class=\"p-4\">Erza, Kasija</td><td class=\"p-4\">Prüft Verständlichkeit & Vollständigkeit</td></tr></tbody></table></div>\n\n<h3 class=\"text-xl font-bold text-slate-800 dark:text-slate-100 mb-4 mt-10\">Risikoanalyse</h3><div class=\"overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800\"><table class=\"w-full text-left border-collapse text-sm\"><thead class=\"bg-slate-800 dark:bg-slate-900 text-white\"><tr><th class=\"p-4 font-black\">Risiko</th><th class=\"p-4 font-black\">Beschreibung</th><th class=\"p-4 font-black\">Mögliche Auswirkungen</th><th class=\"p-4 font-black\">Gegenmaßnahmen</th></tr></thead><tbody class=\"text-slate-700 dark:text-slate-300\"><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Unklare Aufgabenverteilung</td><td class=\"p-4\">Aufgaben und Verantwortlichkeiten sind nicht eindeutig festgelegt</td><td class=\"p-4\">Doppelarbeit, vergessene Aufgaben, Verzögerungen im Projekt</td><td class=\"p-4\">Klare Zuordnung von Features und Tasks, Pflege des Kanban-Boards, regelmäßige Weeklys</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Zeitmangel durch zu große Aufgaben</td><td class=\"p-4\">Tasks sind zu umfangreich oder schlecht eingeplant</td><td class=\"p-4\">Sprintziele werden nicht erreicht, Zeitdruck vor der Abgabe</td><td class=\"p-4\">Tasks klein und konkret formulieren, Aufgaben im Weekly nachschärfen</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Fachlich falsche oder ungenaue Inhalte</td><td class=\"p-4\">Fehlendes technisches Wissen führt zu falschen Erklärungen</td><td class=\"p-4\">Wissensdatenbank ist unzuverlässig, falsche Kundenberatung</td><td class=\"p-4\">Gegenseitige Kontrolle im Team, Nutzung von Unterrichtsunterlagen, Rückfragen an Lehrkraft</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Inhalte zu technisch für den Vertrieb</td><td class=\"p-4\">Zu viele Fachbegriffe oder komplizierte Erklärungen</td><td class=\"p-4\">Zielgruppe versteht Inhalte nicht, geringe Nutzung der Datenbank</td><td class=\"p-4\">Einfache Sprache verwenden, Praxisbeispiele einbauen, Inhalte gegenlesen lassen</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Uneinheitliche Struktur und Sprache</td><td class=\"p-4\">Unterschiedliche Schreibstile und Aufbauten</td><td class=\"p-4\">Unübersichtlicher Gesamteindruck, schlechte Lesbarkeit</td><td class=\"p-4\">Einheitliche Struktur festlegen (EVA-Prinzip), Abschluss-Review durchführen</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Mangelnde Teamkommunikation</td><td class=\"p-4\">Fehlende oder unregelmäßige Abstimmungen</td><td class=\"p-4\">Missverständnisse, unklarer Projektstand</td><td class=\"p-4\">Regelmäßige Weeklys, offene Kommunikation, transparenter Fortschritt im Kanban-Board</td></tr><tr class=\"border-b border-slate-100 dark:border-slate-700\"><td class=\"p-4 font-bold\">Technische Probleme mit Tools</td><td class=\"p-4\">Probleme mit Word, Conceptboard oder Dateizugriff</td><td class=\"p-4\">Zeitverlust, möglicher Datenverlust</td><td class=\"p-4\">Regelmäßiges Speichern, gemeinsame Ablage, klare Dateinamen</td></tr><tr><td class=\"p-4 font-bold\">Pflichtbegriffe nicht vollständig abgedeckt</td><td class=\"p-4\">Begriffe aus dem Dokument „Wichtige Begriffe“ fehlen</td><td class=\"p-4\">Anforderungen nicht erfüllt, Punktabzug</td><td class=\"p-4\">Checkliste verwenden, Vollständigkeit vor Abgabe prüfen</td></tr></tbody></table></div>", businessValue: "Eine transparente Dokumentation sichert das Projektwissen und beschleunigt das Onboarding neuer Vertriebsmitarbeiter.", related: ["sprint1", "sprint2", "retro"], tags: ["Projekt", "Übersicht"] },
-            { id: "sprint1", title: "Dokumentation: Sprint 1", category: "sprint_berichte", definition: "Zeitraum: Projektbeginn bis 30.04.2026. Fokus: Grundstruktur und Kernkonzepte.", content: "Im ersten Sprint haben wir die Basis für die Wissensdatenbank geschaffen.\n\n**Erreichte Meilensteine:**\n- Festlegung des **EVA-S Prinzips** als Navigationsstruktur.\n- Erstellung des **Glossars** mit allen geforderten Fachbegriffen.\n- Entwicklung der **Büro-Analogie** zur Erklärung komplexer Hardware-Vorgänge.\n- Implementierung der **Suchfunktion** und des interaktiven Designs.\n\n**Sprint-Retrospektive**\n\n**Was lief gut?**\n- Die Zusammenarbeit im Team hat sehr gut funktioniert. Aufgaben wurden zuverlässig bearbeitet und im Team abgestimmt.\n- Das Kanban-Board hat dabei geholfen, den Überblick über den aktuellen Stand der Aufgaben zu behalten.\n- Auch die Umsetzung als Website ist gut gelungen und die Inhalte konnten verständlich dargestellt werden.\n\n**Was lief nicht optimal?**\n- Im Projektverlauf hat sich die ursprüngliche Planung leicht verändert, da sich die Umsetzungsform angepasst hat.\n- Dadurch mussten einige Aufgaben neu priorisiert und teilweise überarbeitet werden.\n\n**Was können wir verbessern?**\n- Die Aufgaben können noch etwas klarer priorisiert werden, um schneller zu erkennen, was aktuell am wichtigsten ist.\n- Außerdem könnten Änderungen im Projekt noch früher abgestimmt werden, um den Arbeitsfluss weiter zu verbessern.\n\n**Konkrete Maßnahmen für den nächsten Sprint**\n- Aufgaben im Kanban-Board klar priorisieren\n- Änderungen frühzeitig im Team abstimmen\n- Regelmäßige kurze Abstimmungen beibehalten", businessValue: "Sprint 1 stellt sicher, dass das Team eine gemeinsame Sprache spricht und das Grundgerüst steht.", related: ["EVA-Prinzip", "Sprint 2"], tags: ["SCRUM", "Sprint 1"] },
-            { id: "sprint2", title: "Dokumentation: Sprint 2", category: "sprint_berichte", definition: "Zeitraum: 01.05.2026 bis 21.05.2026. Fokus: Detailtiefe und Finalisierung.", content: "Der zweite Sprint dient der inhaltlichen Vertiefung und dem Feinschliff.\n\n**Geplante Aufgaben:**\n- Detaillierte Beschreibung von **Spezial-Hardware** (z.B. Plotter, Workstations).\n- Ausarbeitung technischer **Schnittstellen** (HDMI 2.1 vs DisplayPort 1.4).\n- Abschlusspräsentation und Projektabgabe am **21.05.2026**.", businessValue: "Ziel ist ein marktreifes Produkt, das sofort für neue Vertriebler als Nachschlagewerk genutzt werden kann.", related: ["Sprint 1", "Retrospektive"], tags: ["SCRUM", "Sprint 2"] },
-            { id: "ram", title: "Arbeitsspeicher (RAM)", image: "RAM.png", category: "verarbeitung", definition: "Flüchtiger Kurzzeitspeicher für laufende Prozesse.", content: "Der RAM ist der 'Schreibtisch' des Computers. Alles, womit der PC gerade arbeitet, liegt hier bereit. Wird der Strom abgeschaltet, ist der Schreibtisch leer.", businessValue: "Viel RAM verhindert, dass der Rechner bei vielen offenen Programmen (Multitasking) ins Stocken gerät.", related: ["CPU", "SSD"], tags: ["Hardware", "Speed"] },
-            { id: "cpu", title: "Prozessor (CPU)", image: "CPU.png", category: "verarbeitung", definition: "Die Zentraleinheit und das 'Gehirn' des Computers.", content: "Der 'Sachbearbeiter', der alle Befehle ausführt. Mehr Kerne erlauben die parallele Bearbeitung von Aufgaben.", businessValue: "Das Herzstück für die Arbeitsgeschwindigkeit. Ein schneller Prozessor spart dem Kunden wertvolle Zeit.", related: ["Zentraleinheit", "Mainboard", "RAM"], tags: ["Hardware", "Gehirn"] },
-            { id: "ssd", title: "Solid State Drive (SSD)", category: "speicherung", definition: "Elektronisches Speichermedium ohne bewegliche Teile.", content: "Das 'Turbo-Archiv'. Extrem schnelle Lese- und Schreibzugriffe.", businessValue: "Verkürzt das Hochfahren des PCs von Minuten auf Sekunden. Ein absolutes Muss für jeden Kunden.", related: ["HDD", "Speicherung"], tags: ["Speed", "Hardware"] },
-            { id: "monitor", title: "Monitor", category: "ausgabe", definition: "Das wichtigste visuelle Ausgabegerät.", content: "Zeigt die Benutzeroberfläche und Daten an. Das 'Fenster' zur digitalen Welt.", businessValue: "Ein zweiter Monitor kann die Arbeitseffizienz um bis zu 30% steigern.", related: ["Auflösung", "Grafikkarte"], tags: ["Hardware", "Anzeige"] },
-            { id: "workstation", title: "Workstation", category: "bauformen", definition: "Hochleistungs-PC für spezialisierte Profi-Anwendungen.", content: "Besonders robust, mit extrem viel RAM und Profi-Grafikkarten ausgestattet.", businessValue: "Für Kunden mit extremen Anforderungen (3D-Design, Videoproduktion, KI-Berechnungen).", related: ["Desktop-PC", "Grafikkarte"], tags: ["Leistung", "Profi"] },
-            { id: "cloud", title: "Cloud-Speicher", category: "speicherung", definition: "Speicherplatz auf entfernten Servern über das Internet.", content: "Dienste wie OneDrive oder Google Drive erlauben den Zugriff auf Daten von jedem Gerät weltweit.", businessValue: "Maximale Mobilität für den Vertrieb: Präsentationen sind auf Tablet, Handy und PC immer aktuell verfügbar.", related: ["SSD", "Speicherung"], tags: ["Internet", "Modern"] },
-            { id: "energieeffizienz", title: "Energieeffizienz", category: "grundlagen", definition: "Das Verhältnis von erbrachter Rechenleistung zum benötigten Stromverbrauch.", content: "Besonders bei Firmen mit vielen Arbeitsplätzen ist die **Energieeffizienz** ein riesiger Hebel für die laufenden Kosten. Zertifizierungen (wie '80 PLUS' bei Netzteilen) oder stromsparende Mobil-CPUs helfen dabei, die Stromrechnung und die Abwärme zu senken.", businessValue: "Ein energieeffizientes System rechnet sich über die Laufzeit von selbst. Argumentieren Sie beim Kunden mit den Gesamtbetriebskosten (TCO - Total Cost of Ownership) statt nur mit dem reinen Anschaffungspreis.", related: ["CPU", "Desktop-PC"], tags: ["Kosten", "Umwelt", "Beratung"] },
-            { id: "externer_speicher", title: "Externer Speicher (z. B. USB-Stick, externe Festplatte)", image: "USB.png", category: "speicherung", definition: "Mobile Speichermedien, die meist über USB an das System angeschlossen werden.", content: "**Externe Speicher** sind ideal für den Transport großer Datenmengen offline oder für lokale Backups. Während USB-Sticks extrem portabel sind, bieten externe Festplatten (HDD oder SSD) riesigen Speicherplatz zu einem günstigen Preis.\n\nZu beachten: Externe SSDs sind deutlich robuster gegen Stürze und Erschütterungen als mechanische externe HDDs.", businessValue: "Verkaufen Sie immer ein Backup-Konzept mit. Ein externer Speicher ist die einfachste und günstigste 'Versicherung' gegen Datenverlust am Einzelplatz.", related: ["SSD", "Cloud-Speicher", "Speicherung"], tags: ["Backup", "Mobil", "Hardware"] },
-            { id: "hardware", title: "Hardware", category: "grundlagen", definition: "Die physischen, greifbaren Komponenten eines IT-Systems.", content: "Alles vom Gehäuse über das Mainboard bis zur Maus gehört zur Hardware.", businessValue: "Das materielle Investment des Kunden. Langlebige Hardware spart langfristig Wartungskosten.", related: ["Software", "Peripherie"], tags: ["Grundbegriff"] },
-            { id: "software", title: "Software", category: "grundlagen", definition: "Sammelbegriff für Programme und Betriebssysteme.", content: "Das 'Wissen' des Computers. Ohne Software weiß die Hardware nicht, was sie tun soll.", businessValue: "Die richtige Software (z.B. CRM oder Office) entscheidet über den Erfolg der Geschäftsprozesse.", related: ["Hardware", "Kompatibilität"], tags: ["Programme", "Immateriell"] },
-            { id: "peripherie_konzept", title: "Peripherie", category: "eingabe", definition: "Zusatzgeräte, die an den Computer angeschlossen werden.", content: "Dazu zählen Maus, Tastatur, Drucker, Scanner und externe Festplatten.", businessValue: "Durch die richtige Peripherie wird ein einfacher PC erst zur individuellen Arbeitsstation für den Kunden.", related: ["Hardware", "Eingabe", "Ausgabe"], tags: ["Zubehör"] },
-            { id: "zentraleinheit", title: "Zentraleinheit", category: "grundlagen", definition: "Der Kern des Computers.", content: "Besteht im Wesentlichen aus Gehäuse, Netzteil, Mainboard und CPU.", businessValue: "Das stabile Herz der IT-Infrastruktur beim Kunden.", related: ["CPU", "Mainboard", "Hardware"], tags: ["Systemkern"] },
-            { id: "tastatur", title: "Tastatur", category: "eingabe", definition: "Hauptgerät zur Eingabe von Texten und Befehlen.", content: "Bestandteil der Standard-Eingabe. Gibt es in verschiedenen Layouts (z.B. QWERTZ).", businessValue: "Gute Druckpunkte und leise Tasten erhöhen den Schreibkomfort in Großraumbüros.", related: ["Maus", "Eingabe"], tags: ["Hardware", "Input"] },
-            { id: "maus", title: "Maus", category: "eingabe", definition: "Eingabegerät zur Steuerung des Cursors auf dem Bildschirm.", content: "Erlaubt die Interaktion mit grafischen Benutzeroberflächen durch Klicken und Ziehen.", businessValue: "Ergonomische Mäuse beugen Gelenkschmerzen (Mausarm) vor – ein wichtiges Gesundheitsargument.", related: ["Tastatur", "Eingabe"], tags: ["Peripherie", "Ergonomie"] },
-            { id: "scanner", title: "Scanner", category: "eingabe", definition: "Gerät zur Digitalisierung von physischen Dokumenten.", content: "Wandelt Papier in digitale Dateien (PDF/Bild) um.", businessValue: "Basis für das 'papierlose Büro' und die schnelle Archivierung von Kundenakten.", related: ["Drucker", "Eingabe"], tags: ["Digitalisierung", "Peripherie"] },
-            { id: "mainboard", title: "Mainboard", image: "Mainboard.png", category: "verarbeitung", definition: "Die Hauptplatine, die alle Bauteile verbindet.", content: "Das 'Skelett' des PCs. Hier werden CPU, RAM und Anschlüsse zusammengeführt.", businessValue: "Ein hochwertiges Mainboard sorgt für Systemstabilität und bietet Platz für zukünftige Upgrades.", related: ["CPU", "RAM", "Formfaktor"], tags: ["Hardware", "Zentrum"] },
-            { id: "grafik", title: "Grafikkarte", category: "verarbeitung", definition: "Komponente zur Berechnung der Bildausgabe.", content: "Kann ein eigener chip (dediziert) oder im Prozessor integriert sein.", businessValue: "Wichtig für Grafik-Design, CAD oder Videobearbeitung. Ein Muss für kreative Kunden.", related: ["Monitor", "CPU"], tags: ["Hardware", "Grafik"] },
-            { id: "drucker", title: "Drucker", category: "ausgabe", definition: "Gerät zur Ausgabe von digitalen Daten auf Papier.", content: "Oberbegriff für Geräte, die Dokumente physisch greifbar machen.", businessValue: "Unverzichtbar für Verträge, Rechnungen und physische Marketingunterlagen beim Kunden.", related: ["Laserdrucker", "Tintenstrahldrucker", "Plotter"], tags: ["Peripherie", "Output"] },
-            { id: "lautsprecher", title: "Lautsprecher", category: "ausgabe", definition: "Gerät zur akustischen Wiedergabe von Signalen.", content: "Wandelt elektrische Signale in hörbaren Schall um.", businessValue: "Wichtig für Webinare, Schulungsvideos oder akustische Systembenachrichtigungen.", related: ["Audio-Anschlüsse", "Ausgabe"], tags: ["Hardware", "Sound"] },
-            { id: "hdd", title: "Festplatte (HDD)", category: "speicherung", definition: "Mechanischer Massenspeicher mit rotierenden Magnetscheiben.", content: "Günstiger Speicherplatz für große Datenmengen, aber deutlich langsamer als eine SSD.", businessValue: "Gute Wahl als günstiges Datengrab für Archive, die nicht täglich schnell abgerufen werden müssen.", related: ["SSD", "Speicherung"], tags: ["Hardware", "Storage"] },
-            { id: "desktop", title: "Desktop-PC", category: "bauformen", definition: "Stationärer Computer für den Einsatz am festen Arbeitsplatz.", content: "Besteht meist aus einem Gehäuse (Tower) und wird mit externer Peripherie betrieben.", businessValue: "Bietet das beste Preis-Leistungs-Verhältnis und ist einfach aufzurüsten oder zu reparieren.", related: ["Workstation", "Mini-PC", "Laptop"], tags: ["System", "Büro"] },
-            { id: "laptop", title: "Laptop / Notebook", category: "bauformen", definition: "Tragbarer Computer mit integriertem Akku und Monitor.", content: "Kombiniert alle EVA-Komponenten in einem mobilen Gehäuse.", businessValue: "Ermöglicht flexibles Arbeiten im Home-Office, im Zug oder direkt beim Kunden vor Ort.", related: ["Desktop-PC", "Mini-PC"], tags: ["Mobil", "System"] },
-            { id: "minipc", title: "Mini-PC", category: "bauformen", definition: "Extrem kompakter Computer für Büroanwendungen.", content: "Oft kaum größer als ein Buch. Kann oft direkt hinter dem Monitor montiert werden.", businessValue: "Spart Platz auf dem Schreibtisch und verbraucht deutlich weniger Energie als große Tower-PCs.", related: ["Desktop-PC", "Laptop"], tags: ["System", "Platzsparend"] },
-            { id: "netzteil", title: "Netzteil", category: "verarbeitung", definition: "Bauteil zur Stromversorgung aller PC-Komponenten.", content: "Wandelt den Strom aus der Steckdose in die benötigten Spannungen für den PC um.", businessValue: "Ein effizientes Netzteil (80 Plus Zertifikat) senkt die monatlichen Stromkosten des Unternehmens.", related: ["Hardware", "Mainboard"], tags: ["Hardware", "Energie"] },
-            { id: "formfaktor", title: "Formfaktor (z. B. ATX)", category: "bauformen", definition: "Standardisierte Größenangabe für Hardware-Bauteile.", content: "Gibt an, ob ein Mainboard in ein Gehäuse passt (z.B. ATX, Micro-ATX).", businessValue: "Entscheidend für die Kompatibilität beim Zusammenbau oder Aufrüsten von Kundensystemen.", related: ["Mainboard", "Desktop-PC"], tags: ["Standard", "Technik"] },
-            { id: "usb", title: "USB (USB-A, USB-C)", image: "USB.png", category: "peripherie", definition: "Universeller Anschluss für fast alle Geräte.", content: "USB-A ist der alte Standard, USB-C der neue, verdrehsichere Alleskönner.", businessValue: "USB-C kann gleichzeitig laden, Daten übertragen und Monitore ansteuern – weniger Kabelsalat.", related: ["Laptop"], tags: ["Anschluss", "Standard"] },
-            { id: "hdmi", title: "HDMI", image: "HDMI.png", category: "peripherie", definition: "Universeller Anschluss für Bild und Ton.", content: "Standard an fast allen Monitoren, Fernsehern und Beamern.", businessValue: "Ermöglicht einfaches Plug-and-Play bei Präsentationen in Besprechungsräumen.", related: ["DisplayPort", "Monitor"], tags: ["Anschluss", "Video"] },
-            { id: "displayport", title: "DisplayPort", category: "peripherie", definition: "Ein digitaler Anschlussstandard für Video und Audio.", content: "Ähnlich wie HDMI, aber im Profi-Bereich verbreiteter für den Anschluss hochauflösender Monitore.", businessValue: "Unterstützt sehr hohe Auflösungen und Bildraten – ideal für moderne Workstations.", related: ["HDMI", "Monitor"], tags: ["Anschluss", "Video"] },
-            { id: "lan", title: "LAN (Ethernet)", category: "peripherie", definition: "Kabelgebundene Netzwerkverbindung.", content: "Wird über ein RJ45-Kabel hergestellt. Stabiler und schneller als WLAN.", businessValue: "Empfehlenswert für stationäre Büro-Arbeitsplätze, um Verbindungsabbrüche in Meetings zu vermeiden.", related: ["USB"], tags: ["Netzwerk", "Speed"] },
-            { id: "audio", title: "Audio-Anschlüsse", image: "Audio.png", category: "peripherie", definition: "Schnittstellen zur Übertragung von Tonsignalen.", content: "Klassische Klinkenanschlüsse (3,5mm) oder USB für Headsets, Mikrofone und Lautsprecher.", businessValue: "Essenziell für professionelle Videokonferenzen und Support-Mitarbeiter im Home-Office.", related: ["Lautsprecher", "USB"], tags: ["Anschluss", "Kommunikation"] },
-            { id: "aufloesung", title: "Auflösung", category: "ausgabe", definition: "Anzahl der Bildpunkte (Pixel) auf einem Monitor.", content: "Gibt an, wie scharf ein Bild ist. Gängige Standards sind Full-HD (1080p) oder 4K (UHD).", businessValue: "Höhere Auflösung bedeutet mehr Details und weniger Ermüdung der Augen bei Textarbeit.", related: ["Monitor", "Grafikkarte"], tags: ["Display", "Qualität"] },
-            { id: "bildgroesse", title: "Bildschirmgröße", category: "ausgabe", definition: "Die Diagonale eines Monitors, meist in Zoll angegeben.", content: "Typische Büro-Größen sind 24 bis 27 Zoll. Größere Bildschirme erlauben das Nebeneinanderstellen von Fenstern.", businessValue: "Direkter Produktivitäts-Booster: Mehr Platz auf dem Schirm spart Zeit beim Fensterwechsel.", related: ["Monitor", "Auflösung"], tags: ["Hardware", "Ergonomie"] },
-            { id: "bildrate", title: "Bildwiederholrate", category: "ausgabe", definition: "Anzahl der Bilder, die ein Monitor pro Sekunde anzeigt (Hz).", content: "60 Hz ist Standard. Höhere Raten (120/144 Hz) machen Bewegungen flüssiger.", businessValue: "Sorgt für 'ruhigeres' Bild und schont die Augen bei langer Bildschirmarbeit.", related: ["Monitor", "Grafikkarte"], tags: ["Hardware", "Komfort"] },
-            { id: "laserdrucker", title: "Laserdrucker", category: "ausgabe", definition: "Drucker, der mit Tonerpulver und Laserstrahlen arbeitet.", content: "Sehr schnell, wischfest und günstig im Seitpreis bei hohem Textaufkommen.", businessValue: "Die beste Wahl für klassische Büros mit viel Korrespondenz und Rechnungsdruck.", related: ["Drucker", "Tintenstrahldrucker"], tags: ["Hardware", "Office"] },
-            { id: "tintenstrahl", title: "Tintenstrahldrucker", category: "ausgabe", definition: "Drucker, flüssige Tinte auf das Papier sprüht.", content: "Ideal für Farbdrucke und Fotos. Günstiger in der Anschaffung als Laserdrucker.", businessValue: "Perfekt für Marketingabteilungen oder Kunden, die gelegentlich hochwertige Fotos drucken müssen.", related: ["Drucker", "Laserdrucker"], tags: ["Hardware", "Foto"] },
-            { id: "plotter", title: "Plotter", category: "ausgabe", definition: "Großformatdrucker für technische Zeichnungen.", content: "Kann Papierrollen in Übergrößen (A1, A0) bedrucken. Wird oft mit Stiften oder Tintendüsen betrieben.", businessValue: "Unerlässlich für Architekten, Ingenieurbüros und Werbeagenturen.", related: ["Drucker", "Ausgabe"], tags: ["Spezial", "Hardware"] },
-            { id: "ergonomie", title: "Ergonomie", category: "grundlagen", definition: "Wissenschaft von der optimalen Anpassung der Arbeitsbedingungen.", content: "Bedeutet in der IT: Monitore auf Augenhöhe, Handballenauflagen, aufrechte Sitzposition.", businessValue: "Ein ergonomischer Arbeitsplatz reduziert nachweislich Krankheitstage. Ein starkes Argument bei der Beratung von Einkäufern.", related: ["Maus", "Monitor"], tags: ["Gesundheit", "Beratung"] },
-            { id: "kompatibilitaet", title: "Kompatibilität", category: "grundlagen", definition: "Das reibungslose Zusammenspiel verschiedener IT-Komponenten.", content: "Beschreibt, ob Hardware A mit Software B oder Hardware C zusammenarbeitet.", businessValue: "Fehlende Kompatibilität führt zu Ausfällen. Wir garantieren geprüfte Systeme.", related: ["Formfaktor", "Software"], tags: ["Beratung"] },
-            { id: "server", title: "Server", category: "bauformen", definition: "Ein zentraler Computer, der Ressourcen, Daten oder Dienste für andere Netzwerkteilnehmer (Clients) bereitstellt.", content: "Server arbeiten meist im Hintergrund (oft in klimatisierten Serverräumen) und sind auf Zuverlässigkeit im 24/7-Dauerbetrieb ausgelegt. Sie unterscheiden sich von normalen PCs durch spezielle Hardware (z.B. redundante Netzteile, ECC-RAM zur Fehlerkorrektur).", businessValue: "Ein eigener Server vor Ort bietet maximale Kontrolle über sensible Daten. Argumentieren Sie mit Ausfallsicherheit und Datensouveränität.", related: ["Cloud-Speicher", "Netzteil", "Desktop-PC"], tags: ["Infrastruktur", "Profi", "System"] },
-            { id: "nas", title: "NAS (Network Attached Storage)", category: "speicherung", definition: "Ein intelligenter Dateiserver, der Speicherplatz im lokalen Netzwerk bereitstellt.", content: "Ein NAS ist wie eine private Mini-Cloud im Büro. Mehrere Nutzer können gleichzeitig auf Dateien zugreifen. Oft mit mehreren Festplatten ausgestattet, die sich gegenseitig spiegeln (RAID), um Datenverlust bei einem Festplattendefekt zu verhindern.", businessValue: "Das ideale Einstiegsprodukt für kleine Teams, um Daten zentral und sicher zu teilen, ohne gleich einen teuren Windows-Server anschaffen zu müssen.", related: ["Festplatte (HDD)", "Externer Speicher", "Cloud-Speicher"], tags: ["Backup", "Netzwerk", "Teamwork"] },
-            { id: "usv", title: "USV (Unterbrechungsfreie Stromversorgung)", category: "peripherie", definition: "Ein Gerät mit Akku, das bei Stromausfall angeschlossene Systeme kurzzeitig weiter mit Strom versorgt.", content: "Eine USV schützt Hardware nicht nur vor kompletten Stromausfällen, sondern gleicht auch gefährliche Spannungsschwankungen aus dem Stromnetz aus. Sie gibt dem System genug Zeit, um geregelt herunterzufahren, ohne dass Daten beschädigt werden.", businessValue: "Ein absolutes Muss-Zubehör beim Verkauf von Servern und NAS-Systemen. Positionieren Sie es als 'Airbag' für die Unternehmensdaten.", related: ["Netzteil", "Server"], tags: ["Sicherheit", "Zubehör"] },
-            { id: "dockingstation", title: "Dockingstation", category: "peripherie", definition: "Ein Verteilerknoten, der Laptops über ein einziges Kabel mit Strom, Monitoren, Netzwerk und Peripherie verbindet.", content: "In modernen Büros (Desk-Sharing) unverzichtbar. Der Nutzer schließt nur noch ein USB-C-Kabel an seinen Laptop an und ist sofort mit zwei Monitoren, Maus, Tastatur und dem Firmennetzwerk verbunden.", businessValue: "Verkaufen Sie keine Firmen-Laptops ohne Dockingstation! Sie ist der Schlüssel zu Produktivität und Ergonomie am modernen (flexiblen) Arbeitsplatz.", related: ["Laptop / Notebook", "USB (USB-A, USB-C)", "Monitor"], tags: ["Zubehör", "Produktivität", "Mobil"] },
-            { id: "firewall", title: "Firewall", category: "grundlagen", definition: "Ein Sicherheitssystem, das den Netzwerkverkehr nach festgelegten Regeln überwacht und kontrolliert.", content: "Eine Firewall agiert als Türsteher zwischen dem sicheren Firmennetzwerk und dem unsicheren Internet. Hardware-Firewalls prüfen den Datenverkehr bereits, bevor er überhaupt ins interne Netzwerk Kunden gelangt.", businessValue: "Das wichtigste Verkaufsargument beim Thema IT-Security. Ein erfolgreicher Cyberangriff oder Datenverlust ist immer deutlich teurer als eine professionelle Firewall.", related: ["Software", "Server"], tags: ["Sicherheit", "Netzwerk", "Beratung"] },
-            { id: "betriebssystem", title: "Betriebssystem (OS)", category: "grundlagen", definition: "Die grundlegende Software, die die Hardware eines Computers verwaltet und Basisdienste für Anwendungen bereitstellt.", content: "Beispiele sind Windows, macOS oder Linux. Das Betriebssystem ist der Dolmetscher zwischen den physischen Bauteilen (CPU, RAM) und den Programmen (z.B. Word, Browser), die der Nutzer bedient.", businessValue: "Wählen Sie das OS passend zur Kunden-Softwarelandschaft. Bedenken Sie auch Upgrade-Zyklen (z.B. das Support-Ende von Windows 10) als Vertriebschance für neue Hardware.", related: ["Software", "Kompatibilität"], tags: ["Basis", "Software"] },
-            { id: "wlan", title: "WLAN (Wi-Fi)", category: "peripherie", definition: "Lokales Funknetzwerk, das Geräten die kabellose Verbindung untereinander oder zum Internet ermöglicht.", content: "WLAN-Standards entwickeln sich ständig weiter (z.B. Wi-Fi 6, Wi-Fi 7), um höhere Geschwindigkeiten und mehr gleichzeitige Geräte in dichten Büroumgebungen bewältigen zu können.", businessValue: "Kabellose Büros liegen im Trend. Bieten Sie neben den Endgeräten auch gleich die Ausleuchtung und Installation von professionellen WLAN-Access-Points an.", related: ["LAN (Ethernet)", "Laptop / Notebook"], tags: ["Netzwerk", "Mobil"] },
-            { id: "webcam", title: "Webcam", category: "eingabe", definition: "Kamera zur Erfassung von Video-Signalen, essenziell für digitale Besprechungen.", content: "Oft bereits in Laptops integriert. Externe Webcams oder spezielle Konferenzraum-Kameras bieten jedoch eine deutlich höhere Bildqualität, besseren Autofokus, eine bessere Ausleuchtung und weite Sichtfelder für mehrere Personen.", businessValue: "Der professionelle Außenauftritt eines Unternehmens findet heute oft per Video-Call statt. Eine gute Kamera ist eine extrem günstige Investition in ein seriöses Firmen-Image.", related: ["Audio-Anschlüsse", "Laptop / Notebook"], tags: ["Kommunikation", "Peripherie"] }
+            { id: "eva_konzept", title: "Das EVA-Prinzip (Einstieg)", category: "eva_uebersicht", definition: "Das **EVA-Prinzip** ist das Fundament der IT: **E**ingabe, **V**erarbeitung, **A**usgabe.", content: "Jeder Computer der Welt funktioniert im Kern gleich. 1. Eingabe, 2. Verarbeitung, 3. Ausgabe. Vom EVA zum EVA-S: S für Speicherung.", businessValue: "Nutzen Sie das einfache EVA-Modell, um Kunden zu erklären, dass Hardware immer als geschlossene Kette funktioniert.", related: ["Zentraleinheit", "Software", "Speicherung"], tags: ["Grundlagen", "Einstieg"] },
+            { id: "eingabe_konzept", title: "Eingabe (Das Tor zum System)", category: "eingabe", definition: "Die **Eingabe** ist die erste Phase des EVA-S Prinzips.", content: "Eingabegeräte sind unsere 'Sinnesorgane' für den Computer: Tastatur, Maus, Mikrofon.", businessValue: "Eine hochwertige Eingabe-Peripherie steigert die Motivation der Mitarbeiter und schont die Gesundheit.", related: ["Tastatur", "Maus", "Scanner"], tags: ["Input", "EVA-S"] },
+            { id: "verarbeitung_konzept", title: "Verarbeitung (Das Herz der IT)", category: "verarbeitung", definition: "In der **Verarbeitung** werden die Rohdaten durch Rechenoperationen in nutzbare Informationen verwandelt.", content: "Der Prozessor (CPU) ist der kluge Sachbearbeiter. Der Arbeitsspeicher (RAM) ist die Tischplatte seines Schreibtisches.", businessValue: "Die Phase der Verarbeitung entscheidet über die Geschwindigkeit. Niemand will Wartezeiten.", related: ["CPU", "RAM"], tags: ["Logik", "EVA-S"] },
+            { id: "ausgabe_konzept", title: "Ausgabe (Das Sichtbare)", category: "ausgabe", definition: "Die **Ausgabe** ist die Präsentation der verarbeiteten Daten für Menschen.", content: "Visuell über den Monitor, physisch über den Drucker, akustisch über Lautsprecher.", businessValue: "Eine brillante Darstellung erhöht die wahrgenommene Wertigkeit der IT massiv.", related: ["Monitor", "Drucker"], tags: ["Output", "EVA-S"] },
+            { id: "speicherung_konzept", title: "Speicherung (Das Gedächtnis)", category: "speicherung", definition: "Die **Speicherung** sichert Daten dauerhaft.", content: "Ohne Speicherung wäre der Computer vergesslich. Das S steht für das Langzeit-Archiv (SSD/Cloud).", businessValue: "Datensicherheit ist das Top-Thema für jedes Unternehmen.", related: ["SSD", "HDD"], tags: ["Archiv", "EVA-S"] },
+            { id: "desktop", title: "Desktop-PC", category: "bauformen", definition: "Ein stationärer Computer für den Einsatz am Schreibtisch.", content: "Der klassische Lastwagen der IT. Groß, viel Platz für Kühlung, aufrüstbar.", businessValue: "Die robusteste, langlebigste Lösung für stationäre Plätze.", related: ["Laptop"], tags: ["System", "Büro"] },
+            { id: "cloud", title: "Cloud-Speicher", category: "speicherung", definition: "Speicherplatz auf entfernten Servern.", content: "Dateien liegen verschlüsselt im Internet. Bietet Mobilität und Ausfallsicherheit.", businessValue: "Maximal flexibel für Home-Office und Vertrieb.", related: ["SSD"], tags: ["Internet", "Modern"] }
         ];
 
-        // --- LERNMODUS DATEN ---
         const LEARNING_PATH = [
             { level: 1, articleId: 'eva_konzept', title: 'Start: Das EVA-Prinzip', question: 'Wofür steht das "S" in der erweiterten Form "EVA-S"?', options: ['Sicherheit', 'Speicherung', 'System'], answer: 1 },
-            { level: 2, articleId: 'verarbeitung_konzept', title: 'Die Verarbeitung', question: 'Welches Bauteil haben wir in der Analogie als "Sachbearbeiter" bezeichnet?', options: ['Festplatte', 'Arbeitsspeicher (RAM)', 'Prozessor (CPU)'], answer: 2 },
-            { level: 3, articleId: 'speicherung_konzept', title: 'Das Gedächtnis', question: 'Was ist der Hauptvorteil einer modernen SSD für den Kunden?', options: ['Sie ist günstiger als eine HDD', 'Sie hat keine beweglichen Teile und ist extrem schnell', 'Sie schützt automatisch vor Viren'], answer: 1 },
-            { level: 4, articleId: 'desktop', title: 'Bauformen', question: 'Was ist der größte Vorteil eines klassischen Desktop-PCs?', options: ['Maximale Mobilität im Zug', 'Bestes Preis-Leistungs-Verhältnis und leichte Aufrüstbarkeit', 'Kann direkt hinter dem Monitor versteckt werden'], answer: 1 },
-            { level: 5, articleId: 'cloud', title: 'Modernes Arbeiten', question: 'Warum ist Cloud-Speicher besonders für den Vertrieb wichtig?', options: ['Er erhöht die CPU-Leistung des Laptops', 'Präsentationen sind weltweit auf jedem Gerät verfügbar', 'Er ersetzt die physische Firewall im Büro'], answer: 1 }
-        ];
-
-        const FINAL_QUIZ = [
-            { q: 'Was ist die Hauptaufgabe eines Betriebssystems?', o: ['Bilder auf dem Monitor heller machen', 'Dolmetscher zwischen Hardware und Programmen sein', 'Netzwerkverkehr als Türsteher blockieren'], a: 1 },
-            { q: 'Welcher Anschluss vereint heute Bild, Ton, Daten und Strom?', o: ['USB-C', 'HDMI', 'LAN'], a: 0 },
-            { q: 'Warum ist Ergonomie in der IT ein starkes Verkaufsargument?', o: ['Weil ergonomische Geräte bunter sind', 'Weil es Krankheitstage durch Fehlhaltung reduziert', 'Weil sie weniger Strom verbrauchen'], a: 1 },
-            { q: 'Was zeichnet einen "Server" im Vergleich zu einem normalen PC aus?', o: ['Er hat immer einen größeren Monitor', 'Er ist für den 24/7 Dauerbetrieb ausgelegt', 'Er benötigt keine Software'], a: 1 },
-            { q: 'Was passiert mit den Daten im RAM (Arbeitsspeicher), wenn der Strom ausfällt?', o: ['Sie werden sicher in die Cloud geladen', 'Sie werden auf die SSD verschoben', 'Sie gehen komplett verloren'], a: 2 }
+            { level: 2, articleId: 'eingabe_konzept', title: 'Die Eingabe', question: 'Warum ist die Qualität der Eingabegeräte so wichtig?', options: ['Weil sie am meisten Strom verbrauchen', 'Zur Vermeidung von Frust und aus ergonomischen Gründen', 'Weil sie die Grafikkarte entlasten'], answer: 1 },
+            { level: 3, articleId: 'verarbeitung_konzept', title: 'Die Verarbeitung', question: 'Welches Bauteil haben wir in der Büro-Analogie als "Sachbearbeiter" bezeichnet?', options: ['Festplatte', 'Arbeitsspeicher (RAM)', 'Prozessor (CPU)'], answer: 2 },
+            { level: 4, articleId: 'ausgabe_konzept', title: 'Die Ausgabe', question: 'Was ist der direkte ROI (Return on Investment) eines zweiten Monitors laut Studien?', options: ['Bis zu 30% mehr Produktivität', 'Stromersparnis von 20%', 'Geringere CPU-Auslastung'], answer: 0 },
+            { level: 5, articleId: 'speicherung_konzept', title: 'Das Gedächtnis', question: 'Was ist der Hauptvorteil einer modernen SSD gegenüber einer alten Festplatte (HDD)?', options: ['Sie ist günstiger in der Anschaffung', 'Sie hat keine beweglichen Teile und ist extrem schnell', 'Sie druckt Dokumente schneller aus'], answer: 1 }
         ];
 
         const NAVIGATION = [
-            { id: 'dashboard', name: 'Zentrale', icon: 'home' },
-            { id: 'glossar', name: 'A-Z Glossar', icon: 'list' },
-            { id: 'grundlagen', name: 'Grundlagen', icon: 'book-open' },
-            { 
-                id: 'evas', 
-                name: 'EVA-S Prinzip', 
-                icon: 'layers', 
-                children: [
-                    { id: 'eva_uebersicht', name: 'Konzept & Übersicht', icon: 'info' },
-                    { id: 'eva_eingabe', name: 'Eingabe', icon: 'mouse-pointer-2' },
-                    { id: 'eva_verarbeitung', name: 'Verarbeitung', icon: 'cpu' },
-                    { id: 'eva_ausgabe', name: 'Ausgabe', icon: 'monitor' },
-                    { id: 'eva_speicherung', name: 'Speicherung', icon: 'hard-drive' }
-                ]
-            },
-            {
-                id: 'geraete',
-                name: 'Hardware & Geräte',
-                icon: 'laptop',
-                children: [
-                    { id: 'eingabe', name: 'Eingabegeräte', icon: 'mouse-pointer-2' },
-                    { id: 'verarbeitung', name: 'Verarbeitung', icon: 'cpu' },
-                    { id: 'ausgabe', name: 'Ausgabegeräte', icon: 'monitor' },
-                    { id: 'speicherung', name: 'Speicherung', icon: 'hard-drive' },
-                    { id: 'peripherie', name: 'Peripherie & Anschlüsse', icon: 'usb' },
-                    { id: 'bauformen', name: 'Computer-Bauformen', icon: 'layout' }
-                ]
-            }
+            { id: 'dashboard', name: 'Startseite', icon: 'home' },
+            { id: 'eva_konzept', name: 'EVA-Prinzip', icon: 'layers' }
         ];
-
-        const DOC_NAV = {
-            id: 'dokumentation',
-            name: 'Projekt-Doku',
-            icon: 'folder-kanban',
-            children: [
-                { id: 'doku_uebersicht', name: 'Übersicht', icon: 'info' },
-                { id: 'kanban', name: 'Kanban Board', icon: 'kanban' },
-                { id: 'sprint1', name: 'Sprint 1 Report', icon: 'check-circle' },
-                { id: 'sprint2', name: 'Sprint 2 Planung', icon: 'clock' }
-            ]
-        };
 
         // --- APP STATE & LOGIC ---
         const app = {
@@ -251,111 +117,54 @@
                 selectedArticleId: null,
                 searchTerm: '',
                 isSidebarOpen: window.innerWidth >= 768,
-                openSubmenus: { evas: false, geraete: true, dokumentation: false },
                 favorites: JSON.parse(localStorage.getItem('itWikiFavorites')) || [],
                 isDarkMode: localStorage.getItem('itWikiDarkMode') === 'true',
-                
-                // Gamification State
                 learning: {
                     active: false,
                     maxUnlockedLevel: parseInt(localStorage.getItem('itWikiMaxLevel')) || 1,
                     quizAnsweredIdx: null,
                     quizCorrect: null,
-                    finalQuizAnswers: {},
-                    finalQuizSubmitted: false,
-                    finalScore: 0
-                },
-
-                // Chatbot State
-                chatState: {
-                    isOpen: false,
-                    messages: [{ role: 'model', text: 'Hallo! Ich bin dein KI-Vertriebsassistent. Welche Hardware-Konzepte soll ich dir erklären oder welches Verkaufsargument suchst du?' }],
-                    isLoading: false
+                    showQuiz: false
                 }
             },
 
             init() {
-                if (this.state.isDarkMode) {
-                    document.documentElement.classList.add('dark');
-                }
-
+                if (this.state.isDarkMode) document.documentElement.classList.add('dark');
                 this.renderSidebar();
                 this.renderContent();
-                this.renderChat();
                 this.updateSidebarMobileVisibility();
-                
-                window.addEventListener('resize', () => {
-                    if (window.innerWidth >= 768 && !this.state.isSidebarOpen) {
-                        this.state.isSidebarOpen = true;
-                        this.updateSidebarMobileVisibility();
-                    } else if (window.innerWidth < 768 && this.state.isSidebarOpen) {
-                        this.state.isSidebarOpen = false;
-                        this.updateSidebarMobileVisibility();
-                    }
-                });
-            },
-
-            formatText(text) {
-                if (!text) return '';
-                return text
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/\n/g, '<br/>');
             },
 
             toggleDarkMode() {
                 this.state.isDarkMode = !this.state.isDarkMode;
                 localStorage.setItem('itWikiDarkMode', this.state.isDarkMode);
-                
-                if (this.state.isDarkMode) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
+                document.documentElement.classList.toggle('dark', this.state.isDarkMode);
             },
 
             toggleFavorite(id) {
                 const idx = this.state.favorites.indexOf(id);
-                if (idx > -1) {
-                    this.state.favorites.splice(idx, 1);
-                } else {
-                    this.state.favorites.push(id);
-                }
+                if (idx > -1) this.state.favorites.splice(idx, 1);
+                else this.state.favorites.push(id);
                 localStorage.setItem('itWikiFavorites', JSON.stringify(this.state.favorites));
-                this.renderContent(); // UI neu laden für das Sternchen
+                this.renderContent(); 
             },
 
-            // --- NAVIGATION ---
             handleNavigate(tabId, articleId = null) {
                 this.state.currentTab = tabId;
                 this.state.selectedArticleId = articleId;
                 this.state.searchTerm = '';
-                
-                // Reset Quiz State on navigation
                 this.state.learning.quizAnsweredIdx = null;
                 this.state.learning.quizCorrect = null;
-
-                const searchInput = document.getElementById('search-input');
-                if(searchInput) searchInput.value = '';
-                
-                if (window.innerWidth < 768) {
-                    this.closeSidebar();
-                }
-                
+                this.state.learning.showQuiz = false;
+                if (window.innerWidth < 768) this.closeSidebar();
                 this.renderSidebar();
                 this.renderContent();
-                const contentArea = document.getElementById('content-area');
-                if(contentArea) contentArea.scrollTo(0, 0);
             },
 
             handleSearch(term) {
-                if(this.state.learning.active) return; // Search disabled in learning mode
-                this.state.searchTerm = term;
+                if(this.state.learning.active) return;
+                this.state.searchTerm = term.toLowerCase();
                 this.renderContent();
-            },
-
-            toggleSubmenu(id) {
-                this.state.openSubmenus[id] = !this.state.openSubmenus[id];
-                this.renderSidebar();
             },
 
             toggleSidebar() {
@@ -371,506 +180,107 @@
             updateSidebarMobileVisibility() {
                 const sidebar = document.getElementById('sidebar');
                 const overlay = document.getElementById('sidebar-overlay');
-                const toggleBtn = document.getElementById('mobile-toggle');
-
                 if (this.state.isSidebarOpen) {
                     sidebar.classList.remove('-translate-x-full');
-                    overlay.classList.remove('hidden');
-                    setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-                    toggleBtn.classList.add('hidden');
+                    overlay.classList.remove('hidden', 'opacity-0');
                 } else {
                     sidebar.classList.add('-translate-x-full');
                     overlay.classList.add('opacity-0');
                     setTimeout(() => overlay.classList.add('hidden'), 300);
-                    if (window.innerWidth < 768) {
-                        toggleBtn.classList.remove('hidden');
-                    }
                 }
             },
 
-            getCategoryTitle() {
-                let displayTitle = this.state.currentTab;
-                [...NAVIGATION, DOC_NAV].forEach(c => {
-                    if (c.id === this.state.currentTab) displayTitle = c.name;
-                    if (c.children) {
-                        const child = c.children.find(child => child.id === this.state.currentTab);
-                        if (child) displayTitle = child.name;
-                    }
-                });
-                return displayTitle;
-            },
-
-            // --- LEARNING MODE LOGIC ---
+            // --- LEARNING MODE LÖSUNG ---
             startLearningMode() {
                 this.state.learning.active = true;
-                const searchHeader = document.getElementById('main-header');
-                if(searchHeader) searchHeader.classList.add('hidden'); // Hide Search
-                
-                // Navigate to highest unlocked level or level 1
-                const maxLevelObj = LEARNING_PATH.find(l => l.level === this.state.learning.maxUnlockedLevel);
-                if (maxLevelObj) {
-                    this.handleNavigate(null, maxLevelObj.articleId);
-                } else {
-                    this.handleNavigate('selbstcheck');
-                }
+                const maxLvl = LEARNING_PATH.find(l => l.level === this.state.learning.maxUnlockedLevel);
+                if (maxLvl) this.handleNavigate(null, maxLvl.articleId);
             },
 
             stopLearningMode() {
                 this.state.learning.active = false;
-                const searchHeader = document.getElementById('main-header');
-                if(searchHeader) searchHeader.classList.remove('hidden');
-                this.handleNavigate('selbststudium');
+                this.handleNavigate('dashboard');
+            },
+
+            startQuiz() {
+                this.state.learning.showQuiz = true;
+                this.renderContent();
             },
 
             answerMiniQuiz(level, selectedIdx) {
-                if (this.state.learning.quizAnsweredIdx !== null) return; // already answered
+                if (this.state.learning.quizAnsweredIdx !== null) return; 
                 
-                const levelData = LEARNING_PATH.find(l => l.level === level);
-                const isCorrect = levelData.answer === selectedIdx;
+                const step = LEARNING_PATH.find(l => l.level === level);
+                const isCorrect = selectedIdx === step.answer;
                 
                 this.state.learning.quizAnsweredIdx = selectedIdx;
                 this.state.learning.quizCorrect = isCorrect;
 
-                if (isCorrect) {
-                    if (level === this.state.learning.maxUnlockedLevel) {
-                        this.state.learning.maxUnlockedLevel = level + 1;
-                        localStorage.setItem('itWikiMaxLevel', this.state.learning.maxUnlockedLevel);
-                    }
+                if (isCorrect && level === this.state.learning.maxUnlockedLevel) {
+                    this.state.learning.maxUnlockedLevel++;
+                    localStorage.setItem('itWikiMaxLevel', this.state.learning.maxUnlockedLevel);
                 }
-                this.renderSidebar(); // Update locks
                 this.renderContent();
             },
 
-            nextLevel(currentLevel) {
-                const nextLevelData = LEARNING_PATH.find(l => l.level === currentLevel + 1);
-                if (nextLevelData) {
-                    this.handleNavigate(null, nextLevelData.articleId);
+            nextLevel() {
+                const nextStep = LEARNING_PATH.find(l => l.level === this.state.learning.maxUnlockedLevel);
+                if (nextStep) {
+                    this.handleNavigate(null, nextStep.articleId);
                 } else {
-                    this.handleNavigate('selbstcheck');
+                    alert("Du hast alle Lern-Level abgeschlossen! Großartig!");
+                    this.stopLearningMode();
                 }
             },
 
-            answerFinalQuiz(questionIdx, answerIdx) {
-                if (this.state.learning.finalQuizSubmitted) return;
-                this.state.learning.finalQuizAnswers[questionIdx] = answerIdx;
-                this.renderContent();
-            },
-
-            submitFinalQuiz() {
-                let score = 0;
-                FINAL_QUIZ.forEach((q, idx) => {
-                    if (this.state.learning.finalQuizAnswers[idx] === q.a) score++;
-                });
-                this.state.learning.finalScore = score;
-                this.state.learning.finalQuizSubmitted = true;
-                this.renderContent();
-            },
-
-            generateCertificate() {
-                const nameInput = document.getElementById('cert-name');
-                const name = nameInput ? nameInput.value.trim() : '';
-                const errSpan = document.getElementById('cert-err');
-                
-                if (!name) {
-                    if(errSpan) errSpan.classList.remove('hidden');
-                    return;
-                }
-                if(errSpan) errSpan.classList.add('hidden');
-
-                const canvas = document.createElement('canvas');
-                canvas.width = 1200; 
-                canvas.height = 800;
-                const ctx = canvas.getContext('2d');
-                
-                // Background & Premium Border
-                ctx.fillStyle = '#f8fafc';
-                ctx.fillRect(0,0, 1200, 800);
-                
-                ctx.strokeStyle = '#4f46e5'; // Indigo-600
-                ctx.lineWidth = 15;
-                ctx.strokeRect(30, 30, 1140, 740);
-                ctx.strokeStyle = '#818cf8'; // Indigo-400
-                ctx.lineWidth = 2;
-                ctx.strokeRect(40, 40, 1120, 720);
-
-                // Watermark Logo
-                ctx.globalAlpha = 0.03;
-                ctx.fillStyle = '#4f46e5';
-                ctx.font = 'bold 300px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('IT', 600, 500);
-                ctx.globalAlpha = 1.0;
-
-                // Header
-                ctx.fillStyle = '#1e293b';
-                ctx.font = 'bold 60px Arial';
-                ctx.textAlign = 'center';
-                ctx.fillText('ZERTIFIKAT', 600, 160);
-                
-                // Subtext
-                ctx.font = '30px Arial';
-                ctx.fillStyle = '#64748b';
-                ctx.fillText('Dieses Zertifikat bestätigt, dass', 600, 260);
-                
-                // Name
-                ctx.font = 'italic bold 55px Arial';
-                ctx.fillStyle = '#4f46e5';
-                ctx.fillText(name, 600, 380);
-                
-                // Course
-                ctx.font = '30px Arial';
-                ctx.fillStyle = '#64748b';
-                ctx.fillText('den Selbststudium-Kurs "Hardware-Grundlagen für den Vertrieb"', 600, 480);
-                ctx.fillText('erfolgreich mit Auszeichnung (' + this.state.learning.finalScore + '/5 Punkten) absolviert hat.', 600, 530);
-                
-                // Footer
-                const date = new Date().toLocaleDateString('de-DE');
-                ctx.font = '20px Arial';
-                ctx.fillStyle = '#94a3b8';
-                ctx.fillText('Ausgestellt am: ' + date, 300, 700);
-                
-                ctx.font = 'bold 24px Arial';
-                ctx.fillStyle = '#1e293b';
-                ctx.fillText('all around IT - Sales Academy', 900, 700);
-                
-                // Line for Signature
-                ctx.beginPath();
-                ctx.moveTo(750, 660);
-                ctx.lineTo(1050, 660);
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = '#94a3b8';
-                ctx.stroke();
-
-                // Download Trigger
-                const link = document.createElement('a');
-                link.download = 'Zertifikat_' + name.replace(/\s+/g, '_') + '.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            },
-
-            // --- CHATBOT LOGIC ---
-            toggleChat() {
-                this.state.chatState.isOpen = !this.state.chatState.isOpen;
-                this.renderChat();
-            },
-
-            async sendChatMessage() {
-                const inputEl = document.getElementById('chat-input');
-                const text = inputEl ? inputEl.value.trim() : '';
-                
-                if (!text || this.state.chatState.isLoading) return;
-
-                this.state.chatState.messages.push({ role: 'user', text: text });
-                this.state.chatState.isLoading = true;
-                this.renderChat();
-
-                if (inputEl) inputEl.value = '';
-
-                // --- AUTOMATISCHE UMGEBUNGSERKENNUNG (Canvas vs. GitHub) ---
-                const isCanvas = window.location.hostname.includes('usercontent.goog') || window.location.hostname === '';
-                
-                let apiKey = ""; 
-                let model = "gemini-2.5-flash-preview-09-2025"; 
-
-                if (!isCanvas) {
-                    apiKey = "AIzaSyAWMgA3l1X_G8Nvz6Dc02hLFUUFDGyMDEQ"; 
-                    model = "gemini-1.5-flash"; 
-                }
-
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-                
-                const contextData = WIKI_DATA.map(d => `- ${d.title}: ${d.definition}`).join('\n');
-                const systemInstruction = {
-                    parts: [{ text: `Du bist ein freundlicher, professioneller IT-Vertriebsassistent für das 'all around IT Wiki'. Beantworte Fragen auf Deutsch, prägnant (max. 3-4 Sätze) und direkt auf den Kundennutzen ausgerichtet. Nutze diese Wiki-Daten als dein Kernwissen:\n${contextData}` }]
-                };
-                
-                const validHistory = [];
-                this.state.chatState.messages.forEach((msg, idx) => {
-                    if (idx === 0 && msg.role === 'model') return; 
-                    if (msg.role === 'model' && msg.text.includes('Fehler')) return;
-                    if (msg.role === 'model' && msg.text.includes('lokal unser Wiki')) return;
-
-                    const lastValid = validHistory[validHistory.length - 1];
-                    if (!lastValid || lastValid.role !== msg.role) {
-                        validHistory.push({ role: msg.role === 'model' ? 'model' : 'user', text: msg.text });
-                    } else {
-                        lastValid.text += "\n" + msg.text; 
-                    }
-                });
-
-                while (validHistory.length > 0 && validHistory[0].role !== 'user') {
-                    validHistory.shift();
-                }
-
-                const contents = validHistory.map(msg => ({
-                    role: msg.role,
-                    parts: [{ text: msg.text }]
-                }));
-
-                const payload = { contents, systemInstruction };
-                const delays = [1000, 2000, 4000];
-                let responseText = "";
-                let apiSuccess = false;
-
-                for (let attempt = 0; attempt < 3; attempt++) {
-                    try {
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        if (!response.ok) {
-                            throw new Error(`Status ${response.status}`);
-                        }
-                        const data = await response.json();
-                        responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-                        if(responseText) {
-                            apiSuccess = true;
-                            break;
-                        }
-                    } catch (error) {
-                        console.error("Chat API Fehler:", error);
-                        await new Promise(resolve => setTimeout(resolve, delays[attempt] || 1000));
-                    }
-                }
-
-                // SMART FALLBACK: Wenn die API fehlschlägt, antworte trotzdem lokal!
-                if (!apiSuccess) {
-                    const lowerText = text.toLowerCase();
-                    if (lowerText.includes("hallo") || lowerText.includes("hi ") || lowerText === "hi" || lowerText.includes("hey")) {
-                        responseText = "Hallo! Die Online-KI ist gerade nicht erreichbar, aber ich durchsuche gerne lokal unser Wiki für dich. Frag mich z.B. nach RAM oder SSD!";
-                    } else {
-                        const bestMatch = WIKI_DATA.find(item => {
-                            const titleWords = item.title.toLowerCase().replace(/[^a-zäöüß0-9-]/g, ' ').split(' ');
-                            return titleWords.some(word => word.length > 2 && lowerText.includes(word)) || 
-                                   item.tags.some(tag => lowerText.includes(tag.toLowerCase()));
-                        });
-
-                        if (bestMatch) {
-                            responseText = `*Hinweis: Lokales Suchergebnis, da die KI offline ist.*\n\n**${bestMatch.title}**\n${bestMatch.definition}\n\n*Verkaufs-Tipp:* ${bestMatch.businessValue}`;
-                        } else {
-                            const partialMatch = WIKI_DATA.find(item => item.definition.toLowerCase().includes(lowerText));
-                            if (partialMatch) {
-                                responseText = `Meintest du vielleicht **${partialMatch.title}**?\n${partialMatch.definition}`;
-                            } else {
-                                responseText = "Dazu habe ich lokal leider keinen passenden Artikel gefunden.";
-                            }
-                        }
-                    }
-                }
-
-                this.state.chatState.messages.push({ role: 'model', text: responseText });
-                this.state.chatState.isLoading = false;
-                this.renderChat();
-            },
-
-            // --- RENDERING ---
-            renderChat() {
-                const container = document.getElementById('chat-widget-container');
-                if (!container) return;
-                
-                let html = '';
-                
-                if (this.state.chatState.isOpen) {
-                    const messagesHtml = this.state.chatState.messages.map(msg => `
-                        <div class="flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}">
-                            <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm ${msg.role === 'user' ? 'bg-indigo-200 text-indigo-800' : 'bg-indigo-600 text-white'}">
-                                <i data-lucide="${msg.role === 'user' ? 'user' : 'bot'}" class="w-4 h-4"></i>
-                            </div>
-                            <div class="p-3 rounded-2xl text-sm leading-relaxed shadow-sm max-w-[80%] ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-tr-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm'}">
-                                ${this.formatText(msg.text)}
-                            </div>
-                        </div>
-                    `).join('');
-
-                    const loadingHtml = this.state.chatState.isLoading ? `
-                        <div class="flex gap-3 flex-row">
-                            <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-                                <i data-lucide="bot" class="w-4 h-4"></i>
-                            </div>
-                            <div class="p-3 bg-white border border-slate-200 rounded-2xl rounded-tl-sm flex items-center gap-2 shadow-sm">
-                                <i data-lucide="loader-2" class="w-4 h-4 text-indigo-600 animate-spin"></i>
-                                <span class="text-sm text-slate-500">Tippt...</span>
-                            </div>
-                        </div>
-                    ` : '';
-
-                    html += `
-                        <div class="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-slide-in pointer-events-auto">
-                            <div class="bg-indigo-600 text-white p-4 flex items-center justify-between shrink-0">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="bot" class="w-5 h-5"></i>
-                                    <span class="font-bold">IT-Wiki KI</span>
-                                </div>
-                                <button onclick="app.toggleChat()" class="text-indigo-200 hover:text-white transition-colors">
-                                    <i data-lucide="x" class="w-5 h-5"></i>
-                                </button>
-                            </div>
-                            
-                            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto custom-scrollbar flex flex-col gap-4 bg-slate-50">
-                                ${messagesHtml}
-                                ${loadingHtml}
-                            </div>
-                            
-                            <div class="p-4 bg-white border-t border-slate-100 shrink-0">
-                                <div class="relative flex items-center">
-                                    <input 
-                                        type="text"
-                                        id="chat-input"
-                                        onkeydown="if(event.key === 'Enter') app.sendChatMessage()"
-                                        placeholder="Frag mich etwas..."
-                                        class="w-full bg-slate-100 border-none rounded-full pl-4 pr-12 py-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-                                    />
-                                    <button 
-                                        onclick="app.sendChatMessage()"
-                                        ${this.state.chatState.isLoading ? 'disabled' : ''}
-                                        class="absolute right-2 p-2 text-indigo-600 hover:bg-indigo-100 rounded-full transition-colors disabled:opacity-50"
-                                    >
-                                        <i data-lucide="send" class="w-[18px] h-[18px]"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                html += `
-                    <button 
-                        onclick="app.toggleChat()"
-                        class="w-14 h-14 bg-slate-900 hover:bg-indigo-600 text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 pointer-events-auto"
-                    >
-                        <i data-lucide="${this.state.chatState.isOpen ? 'x' : 'message-circle'}" class="w-6 h-6"></i>
-                    </button>
-                `;
-
-                container.innerHTML = html;
-                lucide.createIcons();
-
-                if (this.state.chatState.isOpen) {
-                    const messagesDiv = document.getElementById('chat-messages');
-                    if (messagesDiv) messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                    const inputEl = document.getElementById('chat-input');
-                    if (inputEl && !this.state.chatState.isLoading) inputEl.focus();
-                }
-            },
-
+            // --- RENDER FUNKTIONEN ---
             renderSidebar() {
-                const navContainer = document.getElementById('sidebar-nav-container');
-                if (!navContainer) return;
-                
+                const container = document.getElementById('sidebar-nav-container');
                 let html = '';
 
                 if (this.state.learning.active) {
-                    // LEARNING MODE SIDEBAR
-                    html += `
-                        <div class="mb-6 px-4">
-                            <h3 class="text-xs font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest flex items-center gap-2 mb-4">
-                                <i data-lucide="graduation-cap" class="w-4 h-4"></i> LERN-PFAD
-                            </h3>
-                            <div class="space-y-3">
-                                ${LEARNING_PATH.map((l, i) => {
-                                    const isUnlocked = this.state.learning.maxUnlockedLevel >= l.level;
-                                    const isDone = this.state.learning.maxUnlockedLevel > l.level;
-                                    const isActive = this.state.selectedArticleId === l.articleId;
-                                    
-                                    let icon = 'lock';
-                                    let color = 'text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800';
-                                    let clickAction = '';
-
-                                    if (isDone) {
-                                        icon = 'check-circle';
-                                        color = 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/20';
-                                        clickAction = `onclick="app.handleNavigate(null, '${l.articleId}')"`;
-                                    } else if (isUnlocked) {
-                                        icon = 'play-circle';
-                                        color = 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/20 border border-indigo-200 dark:border-indigo-500/50';
-                                        clickAction = `onclick="app.handleNavigate(null, '${l.articleId}')"`;
-                                    }
-
-                                    return `
-                                    <button ${clickAction} class="w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left ${isActive ? 'ring-2 ring-indigo-500' : ''} ${isUnlocked ? 'hover:scale-[1.02] cursor-pointer' : 'opacity-60 cursor-not-allowed'}">
-                                        <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${color}">
-                                            <i data-lucide="${icon}" class="w-4 h-4"></i>
-                                        </div>
-                                        <div class="flex-1 overflow-hidden">
-                                            <div class="text-[10px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider">Level ${l.level}</div>
-                                            <div class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${l.title}</div>
-                                        </div>
-                                    </button>
-                                    `;
-                                }).join('')}
-
-                                <!-- Final Check Button in Path -->
-                                <button ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? `onclick="app.handleNavigate('selbstcheck')"` : ''} class="w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left mt-6 ${this.state.currentTab === 'selbstcheck' ? 'ring-2 ring-indigo-500' : ''} ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'bg-slate-900 dark:bg-slate-700 text-white hover:scale-[1.02] shadow-lg' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 opacity-60 cursor-not-allowed'}">
-                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'bg-indigo-600' : 'bg-slate-200 dark:bg-slate-700'}">
-                                        <i data-lucide="award" class="w-4 h-4 ${this.state.learning.maxUnlockedLevel > LEARNING_PATH.length ? 'text-white' : 'text-slate-500'}"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <div class="text-sm font-bold truncate dark:text-slate-100">Selbstcheck</div>
-                                    </div>
-                                </button>
-
+                    html += `<div class="mb-4"><button onclick="app.stopLearningMode()" class="text-sm text-red-500 hover:text-red-700 flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i> Lernmodus beenden</button></div>`;
+                    html += `<h3 class="text-xs font-bold text-slate-400 uppercase mb-4">Lernpfad</h3>`;
+                    
+                    LEARNING_PATH.forEach(step => {
+                        const isUnlocked = step.level <= this.state.learning.maxUnlockedLevel;
+                        const isCurrent = this.state.selectedArticleId === step.articleId;
+                        const icon = isUnlocked ? 'unlock' : 'lock';
+                        const color = isCurrent ? 'bg-indigo-50 text-indigo-600' : (isUnlocked ? 'text-slate-700 dark:text-slate-300 hover:bg-slate-100' : 'text-slate-400 opacity-50 cursor-not-allowed');
+                        
+                        html += `
+                            <div onclick="${isUnlocked ? `app.handleNavigate(null, '${step.articleId}')` : ''}" 
+                                 class="flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-colors ${color}">
+                                <i data-lucide="${icon}" class="w-4 h-4"></i>
+                                <span class="text-sm font-medium">Level ${step.level}: ${step.title}</span>
                             </div>
-                        </div>
-                        <div class="mt-auto px-4 pt-6 border-t border-slate-100 dark:border-slate-700">
-                            <button onclick="app.stopLearningMode()" class="w-full py-3 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-xl font-bold text-sm hover:border-red-400 dark:hover:border-red-500 hover:text-red-600 dark:hover:text-red-500 transition-colors flex justify-center items-center gap-2">
-                                <i data-lucide="x-circle" class="w-4 h-4"></i> Lernmodus beenden
-                            </button>
-                        </div>
-                    `;
+                        `;
+                    });
                 } else {
-                    // NORMAL SIDEBAR
-                    const renderNavButton = (item, isChild = false) => {
-                        const isActive = this.state.currentTab === item.id && !this.state.searchTerm && !this.state.selectedArticleId;
-                        if (item.children) {
-                            const isOpen = this.state.openSubmenus[item.id];
-                            return `
-                                <div>
-                                    <button onclick="app.toggleSubmenu('${item.id}')" class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-100 transition-all text-left">
-                                        <div class="flex items-center gap-3 flex-1 overflow-hidden">
-                                            <i data-lucide="${item.icon}" class="w-5 h-5 shrink-0"></i>
-                                            <span class="text-sm font-semibold truncate">${item.name}</span>
-                                        </div>
-                                        <i data-lucide="chevron-down" class="w-4 h-4 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}"></i>
-                                    </button>
-                                    <div class="overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}">
-                                        <div class="pt-1 space-y-1">
-                                            ${item.children.map(child => renderNavButton(child, true)).join('')}
-                                        </div>
-                                    </div>
-                                </div>`;
-                        }
-
-                        let onclickAction = `app.handleNavigate('${item.id}')`;
-                        const conceptMap = {
-                            'eva_uebersicht': 'eva_konzept', 'eva_eingabe': 'eingabe_konzept',
-                            'eva_verarbeitung': 'verarbeitung_konzept', 'eva_ausgabe': 'ausgabe_konzept',
-                            'eva_speicherung': 'speicherung_konzept',
-                            'doku_uebersicht': 'doku_uebersicht',
-                            'sprint1': 'sprint1', 'sprint2': 'sprint2'
-                        };
-                        if (conceptMap[item.id]) {
-                            onclickAction = `app.handleNavigate('${item.id}', '${conceptMap[item.id]}')`;
-                        }
-
-                        const paddingClass = isChild ? 'pl-11 pr-4' : 'px-4';
-                        const activeClass = isActive ? 'bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-slate-900 dark:hover:text-slate-100';
-                        const iconSize = isChild ? 'w-[18px] h-[18px]' : 'w-5 h-5';
-                        const alignmentClass = isChild ? 'items-start' : 'items-center';
-                        const iconMargin = isChild ? 'mt-0.5' : '';
-
-                        return `
-                            <button onclick="${onclickAction}" class="w-full flex ${alignmentClass} gap-3 py-2.5 rounded-xl transition-all ${paddingClass} ${activeClass} text-left">
-                                <i data-lucide="${item.icon}" class="${iconSize} shrink-0 ${iconMargin}"></i>
-                                <span class="text-sm font-medium flex-1 leading-snug">${item.name}</span>
-                            </button>`;
-                    };
-
-                    html += `<nav class="space-y-1">${NAVIGATION.map(item => renderNavButton(item)).join('')}</nav>`;
-                    html += `<div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700">${renderNavButton(DOC_NAV)}</div>`;
+                    NAVIGATION.forEach(nav => {
+                        const active = this.state.currentTab === nav.id ? 'bg-indigo-50 text-indigo-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800';
+                        html += `
+                            <button onclick="app.handleNavigate('${nav.id}')" class="w-full flex items-center gap-3 p-3 rounded-xl ${active} transition-colors">
+                                <i data-lucide="${nav.icon}" class="w-5 h-5"></i>
+                                <span class="font-medium">${nav.name}</span>
+                            </button>
+                        `;
+                    });
+                    
+                    html += `<hr class="my-4 border-slate-200 dark:border-slate-700">`;
+                    html += `<h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Alle Artikel</h3>`;
+                    
+                    WIKI_DATA.forEach(article => {
+                        const active = this.state.selectedArticleId === article.id ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:text-indigo-600';
+                        html += `
+                            <button onclick="app.handleNavigate('article', '${article.id}')" class="w-full text-left p-2 rounded-lg text-sm ${active} transition-colors">
+                                ${article.title}
+                            </button>
+                        `;
+                    });
                 }
 
-                navContainer.innerHTML = html;
+                container.innerHTML = html;
                 lucide.createIcons();
             },
 
@@ -878,484 +288,122 @@
                 const container = document.getElementById('view-container');
                 let html = '';
 
-                // Hilfsfunktion zum Rendern der Hardware-Karten (wird mehrfach gebraucht)
-                const renderArticleCard = (art) => {
-                    const cleanTitle = art.title.split('(')[0].split('/')[0].trim();
-                    const imgSrc = art.image || '';
-                    const isFav = this.state.favorites.includes(art.id);
-                    const favIconClass = isFav ? 'fill-amber-400 text-amber-400' : 'text-slate-400 dark:text-slate-500';
-                    
-                    return `
-                    <div onclick="app.handleNavigate('${art.category}', '${art.id}')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl dark:hover:border-indigo-500 hover:border-indigo-200 cursor-pointer transition-all flex flex-col group relative">
-                        <div class="h-48 flex items-center justify-center p-6 bg-slate-100 dark:bg-slate-700 relative overflow-hidden border-b border-slate-100 dark:border-slate-700">
-                            <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/600x300/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500">
-                            <button onclick="event.stopPropagation(); app.toggleFavorite('${art.id}')" class="absolute top-4 right-4 p-2 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur shadow-sm hover:scale-110 transition-transform z-10">
-                                <i data-lucide="star" class="w-5 h-5 ${favIconClass}"></i>
-                            </button>
-                        </div>
-                        <div class="p-6 flex flex-col flex-1">
-                            <h3 class="font-bold text-xl mb-3 text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${art.title}</h3>
-                            <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2 mb-4 italic leading-relaxed">${art.definition.replace(/\*\*/g, '')}</p>
-                            ${art.category !== 'sprint_berichte' ? `
-                            <div class="mt-auto flex flex-wrap gap-2 pt-4 border-t border-slate-50 dark:border-slate-700">
-                                ${art.tags.map(t => `<span class="text-[10px] px-2 py-1 rounded-lg uppercase font-black tracking-widest bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-300">${t}</span>`).join('')}
-                            </div>
-                            ` : ''}
-                        </div>
-                    </div>`;
-                };
-
-                // 1. SEARCH
-                if (this.state.searchTerm && !this.state.learning.active) {
-                    const term = this.state.searchTerm.toLowerCase();
-                    const filtered = WIKI_DATA.filter(a => 
-                        a.title.toLowerCase().includes(term) || 
-                        a.definition.toLowerCase().includes(term)
+                // Suchergebnisse anzeigen
+                if (this.state.searchTerm !== '') {
+                    const results = WIKI_DATA.filter(a => 
+                        a.title.toLowerCase().includes(this.state.searchTerm) || 
+                        a.content.toLowerCase().includes(this.state.searchTerm)
                     );
-
-                    html = `
-                        <div class="space-y-6 animate-slide-in">
-                            <h2 class="text-2xl font-black">Ergebnisse für "${this.state.searchTerm}"</h2>
-                            <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl overflow-hidden shadow-sm">
-                                ${filtered.length > 0 ? `
-                                    <div class="divide-y divide-slate-100 dark:divide-slate-700">
-                                        ${filtered.map(art => {
-                                            const cleanTitle = art.title.split('(')[0].split('/')[0].trim();
-                                            const imgSrc = art.image || '';
-                                            return `
-                                            <button onclick="app.handleNavigate('${art.category}', '${art.id}')" class="w-full text-left p-6 hover:bg-slate-50 dark:hover:bg-slate-700/50 flex items-center gap-6 group transition-colors">
-                                                <div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-slate-100 dark:bg-slate-700 hidden sm:block p-1">
-                                                    <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/100x100/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
-                                                </div>
-                                                <div class="flex-1">
-                                                    <span class="font-bold text-lg text-slate-800 dark:text-slate-100 block mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">${art.title}</span>
-                                                    <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">${art.definition.replace(/\*\*/g, '')}</p>
-                                                </div>
-                                                <i data-lucide="chevron-right" class="text-slate-300 dark:text-slate-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 w-5 h-5 transition-transform group-hover:translate-x-1 shrink-0"></i>
-                                            </button>
-                                        `}).join('')}
-                                    </div>
-                                ` : `
-                                    <div class="p-20 text-center text-slate-400 dark:text-slate-500">Keine passenden Begriffe gefunden.</div>
-                                `}
-                            </div>
-                        </div>
-                    `;
-                } 
-                // 2. SELBSTSTUDIUM DASHBOARD
-                else if (this.state.currentTab === 'selbststudium') {
-                    const progress = ((this.state.learning.maxUnlockedLevel - 1) / LEARNING_PATH.length) * 100;
-                    
-                    html = `
-                        <div class="space-y-10 animate-fade-in">
-                            <section class="bg-indigo-600 text-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
-                                <div class="relative z-10">
-                                    <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">IT-Wiki Selbststudium</h2>
-                                    <p class="text-indigo-100 text-lg md:text-xl max-w-2xl mb-8 leading-relaxed">Der geführte Weg vom Anfänger zum Hardware-Profi. Bestehe die Mini-Quizzes, schalte Level frei und verdiene dir dein Zertifikat.</p>
-                                    <button onclick="app.startLearningMode()" class="bg-white text-indigo-600 font-black px-8 py-4 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center gap-3">
-                                        <i data-lucide="play" class="w-5 h-5"></i> LERNMODUS STARTEN
-                                    </button>
-                                </div>
-                                <i data-lucide="graduation-cap" class="absolute -bottom-10 -right-10 text-white/10 w-80 h-80 rotate-12"></i>
-                            </section>
-
-                            <section>
-                                <h3 class="text-2xl font-black mb-6">Dein Fortschritt</h3>
-                                <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                                    <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-4 mb-2 overflow-hidden">
-                                        <div class="bg-emerald-500 h-4 rounded-full transition-all duration-1000" style="width: ${progress}%"></div>
-                                    </div>
-                                    <p class="text-right text-sm text-slate-500 dark:text-slate-400 font-bold mb-8">${this.state.learning.maxUnlockedLevel - 1} von ${LEARNING_PATH.length} Leveln abgeschlossen</p>
-
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                                        ${LEARNING_PATH.map(l => {
-                                            const isDone = this.state.learning.maxUnlockedLevel > l.level;
-                                            return `
-                                            <div class="p-4 rounded-2xl border-2 ${isDone ? 'border-emerald-200 dark:border-emerald-500/50 bg-emerald-50 dark:bg-emerald-500/10' : 'border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800'} flex items-center gap-4">
-                                                <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isDone ? 'bg-emerald-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-400 dark:text-slate-500'}">
-                                                    <i data-lucide="${isDone ? 'check' : 'lock'}" class="w-5 h-5"></i>
-                                                </div>
-                                                <div>
-                                                    <div class="text-[10px] font-black uppercase text-slate-400 dark:text-slate-500">Level ${l.level}</div>
-                                                    <div class="font-bold text-sm text-slate-800 dark:text-slate-100">${l.title}</div>
-                                                </div>
-                                            </div>
-                                            `;
-                                        }).join('')}
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    `;
-                }
-                // 3. FINAL QUIZ & CERTIFICATE
-                else if (this.state.currentTab === 'selbstcheck') {
-                    if (!this.state.learning.finalQuizSubmitted) {
-                        // QUIZ VIEW
-                        const allAnswered = Object.keys(this.state.learning.finalQuizAnswers).length === FINAL_QUIZ.length;
-                        html = `
-                            <div class="space-y-8 animate-fade-in max-w-3xl mx-auto">
-                                <div class="text-center mb-12">
-                                    <div class="w-20 h-20 bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center mx-auto mb-6">
-                                        <i data-lucide="award" class="w-10 h-10"></i>
-                                    </div>
-                                    <h2 class="text-3xl md:text-4xl font-black mb-4">Abschluss-Check</h2>
-                                    <p class="text-slate-500 dark:text-slate-400 text-lg">Beweise dein Wissen in 5 Fragen, um dein Zertifikat freizuschalten.</p>
-                                </div>
-
-                                <div class="space-y-8">
-                                    ${FINAL_QUIZ.map((q, qIdx) => {
-                                        const selected = this.state.learning.finalQuizAnswers[qIdx];
-                                        return `
-                                            <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm">
-                                                <h3 class="font-bold text-lg mb-6 flex gap-4 text-slate-900 dark:text-slate-100">
-                                                    <span class="text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/20 w-8 h-8 flex items-center justify-center rounded-lg shrink-0">${qIdx + 1}</span>
-                                                    ${q.q}
-                                                </h3>
-                                                <div class="space-y-3">
-                                                    ${q.o.map((opt, oIdx) => `
-                                                        <button onclick="app.answerFinalQuiz(${qIdx}, ${oIdx})" class="w-full p-4 rounded-xl text-left border-2 transition-all ${selected === oIdx ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/20 text-indigo-800 dark:text-indigo-300 font-bold' : 'border-slate-100 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-500/50 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300'}">
-                                                            ${opt}
-                                                        </button>
-                                                    `).join('')}
-                                                </div>
-                                            </div>
-                                        `;
-                                    }).join('')}
-                                </div>
-
-                                <div class="pt-8 border-t border-slate-200 dark:border-slate-700 text-center pb-20">
-                                    <button onclick="app.submitFinalQuiz()" ${!allAnswered ? 'disabled' : ''} class="bg-slate-900 dark:bg-indigo-600 text-white font-black px-12 py-5 rounded-full text-lg shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                                        Antworten Auswerten
-                                    </button>
-                                </div>
+                    html = `<h2 class="text-2xl font-bold mb-6 animate-fade-in">Suchergebnisse für "${this.state.searchTerm}"</h2><div class="grid gap-4">`;
+                    results.forEach(res => {
+                        html += `
+                            <div onclick="app.handleNavigate('article', '${res.id}')" class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-indigo-500 transition-colors animate-slide-in">
+                                <h3 class="font-bold text-lg text-indigo-600 dark:text-indigo-400 mb-2">${res.title}</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">${res.definition}</p>
                             </div>
                         `;
-                    } else {
-                        // RESULTS & CERTIFICATE VIEW
-                        const score = this.state.learning.finalScore;
-                        const passed = score >= 4; // 80% needed
-                        
-                        html = `
-                            <div class="max-w-2xl mx-auto text-center space-y-8 animate-zoom-in pt-10">
-                                <div class="w-32 h-32 rounded-full mx-auto flex items-center justify-center animate-bounce-custom ${passed ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-500 dark:text-emerald-400' : 'bg-red-100 dark:bg-red-500/20 text-red-500 dark:text-red-400'}">
-                                    <i data-lucide="${passed ? 'check-circle' : 'x-circle'}" class="w-16 h-16"></i>
-                                </div>
-                                
-                                <div>
-                                    <h2 class="text-4xl font-black mb-4">${passed ? 'Herzlichen Glückwunsch!' : 'Schade, das hat nicht ganz gereicht.'}</h2>
-                                    <p class="text-xl text-slate-500 dark:text-slate-400">Du hast <strong class="text-slate-800 dark:text-slate-100">${score} von 5</strong> Fragen richtig beantwortet.</p>
-                                </div>
-
-                                ${passed ? `
-                                    <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl mt-12 text-left">
-                                        <h3 class="font-black text-xl mb-2 text-indigo-600 dark:text-indigo-400 flex items-center gap-2"><i data-lucide="award" class="w-6 h-6"></i> Zertifikat anfordern</h3>
-                                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Bitte gib deinen vollständigen Namen für das Zertifikat ein.</p>
-                                        
-                                        <input type="text" id="cert-name" placeholder="Vorname Nachname" class="w-full p-4 bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl font-bold mb-2 focus:border-indigo-500 focus:outline-none">
-                                        <span id="cert-err" class="text-red-500 text-xs font-bold hidden mb-6 block">Bitte einen Namen eingeben!</span>
-                                        
-                                        <button onclick="app.generateCertificate()" class="w-full bg-indigo-600 text-white font-black py-4 rounded-xl shadow-lg mt-4 hover:bg-indigo-700 transition-colors flex justify-center items-center gap-2">
-                                            <i data-lucide="download" class="w-5 h-5"></i> Zertifikat als Bild herunterladen
-                                        </button>
-                                    </div>
-                                ` : `
-                                    <button onclick="app.state.learning.finalQuizSubmitted = false; app.state.learning.finalQuizAnswers = {}; app.renderContent();" class="bg-slate-900 dark:bg-slate-700 text-white font-black px-8 py-4 rounded-full mt-8">
-                                        Quiz wiederholen
-                                    </button>
-                                `}
-                            </div>
-                        `;
-                    }
-                }
-                // 3.5 FAVORITEN VIEW
-                else if (this.state.currentTab === 'favoriten') {
-                    const favArticles = WIKI_DATA.filter(a => this.state.favorites.includes(a.id));
-                    
-                    html = `
-                        <div class="space-y-8 animate-fade-in">
-                            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-6">
-                                <h2 class="text-3xl font-black capitalize flex items-center gap-3">
-                                    <i data-lucide="star" class="w-8 h-8 text-amber-400 fill-amber-400"></i> Meine Favoriten
-                                </h2>
-                            </div>
-                            
-                            ${favArticles.length > 0 ? `
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    ${favArticles.map(art => renderArticleCard(art)).join('')}
-                                </div>
-                            ` : `
-                                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-12 text-center shadow-sm">
-                                    <div class="w-20 h-20 bg-slate-100 dark:bg-slate-700 text-slate-300 dark:text-slate-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                                        <i data-lucide="star" class="w-10 h-10"></i>
-                                    </div>
-                                    <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2">Noch keine Favoriten</h3>
-                                    <p class="text-slate-500 dark:text-slate-400">Klicke auf das Stern-Symbol bei einem Hardware-Artikel, um ihn dir für später zu merken!</p>
-                                </div>
-                            `}
-                        </div>
-                    `;
-                }
-                // 4. A-Z GLOSSAR
-                else if (this.state.currentTab === 'glossar') {
-                    const sorted = [...WIKI_DATA].sort((a, b) => a.title.localeCompare(b.title, 'de'));
-                    const groups = {};
-                    sorted.forEach(item => {
-                        const letter = item.title.charAt(0).toUpperCase();
-                        if (!groups[letter]) groups[letter] = [];
-                        groups[letter].push(item);
                     });
-                    const groupedKeys = Object.keys(groups).sort();
-                    
-                    let groupsHtml = groupedKeys.map(letter => `
-                        <section>
-                            <h3 class="text-xl font-bold text-indigo-700 dark:text-indigo-400 mb-4 border-b border-indigo-100 dark:border-slate-700 pb-2">${letter}</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                ${groups[letter].map(art => `
-                                    <button onclick="app.handleNavigate('${art.category}', '${art.id}')" class="p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl hover:border-indigo-400 dark:hover:border-indigo-500 hover:shadow-md transition-all text-left flex items-center justify-between group">
-                                        <span class="font-bold text-slate-800 dark:text-slate-100">${art.title}</span>
-                                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 dark:text-slate-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-transform group-hover:translate-x-1"></i>
-                                    </button>
-                                `).join('')}
-                            </div>
-                        </section>
-                    `).join('');
-
-                    html = `
-                        <div class="space-y-12 animate-fade-in">
-                            <h2 class="text-3xl font-black text-slate-900 dark:text-white">A-Z Glossar</h2>
-                            <div class="space-y-10">
-                                ${groupsHtml}
-                            </div>
-                        </div>
-                    `;
-                }
-                // 5. ARTICLE DETAIL VIEW
+                    html += `</div>`;
+                    if(results.length === 0) html += `<p class="text-slate-500">Keine Ergebnisse gefunden.</p>`;
+                } 
+                // Artikel Detailansicht
                 else if (this.state.selectedArticleId) {
                     const article = WIKI_DATA.find(a => a.id === this.state.selectedArticleId);
-                    if (article) {
-                        const cleanTitle = article.title.split('(')[0].split('/')[0].trim();
-                        const imgSrc = article.image || '';
-                        const tagsHtml = article.tags.map(t => `<span class="text-[10px] px-3 py-1 rounded-lg uppercase font-black tracking-widest bg-slate-900 dark:bg-slate-700 text-white shadow-sm">${t}</span>`).join('');
-                        const relatedHtml = article.related.map(rel => {
-                            const target = WIKI_DATA.find(a => a.title.toLowerCase().includes(rel.toLowerCase()));
-                            const action = target ? `onclick="app.handleNavigate('${target.category}', '${target.id}')"` : '';
-                            return `<button ${action} class="text-xs bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 px-4 py-2 rounded-full hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all font-bold">${rel}</button>`;
-                        }).join('');
+                    const isFav = this.state.favorites.includes(article.id);
+                    
+                    html = `
+                        <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 animate-slide-in">
+                            <div class="flex justify-between items-start mb-6">
+                                <h2 class="text-3xl font-black text-slate-900 dark:text-white">${article.title}</h2>
+                                <button onclick="app.toggleFavorite('${article.id}')" class="p-2 rounded-full ${isFav ? 'text-amber-500 bg-amber-50' : 'text-slate-400 hover:bg-slate-100'} transition-colors">
+                                    <i data-lucide="star" class="w-6 h-6 ${isFav ? 'fill-current' : ''}"></i>
+                                </button>
+                            </div>
+                            <div class="p-4 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-900 dark:text-indigo-100 rounded-xl mb-6 font-medium">
+                                ${article.definition.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
+                            </div>
+                            <div class="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed mb-8">
+                                ${article.content.replace(/\n/g, '<br/>')}
+                            </div>
+                            <div class="border-t border-slate-200 dark:border-slate-700 pt-6">
+                                <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3"><i data-lucide="briefcase" class="inline w-4 h-4 mr-2"></i>Sales Argument</h4>
+                                <p class="italic text-slate-600 dark:text-slate-400 border-l-4 border-green-500 pl-4">${article.businessValue}</p>
+                            </div>
+                        </div>
+                    `;
 
-                        let specialFooterHtml = '';
-                        const isFav = this.state.favorites.includes(article.id);
-
-                        // In Learning Mode: Inject Quiz at the bottom instead of normal related topics
-                        if (this.state.learning.active) {
-                            const levelData = LEARNING_PATH.find(l => l.articleId === article.id);
-                            if (levelData) {
-                                const quizAns = this.state.learning.quizAnsweredIdx;
-                                const isCorrect = this.state.learning.quizCorrect;
-                                
-                                specialFooterHtml = `
-                                    <div class="mt-16 bg-slate-900 dark:bg-slate-950 border border-transparent dark:border-slate-800 text-white rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
-                                        <div class="relative z-10">
-                                            <h3 class="text-indigo-400 font-black text-xs tracking-widest uppercase mb-4 flex items-center gap-2">
-                                                <i data-lucide="help-circle" class="w-4 h-4"></i> Wissenstest - Level ${levelData.level}
-                                            </h3>
-                                            <p class="text-2xl font-bold mb-8">${levelData.question}</p>
-                                            
-                                            <div class="space-y-3 mb-8">
-                                                ${levelData.options.map((opt, idx) => {
-                                                    let btnClass = 'bg-white/10 hover:bg-white/20 border-white/10';
-                                                    let icon = '';
-                                                    if (quizAns !== null) {
-                                                        if (idx === levelData.answer) {
-                                                            btnClass = 'bg-emerald-500 border-emerald-400 text-white font-bold';
-                                                            icon = '<i data-lucide="check" class="w-5 h-5 absolute right-4"></i>';
-                                                        } else if (idx === quizAns) {
-                                                            btnClass = 'bg-red-500 border-red-400 text-white opacity-50';
-                                                            icon = '<i data-lucide="x" class="w-5 h-5 absolute right-4"></i>';
-                                                        } else {
-                                                            btnClass = 'bg-white/5 border-transparent opacity-30';
-                                                        }
-                                                    }
-                                                    return `
-                                                        <button onclick="app.answerMiniQuiz(${levelData.level}, ${idx})" class="w-full text-left p-4 rounded-xl border-2 transition-all relative flex items-center ${btnClass}">
-                                                            ${opt} ${icon}
-                                                        </button>
-                                                    `;
-                                                }).join('')}
-                                            </div>
-
-                                            ${quizAns !== null ? `
-                                                <div class="animate-fade-in border-t border-white/20 pt-6 flex items-center justify-between">
-                                                    <span class="font-bold ${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isCorrect ? 'Richtig! Level abgeschlossen.' : 'Leider falsch. Versuch es nochmal!'}</span>
-                                                    ${isCorrect ? `
-                                                        <button onclick="app.nextLevel(${levelData.level})" class="bg-white text-slate-900 px-6 py-3 rounded-full font-black text-sm hover:scale-105 transition-transform shadow-lg flex items-center gap-2">
-                                                            Nächster Schritt <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                                                        </button>
-                                                    ` : `
-                                                        <button onclick="app.state.learning.quizAnsweredIdx = null; app.renderContent();" class="text-white underline text-sm">Nochmal versuchen</button>
-                                                    `}
-                                                </div>
-                                            ` : ''}
-                                        </div>
-                                        <i data-lucide="graduation-cap" class="absolute -right-10 -bottom-10 w-64 h-64 text-white/5 rotate-12"></i>
+                    // Wenn Lernmodus aktiv, Quiz unten anhängen
+                    if (this.state.learning.active) {
+                        const stepData = LEARNING_PATH.find(l => l.articleId === article.id);
+                        if (stepData) {
+                            if (!this.state.learning.showQuiz) {
+                                html += `
+                                    <div class="mt-8 text-center animate-fade-in">
+                                        <button onclick="app.startQuiz()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg transition-transform transform hover:scale-105">
+                                            Artikel verstanden? Teste dein Wissen!
+                                        </button>
                                     </div>
                                 `;
                             } else {
-                                // Fallback if article is not part of path
-                                specialFooterHtml = `
-                                    <div class="mt-10 p-6 bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-500 rounded-2xl border border-amber-200 dark:border-amber-500/20 flex items-center justify-between">
-                                        <div class="flex items-center gap-3 font-bold"><i data-lucide="info" class="w-5 h-5"></i> Dieser Artikel ist optional und kein Teil des Pflicht-Pfads.</div>
-                                        <button onclick="app.startLearningMode()" class="bg-amber-800 dark:bg-amber-500 text-white px-4 py-2 rounded-xl text-sm font-bold">Zurück zum Pfad</button>
-                                    </div>
+                                html += `
+                                    <div class="mt-8 bg-slate-900 text-white rounded-3xl p-8 shadow-xl animate-slide-in border border-slate-700">
+                                        <h3 class="text-xl font-bold mb-6 text-indigo-400">Quiz: ${stepData.title}</h3>
+                                        <p class="text-lg mb-6">${stepData.question}</p>
+                                        <div class="grid gap-3">
                                 `;
-                            }
-                        } else {
-                            // NORMAL FOOTER
-                            if (article.category !== 'sprint_berichte') {
-                                specialFooterHtml = `
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12">
-                                        <div class="bg-indigo-900 dark:bg-indigo-950 p-8 rounded-3xl text-white shadow-xl shadow-indigo-100 dark:shadow-none border dark:border-indigo-900 relative overflow-hidden">
-                                            <i data-lucide="shield-check" class="absolute -right-4 -bottom-4 w-24 h-24 text-white/5 rotate-12"></i>
-                                            <h4 class="text-indigo-300 dark:text-indigo-400 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
-                                                <i data-lucide="shield-check" class="w-4 h-4"></i> VERTRIEBS-ARGUMENT
-                                            </h4>
-                                            <p class="text-lg leading-relaxed font-medium relative z-10">
-                                                ${article.businessValue.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white underline decoration-indigo-400 dark:decoration-indigo-500">$1</strong>')}
-                                            </p>
-                                        </div>
-                                        
-                                        <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border-2 border-slate-100 dark:border-slate-700">
-                                            <h4 class="text-slate-400 dark:text-slate-500 font-black text-xs mb-4 uppercase tracking-widest flex items-center gap-2">
-                                                <i data-lucide="arrow-right-left" class="w-4 h-4"></i> VERWANDTE THEMEN
-                                            </h4>
-                                            <div class="flex flex-wrap gap-2">
-                                                ${relatedHtml}
+                                stepData.options.forEach((opt, idx) => {
+                                    let btnClass = "bg-slate-800 hover:bg-slate-700 border-slate-600";
+                                    if (this.state.learning.quizAnsweredIdx !== null) {
+                                        if (idx === stepData.answer) btnClass = "bg-green-600 border-green-500";
+                                        else if (idx === this.state.learning.quizAnsweredIdx) btnClass = "bg-red-600 border-red-500";
+                                    }
+                                    html += `
+                                        <button onclick="app.answerMiniQuiz(${stepData.level}, ${idx})" class="w-full text-left p-4 rounded-xl border ${btnClass} transition-colors font-medium">
+                                            ${opt}
+                                        </button>
+                                    `;
+                                });
+                                html += `</div>`;
+
+                                if (this.state.learning.quizAnsweredIdx !== null) {
+                                    if (this.state.learning.quizCorrect) {
+                                        html += `
+                                            <div class="mt-6 p-4 bg-green-500/20 text-green-400 rounded-xl border border-green-500/30 flex items-center gap-3 animate-fade-in">
+                                                <i data-lucide="check-circle" class="w-6 h-6 flex-shrink-0"></i>
+                                                <div class="flex-1 font-bold">Richtig! Perfekt gemacht.</div>
+                                                <button onclick="app.nextLevel()" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Weiter</button>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex gap-3 pt-8 border-t border-slate-100 dark:border-slate-700 flex-wrap">
-                                        ${tagsHtml}
-                                    </div>
-                                `;
+                                        `;
+                                    } else {
+                                        html += `
+                                            <div class="mt-6 p-4 bg-red-500/20 text-red-400 rounded-xl border border-red-500/30 flex items-center gap-3 animate-fade-in">
+                                                <i data-lucide="x-circle" class="w-6 h-6 flex-shrink-0"></i>
+                                                <div class="flex-1 font-bold">Leider falsch. Lies den Artikel nochmal!</div>
+                                                <button onclick="app.handleNavigate(null, '${article.id}')" class="px-6 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600">Nochmal probieren</button>
+                                            </div>
+                                        `;
+                                    }
+                                }
+                                html += `</div>`;
                             }
                         }
-
-                        html = `
-                            <article class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[2.5rem] p-6 md:p-14 shadow-xl animate-zoom-in">
-                                <div class="flex items-center justify-between mb-8">
-                                    ${!this.state.learning.active ? `
-                                    <button onclick="app.handleNavigate(app.state.currentTab)" class="text-indigo-600 dark:text-indigo-400 text-sm font-black flex items-center gap-2 hover:-translate-x-1 transition-transform">
-                                        <i data-lucide="arrow-left" class="w-4 h-4"></i> ZURÜCK
-                                    </button>
-                                    ` : '<div></div>'}
-                                    
-                                    <button onclick="app.toggleFavorite('${article.id}')" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-700 text-sm font-bold hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors ${isFav ? 'text-amber-500 dark:text-amber-400' : 'text-slate-500 dark:text-slate-300'}">
-                                        <i data-lucide="star" class="w-4 h-4 ${isFav ? 'fill-current' : ''}"></i> ${isFav ? 'Gespeichert' : 'Merken'}
-                                    </button>
-                                </div>
-                                
-                                <header class="mb-10">
-                                    <h1 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 tracking-tight">${article.title}</h1>
-                                    <p class="text-xl md:text-2xl text-slate-400 dark:text-slate-300 font-medium leading-relaxed italic border-l-8 border-indigo-500 dark:border-indigo-400 pl-6 md:pl-8">
-                                        ${this.formatText(article.definition)}
-                                    </p>
-                                </header>
-
-                                ${article.category !== 'sprint_berichte' ? `
-                                <div class="mb-12 w-full h-64 md:h-96 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-700 shadow-inner relative bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-8">
-                                    <img src="${imgSrc}" alt="${cleanTitle}" onerror="this.onerror=null; this.src='https://placehold.co/800x400/eef2ff/4f46e5?text=${encodeURIComponent(cleanTitle)}'" class="w-full h-full object-contain drop-shadow-md">
-                                </div>
-                                ` : ''}
-
-                                <div class="text-slate-700 dark:text-slate-300 leading-relaxed text-lg mb-12 space-y-6">
-                                    <div class="bg-slate-50 dark:bg-slate-900/50 rounded-3xl p-6 md:p-8 border border-slate-100 dark:border-slate-700">
-                                        <h4 class="text-sm font-black mb-4 text-slate-400 dark:text-slate-500 uppercase tracking-widest">Technischer Hintergrund</h4>
-                                        <div class="whitespace-pre-line leading-relaxed">
-                                            ${this.formatText(article.content)}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                ${specialFooterHtml}
-                            </article>
-                        `;
                     }
                 } 
-                // 6. DASHBOARD VIEW (Normal)
-                else if (this.state.currentTab === 'dashboard') {
-                    html = `
-                        <div class="space-y-10 animate-fade-in">
-                            <section>
-                                <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-4 underline decoration-indigo-200 dark:decoration-indigo-500/50 underline-offset-8">Vertriebs-Wiki Hardware</h2>
-                                <p class="text-slate-500 dark:text-slate-400 text-lg md:text-xl">Wissen kompakt aufbereitet für Verkaufsalltag. Verstehen Sie die Technik – begeistern Sie den Kunden.</p>
-                            </section>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div onclick="app.handleNavigate('eva_uebersicht', 'eva_konzept')" class="bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-xl dark:hover:border-indigo-500 transition-all cursor-pointer group">
-                                    <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                                        <i data-lucide="layers" class="w-6 h-6"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">Das EVA-S Prinzip</h3>
-                                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed italic">Beginnen Sie mit dem Grundgerüst jeder IT-Beratung. Einfach erklärt für Laien.</p>
-                                </div>
-                                <div onclick="app.handleNavigate('selbststudium')" class="bg-indigo-600 text-white p-8 rounded-[2rem] shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group relative overflow-hidden">
-                                    <div class="w-12 h-12 bg-white/20 text-white rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-indigo-600 transition-colors relative z-10">
-                                        <i data-lucide="graduation-cap" class="w-6 h-6"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2 relative z-10">Selbststudium Kurs</h3>
-                                    <p class="text-indigo-100 text-sm leading-relaxed italic relative z-10">Schalte Artikel durch Mini-Quizzes frei und hole dir dein IT-Zertifikat!</p>
-                                    <i data-lucide="graduation-cap" class="absolute -right-4 -bottom-4 w-32 h-32 text-white/10 rotate-12"></i>
-                                </div>
-                            </div>
-
-                            <div class="bg-slate-900 dark:bg-slate-950 dark:border dark:border-slate-800 rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden shadow-2xl">
-                                <div class="relative z-10">
-                                    <div class="flex items-center gap-2 mb-6 text-indigo-300 font-black uppercase tracking-[0.2em] text-xs">
-                                        <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
-                                        <span>Verkaufs-Tipp des Tages</span>
-                                    </div>
-                                    <p class="text-xl md:text-2xl font-medium leading-relaxed italic">
-                                        "Verkaufen Sie keine Gigabyte, sondern Sicherheit. Sagen Sie: 'Mit dieser SSD-Lösung sind Ihre Kundendaten nicht nur schneller verfügbar, sondern auch vor mechanischen Defekten geschützt.'"
-                                    </p>
-                                </div>
-                                <i data-lucide="zap" class="absolute -bottom-10 -right-10 text-white/5 w-64 h-64"></i>
-                            </div>
-                        </div>
-                    `;
-                }
-                // 7. KANBAN VIEW (CryptPad iFrame)
-                else if (this.state.currentTab === 'kanban') {
-                    html = `
-                        <div class="flex flex-col animate-fade-in h-full">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shrink-0">
-                                <div>
-                                    <h2 class="text-3xl font-black capitalize text-slate-900 dark:text-white">Kanban Board</h2>
-                                    <p class="text-slate-500 dark:text-slate-400 mt-1">Gemeinsames Projektboard über CryptPad.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="w-full bg-white rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex min-h-[800px] md:min-h-[1000px]">
-                                <iframe 
-                                    src="https://cryptpad.fr/kanban/#/2/kanban/view/DyBsTGMdamt4G02TtJl6OhRlVPNtzbqP0wwedvlLEIQ/embed/" 
-                                    class="w-full h-full border-none"
-                                    allowfullscreen="true">
-                                </iframe>
-                            </div>
-                        </div>
-                    `;
-                }
-                // 8. CATEGORY VIEW
+                // Dashboard Startseite
                 else {
-                    const filtered = WIKI_DATA.filter(a => a.category === this.state.currentTab);
-                    const title = this.getCategoryTitle();
-
                     html = `
-                        <div class="space-y-8 animate-fade-in">
-                            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-6">
-                                <h2 class="text-3xl font-black capitalize text-slate-900 dark:text-white">${title}</h2>
+                        <div class="text-center py-10 animate-fade-in">
+                            <h1 class="text-4xl font-black mb-4 dark:text-white">Willkommen im <span class="text-indigo-600">IT Wiki</span></h1>
+                            <p class="text-slate-500 max-w-lg mx-auto">Dein zentraler Knotenpunkt für Hardware-Wissen im Vertrieb. Wähle ein Thema aus der Leiste oder suche nach einem Begriff.</p>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6 mt-8">
+                            <div onclick="app.handleNavigate('article', 'eva_konzept')" class="bg-gradient-to-br from-indigo-500 to-purple-600 p-8 rounded-3xl text-white cursor-pointer hover:shadow-xl transition-all transform hover:-translate-y-1">
+                                <h3 class="font-bold text-2xl mb-2 flex items-center gap-2"><i data-lucide="layers"></i> EVA Prinzip</h3>
+                                <p class="text-indigo-100 opacity-90">Der perfekte Startpunkt. Verstehe die Basis jedes Computers.</p>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                ${filtered.map(art => renderArticleCard(art)).join('')}
+                            <div onclick="app.startLearningMode()" class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-indigo-500 transition-all">
+                                <h3 class="font-bold text-xl mb-2 text-slate-800 dark:text-white flex items-center gap-2"><i data-lucide="graduation-cap" class="text-indigo-600"></i> Selbststudium</h3>
+                                <p class="text-slate-500 text-sm">Absolviere den Lernpfad und werde Schritt für Schritt zum Hardware-Experten im Vertrieb.</p>
                             </div>
                         </div>
                     `;
@@ -1367,9 +415,8 @@
         };
 
         // Initialize App
-        window.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             app.init();
-            window.app = app; // Expose to global scope
         });
     </script>
 </body>
