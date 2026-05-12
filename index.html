@@ -1,423 +1,803 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>all around IT Wiki</title>
+    <title>all around IT Wiki | Sales Edition</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { darkMode: 'class' };
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    borderRadius: { '4xl': '2rem', '5xl': '2.5rem' }
+                }
+            }
+        }
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+        
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
         .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
         
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        .animate-slide-in { animation: slideInUp 0.4s forwards; }
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        
+        @keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .animate-pulse-soft { animation: pulse-soft 3s infinite ease-in-out; }
+
+        /* Glassmorphism Classes */
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); }
+        .dark .glass { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(12px); }
+        
+        /* Canvas for Certificate needs to be hidden */
+        #cert-canvas-hidden { display: none; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 flex font-sans h-screen w-full overflow-hidden relative transition-colors duration-300">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 flex font-sans h-screen w-full overflow-hidden transition-colors duration-300">
 
-    <button id="mobile-toggle" onclick="app.toggleSidebar();" class="fixed bottom-6 left-6 z-50 p-4 bg-indigo-600 text-white rounded-full shadow-lg md:hidden hidden">
+    
+    <!-- Mobile Menu Toggle -->
+    <button id="mobile-toggle" onclick="app.toggleSidebar()" class="fixed bottom-6 left-6 z-50 p-4 bg-indigo-600 text-white rounded-full shadow-2xl md:hidden flex items-center justify-center hover:scale-110 active:scale-95 transition-all">
         <i data-lucide="menu" class="w-6 h-6"></i>
     </button>
 
-    <div id="sidebar-overlay" onclick="app.closeSidebar();" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden transition-opacity opacity-0"></div>
+    <!-- Sidebar Overlay (Mobile) -->
+    <div id="sidebar-overlay" onclick="app.closeSidebar()" class="fixed inset-0 bg-slate-900/60 z-30 hidden backdrop-blur-sm transition-opacity opacity-0"></div>
 
-    <aside id="sidebar" class="h-screen fixed inset-y-0 left-0 z-40 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 flex flex-col flex-shrink-0">
-        <div class="p-6 pb-4 shrink-0 border-b border-slate-100 dark:border-slate-700">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                   <div class="w-12 h-12 flex-shrink-0 bg-indigo-100 rounded-full flex items-center justify-center">
-                      <i data-lucide="cpu" class="text-indigo-600 w-6 h-6"></i>
-                   </div>
-                   <div>
-                      <h1 class="font-bold text-lg leading-tight dark:text-white">all around <span class="text-indigo-600 dark:text-indigo-400 block italic">IT Wiki</span></h1>
-                      <p class="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold">Sales Edition</p>
-                   </div>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="h-screen fixed inset-y-0 left-0 z-40 w-80 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-500 ease-in-out flex flex-col flex-shrink-0 shadow-2xl md:shadow-none">
+        
+        <!-- Sidebar Header -->
+        <div class="p-8 pb-6 shrink-0">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200 dark:shadow-none rotate-3">
+                    <i data-lucide="cpu" class="text-white w-8 h-8"></i>
                 </div>
-                <button onclick="app.closeSidebar();" class="md:hidden text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-lg">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+                <div>
+                    <h1 class="font-black text-xl leading-none tracking-tight">all around <span class="text-indigo-600 block italic">IT Wiki</span></h1>
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mt-1 block">Sales Edition</span>
+                </div>
             </div>
         </div>
-        <div class="flex-1 overflow-y-auto px-6 py-6 custom-scrollbar flex flex-col gap-2" id="sidebar-nav-container">
-            <!-- Rendered by JS -->
+
+        <!-- Navigation Container -->
+        <div class="flex-1 overflow-y-auto px-6 py-4 custom-scrollbar" id="sidebar-nav-container">
+            <!-- Navigation items injected by JS -->
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="p-6 border-t border-slate-100 dark:border-slate-700">
+            <button onclick="app.toggleDarkMode()" class="w-full flex items-center justify-between p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all group">
+                <span class="text-sm font-bold text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white">Farbschema</span>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="sun" class="w-4 h-4 text-amber-500 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-4 h-4 text-indigo-600 block dark:hidden"></i>
+                </div>
+            </button>
         </div>
     </aside>
 
+    <!-- Main Content -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
-        <header id="main-header" class="h-20 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center px-4 md:px-8 shadow-sm z-10 shrink-0 transition-colors duration-300">
-            <div class="w-full flex items-center justify-between gap-2 md:gap-4">
-                <div class="relative flex-1 max-w-2xl">
-                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-[18px] h-[18px]"></i>
-                    <input type="text" id="search-input" placeholder="Hardware-Begriff suchen..." oninput="app.handleSearch(this.value);" class="w-full pl-12 pr-4 py-3 bg-slate-100 dark:bg-slate-900/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all outline-none">
+        
+        <!-- Top Header -->
+        <header id="main-header" class="h-24 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 flex items-center px-6 md:px-10 z-20 shrink-0">
+            <div class="w-full flex items-center justify-between gap-6">
+                
+                <!-- Search Bar -->
+                <div class="relative flex-1 max-w-2xl group">
+                    <i data-lucide="search" class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors w-5 h-5"></i>
+                    <input 
+                        type="text" 
+                        id="search-input"
+                        placeholder="Hardware, Begriffe oder Pitches suchen..." 
+                        oninput="app.handleSearch(this.value)"
+                        class="w-full pl-14 pr-6 py-4 bg-slate-100 dark:bg-slate-900/50 border-2 border-transparent rounded-3xl text-sm focus:bg-white dark:focus:bg-slate-900 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none"
+                    >
                 </div>
-                <div class="flex items-center gap-2 shrink-0 ml-auto">
-                    <button onclick="app.handleNavigate('favoriten');" title="Meine Favoriten" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-900/50 text-slate-500 hover:text-amber-500 hover:bg-slate-200 transition-colors flex items-center justify-center">
+                
+                <!-- Quick Actions -->
+                <div class="flex items-center gap-3">
+                    <button onclick="app.handleNavigate('favoriten')" title="Favoriten" class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-amber-500 hover:border-amber-200 transition-all">
                         <i data-lucide="star" class="w-5 h-5"></i>
                     </button>
-                    <button onclick="app.startLearningMode();" title="Selbststudium" class="flex items-center gap-2 px-4 py-3 rounded-2xl bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 transition-colors font-bold text-sm">
+                    <button onclick="app.handleNavigate('selbststudium')" class="hidden sm:flex items-center gap-3 px-6 py-4 rounded-2xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-none transition-all">
                         <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                        <span class="hidden md:inline">Selbststudium</span>
-                    </button>
-                    <button onclick="app.toggleDarkMode();" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-900/50 text-slate-500 hover:text-indigo-600 hover:bg-slate-200 transition-colors flex items-center justify-center">
-                        <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
-                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                        <span>Lernpfad</span>
                     </button>
                 </div>
             </div>
         </header>
 
-        <section id="content-area" class="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar scroll-smooth">
-            <div id="view-container" class="max-w-4xl mx-auto pb-20">
-                <!-- Rendered by JS -->
+        <!-- Content Area -->
+        <section id="content-area" class="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar scroll-smooth">
+            <div id="view-container" class="max-w-5xl mx-auto pb-20">
+                <!-- Content injected by JS -->
             </div>
         </section>
+
+        <!-- Chat Widget -->
+        <div id="chat-widget-root" class="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
+            <!-- Chatbot UI injected by JS -->
+        </div>
     </main>
 
     <script>
-        // --- DATA ---
+        // --- DATA LAYER ---
         const WIKI_DATA = [
-            { id: "eva_konzept", title: "Das EVA-Prinzip (Einstieg)", category: "eva_uebersicht", definition: "Das **EVA-Prinzip** ist das Fundament der IT: **E**ingabe, **V**erarbeitung, **A**usgabe.", content: "Jeder Computer der Welt funktioniert im Kern gleich. 1. Eingabe, 2. Verarbeitung, 3. Ausgabe. Vom EVA zum EVA-S: S für Speicherung.", businessValue: "Nutzen Sie das einfache EVA-Modell, um Kunden zu erklären, dass Hardware immer als geschlossene Kette funktioniert.", related: ["Zentraleinheit", "Software", "Speicherung"], tags: ["Grundlagen", "Einstieg"] },
-            { id: "eingabe_konzept", title: "Eingabe (Das Tor zum System)", category: "eingabe", definition: "Die **Eingabe** ist die erste Phase des EVA-S Prinzips.", content: "Eingabegeräte sind unsere 'Sinnesorgane' für den Computer: Tastatur, Maus, Mikrofon.", businessValue: "Eine hochwertige Eingabe-Peripherie steigert die Motivation der Mitarbeiter und schont die Gesundheit.", related: ["Tastatur", "Maus", "Scanner"], tags: ["Input", "EVA-S"] },
-            { id: "verarbeitung_konzept", title: "Verarbeitung (Das Herz der IT)", category: "verarbeitung", definition: "In der **Verarbeitung** werden die Rohdaten durch Rechenoperationen in nutzbare Informationen verwandelt.", content: "Der Prozessor (CPU) ist der kluge Sachbearbeiter. Der Arbeitsspeicher (RAM) ist die Tischplatte seines Schreibtisches.", businessValue: "Die Phase der Verarbeitung entscheidet über die Geschwindigkeit. Niemand will Wartezeiten.", related: ["CPU", "RAM"], tags: ["Logik", "EVA-S"] },
-            { id: "ausgabe_konzept", title: "Ausgabe (Das Sichtbare)", category: "ausgabe", definition: "Die **Ausgabe** ist die Präsentation der verarbeiteten Daten für Menschen.", content: "Visuell über den Monitor, physisch über den Drucker, akustisch über Lautsprecher.", businessValue: "Eine brillante Darstellung erhöht die wahrgenommene Wertigkeit der IT massiv.", related: ["Monitor", "Drucker"], tags: ["Output", "EVA-S"] },
-            { id: "speicherung_konzept", title: "Speicherung (Das Gedächtnis)", category: "speicherung", definition: "Die **Speicherung** sichert Daten dauerhaft.", content: "Ohne Speicherung wäre der Computer vergesslich. Das S steht für das Langzeit-Archiv (SSD/Cloud).", businessValue: "Datensicherheit ist das Top-Thema für jedes Unternehmen.", related: ["SSD", "HDD"], tags: ["Archiv", "EVA-S"] },
-            { id: "desktop", title: "Desktop-PC", category: "bauformen", definition: "Ein stationärer Computer für den Einsatz am Schreibtisch.", content: "Der klassische Lastwagen der IT. Groß, viel Platz für Kühlung, aufrüstbar.", businessValue: "Die robusteste, langlebigste Lösung für stationäre Plätze.", related: ["Laptop"], tags: ["System", "Büro"] },
-            { id: "cloud", title: "Cloud-Speicher", category: "speicherung", definition: "Speicherplatz auf entfernten Servern.", content: "Dateien liegen verschlüsselt im Internet. Bietet Mobilität und Ausfallsicherheit.", businessValue: "Maximal flexibel für Home-Office und Vertrieb.", related: ["SSD"], tags: ["Internet", "Modern"] }
+            { 
+                id: "eva_konzept", 
+                title: "Das EVA-S Prinzip", 
+                category: "eva_uebersicht", 
+                definition: "Das Fundament der IT: **E**ingabe, **V**erarbeitung, **A**usgabe und **S**peicherung.", 
+                content: "Jedes IT-System folgt diesem universellen Prozess. \n\n1. **Eingabe**: Rohdaten fließen ins System (Tastatur, Scanner).\n2. **Verarbeitung**: Die CPU berechnet Ergebnisse basierend auf Logik.\n3. **Ausgabe**: Informationen werden für Menschen lesbar (Monitor, Drucker).\n4. **Speicherung**: Ergebnisse werden dauerhaft gesichert (SSD, Cloud).\n\nDieses Modell hilft Kunden zu verstehen, warum ein langsames Bauteil (Flaschenhals) die gesamte Kette bremst.", 
+                businessValue: "Nutzen Sie das EVA-S Modell, um **Ganzheitlichkeit** zu verkaufen. Ein High-End PC bringt nichts ohne einen ergonomischen Monitor (Ausgabe) oder schnellen Speicher (Speicherung).", 
+                related: ["Prozessor (CPU)", "SSD", "Monitor"], 
+                tags: ["Grundlagen", "Methodik"],
+                image: "https://placehold.co/600x400/4f46e5/ffffff?text=EVA-S+Prinzip"
+            },
+            { 
+                id: "cpu", 
+                title: "Prozessor (CPU)", 
+                category: "verarbeitung", 
+                definition: "Die Zentraleinheit und das logische 'Gehirn' des Computers.", 
+                content: "Die CPU steuert alle Berechnungen. Wichtige Faktoren sind die **Taktfrequenz (GHz)** für die Einzelgeschwindigkeit und die **Kern-Anzahl** für Multitasking.\n\nIm Büro-Kontext: Mehr Kerne erlauben das flüssige gleichzeitige Arbeiten in Teams, Excel und CRM ohne Ruckler.", 
+                businessValue: "Ein starker Prozessor ist eine Investition in die **Mitarbeiter-Produktivität**. Weniger Wartezeiten bedeuten mehr geschaffte Aufgaben pro Tag.", 
+                related: ["Mainboard", "Arbeitsspeicher (RAM)"], 
+                tags: ["Hardware", "Leistung"],
+                image: "https://placehold.co/600x400/e2e8f0/475569?text=CPU"
+            },
+            { 
+                id: "ram", 
+                title: "Arbeitsspeicher (RAM)", 
+                category: "verarbeitung", 
+                definition: "Der flüchtige Kurzzeitspeicher für aktive Programme.", 
+                content: "RAM ist die 'digitale Werkbank'. Je größer sie ist, desto mehr 'Akten' (Programme) können gleichzeitig offen liegen.\n\nHeutiger Standard: 8GB (Einstieg), 16GB (Empfehlung Büro), 32GB+ (Grafik/Entwicklung).", 
+                businessValue: "RAM ist das **günstigste Upgrade** für sofort spürbare Geschwindigkeit. Vermeiden Sie 'Memory Swapping' (Auslagern auf die langsame Platte) durch ausreichend Kapazität.", 
+                related: ["SSD", "CPU"], 
+                tags: ["Speicher", "Geschwindigkeit"],
+                image: "https://placehold.co/600x400/e2e8f0/475569?text=RAM"
+            },
+            { 
+                id: "ssd", 
+                title: "Solid State Drive (SSD)", 
+                category: "speicherung", 
+                definition: "Rasend schneller, elektronischer Langzeitspeicher ohne bewegliche Teile.", 
+                content: "Im Gegensatz zur alten HDD arbeitet die SSD lautlos und schockresistent. Sie ist bis zu 100x schneller beim Zugriff auf Daten.\n\nNVMe-SSDs sind der aktuelle Standard für maximale Performance beim Systemstart.", 
+                businessValue: "Eine SSD ist ein **Must-have**. Verkaufen Sie den Zeitvorteil: 'Ihr Rechner ist in 10 Sekunden einsatzbereit statt in 2 Minuten.'", 
+                related: ["Cloud-Speicher", "RAM"], 
+                tags: ["Speicher", "Modern"],
+                image: "https://placehold.co/600x400/e2e8f0/475569?text=SSD"
+            },
+            { 
+                id: "monitor", 
+                title: "Monitor", 
+                category: "ausgabe", 
+                definition: "Das wichtigste visuelle Ausgabegerät für den Nutzer.", 
+                content: "Qualität wird durch **Auflösung (Full HD, 4K)**, **Panel-Typ (IPS für Farbtreue)** und **Ergonomie** definiert.", 
+                businessValue: "Verkaufen Sie **Gesundheit**. Ein höhenverstellbarer Monitor mit Blaulichtfilter reduziert Krankheitstage durch Nackenbeschwerden und Augenermüdung.", 
+                related: ["Grafikkarte", "HDMI"], 
+                tags: ["Ergonomie", "Peripherie"],
+                image: "https://placehold.co/600x400/e2e8f0/475569?text=Monitor"
+            },
+            {
+                id: "sprint1",
+                title: "Projekt-Doku: Sprint 1",
+                category: "sprint_berichte",
+                definition: "Aufbau der Grundstruktur und Kerninhalte.",
+                content: "Im ersten Sprint wurde das technische Grundgerüst des Wikis erstellt. \n\n**Meilensteine:**\n- Implementierung des SPA-Systems (Single Page Application).\n- Definition des EVA-S Datenmodells.\n- Erstellung der ersten 10 Hardware-Artikel.\n- Design des Dark-Modes.",
+                businessValue: "Dokumentation sichert die **Qualität** und Nachvollziehbarkeit unserer Beratungsgrundlage.",
+                related: ["sprint2"],
+                tags: ["Management", "Doku"]
+            },
+            {
+                id: "sprint2",
+                title: "Projekt-Doku: Sprint 2",
+                category: "sprint_berichte",
+                definition: "Interaktive Features und Gamification.",
+                content: "Der zweite Sprint fokussierte sich auf die Benutzererfahrung.\n\n**Meilensteine:**\n- Integration des KI-Chatbots.\n- Aufbau des Quiz-Systems.\n- PDF/Canvas Zertifikatserstellung.\n- Suchalgorithmus-Optimierung.",
+                businessValue: "Interaktive Tools erhöhen die **Lernkurve** neuer Vertriebsmitarbeiter um bis zu 40%.",
+                related: ["sprint1"],
+                tags: ["KI", "Features"]
+            }
         ];
 
+        // --- LEARNING MODE DATA ---
         const LEARNING_PATH = [
-            { level: 1, articleId: 'eva_konzept', title: 'Start: Das EVA-Prinzip', question: 'Wofür steht das "S" in der erweiterten Form "EVA-S"?', options: ['Sicherheit', 'Speicherung', 'System'], answer: 1 },
-            { level: 2, articleId: 'eingabe_konzept', title: 'Die Eingabe', question: 'Warum ist die Qualität der Eingabegeräte so wichtig?', options: ['Weil sie am meisten Strom verbrauchen', 'Zur Vermeidung von Frust und aus ergonomischen Gründen', 'Weil sie die Grafikkarte entlasten'], answer: 1 },
-            { level: 3, articleId: 'verarbeitung_konzept', title: 'Die Verarbeitung', question: 'Welches Bauteil haben wir in der Büro-Analogie als "Sachbearbeiter" bezeichnet?', options: ['Festplatte', 'Arbeitsspeicher (RAM)', 'Prozessor (CPU)'], answer: 2 },
-            { level: 4, articleId: 'ausgabe_konzept', title: 'Die Ausgabe', question: 'Was ist der direkte ROI (Return on Investment) eines zweiten Monitors laut Studien?', options: ['Bis zu 30% mehr Produktivität', 'Stromersparnis von 20%', 'Geringere CPU-Auslastung'], answer: 0 },
-            { level: 5, articleId: 'speicherung_konzept', title: 'Das Gedächtnis', question: 'Was ist der Hauptvorteil einer modernen SSD gegenüber einer alten Festplatte (HDD)?', options: ['Sie ist günstiger in der Anschaffung', 'Sie hat keine beweglichen Teile und ist extrem schnell', 'Sie druckt Dokumente schneller aus'], answer: 1 }
+            { level: 1, articleId: 'eva_konzept', title: 'Level 1: Das Fundament', question: 'Was bedeutet das "A" im EVA-Prinzip?', options: ['Analyse', 'Ausgabe', 'Arbeitsspeicher'], answer: 1 },
+            { level: 2, articleId: 'cpu', title: 'Level 2: Das Gehirn', question: 'Welcher Faktor bestimmt primär das Multitasking einer CPU?', options: ['Taktfrequenz', 'Lüftergröße', 'Anzahl der Kerne'], answer: 2 },
+            { level: 3, articleId: 'ssd', title: 'Level 3: Geschwindigkeit', question: 'Was ist der Hauptvorteil einer SSD gegenüber einer HDD?', options: ['Günstigerer Preis', 'Keine beweglichen Teile / Hohes Tempo', 'Mehr Speicherplatz'], answer: 1 }
         ];
 
-        const NAVIGATION = [
-            { id: 'dashboard', name: 'Startseite', icon: 'home' },
-            { id: 'eva_konzept', name: 'EVA-Prinzip', icon: 'layers' }
+        // --- NAVIGATION STRUCTURE ---
+        const NAV_ITEMS = [
+            { id: 'dashboard', name: 'Zentrale', icon: 'home' },
+            { id: 'glossar', name: 'A-Z Glossar', icon: 'list' },
+            { 
+                id: 'hardware', 
+                name: 'Hardware-Welt', 
+                icon: 'cpu', 
+                children: [
+                    { id: 'eva_uebersicht', name: 'EVA-S Konzept', icon: 'layers' },
+                    { id: 'verarbeitung', name: 'Verarbeitung', icon: 'settings' },
+                    { id: 'speicherung', name: 'Speicherung', icon: 'hard-drive' },
+                    { id: 'ausgabe', name: 'Ausgabe', icon: 'monitor' }
+                ]
+            },
+            { 
+                id: 'projekt', 
+                name: 'Projekt-Doku', 
+                icon: 'folder-kanban',
+                children: [
+                    { id: 'sprint_berichte', name: 'Sprint-Berichte', icon: 'clipboard-list' },
+                    { id: 'kanban', name: 'Kanban Board', icon: 'columns' }
+                ]
+            }
         ];
 
-        // --- APP STATE & LOGIC ---
+        // --- STREAMING_CHUNK:Building Application Engine... ---
         const app = {
             state: {
                 currentTab: 'dashboard',
                 selectedArticleId: null,
                 searchTerm: '',
                 isSidebarOpen: window.innerWidth >= 768,
-                favorites: JSON.parse(localStorage.getItem('itWikiFavorites')) || [],
-                isDarkMode: localStorage.getItem('itWikiDarkMode') === 'true',
-                learning: {
-                    active: false,
-                    maxUnlockedLevel: parseInt(localStorage.getItem('itWikiMaxLevel')) || 1,
-                    quizAnsweredIdx: null,
-                    quizCorrect: null,
-                    showQuiz: false
-                }
+                favorites: JSON.parse(localStorage.getItem('wiki_favs')) || [],
+                isDarkMode: localStorage.getItem('wiki_dark') === 'true',
+                learningLevel: parseInt(localStorage.getItem('wiki_level')) || 1,
+                chatMessages: [{ role: 'bot', text: 'Bereit für den nächsten Abschluss? Ich helfe dir bei technischen Fragen oder Pitches!' }],
+                isChatOpen: false
             },
 
             init() {
                 if (this.state.isDarkMode) document.documentElement.classList.add('dark');
                 this.renderSidebar();
                 this.renderContent();
-                this.updateSidebarMobileVisibility();
+                this.renderChat();
+                lucide.createIcons();
+                
+                // Responsiveness
+                window.addEventListener('resize', () => {
+                    const shouldOpen = window.innerWidth >= 768;
+                    if (this.state.isSidebarOpen !== shouldOpen) {
+                        this.state.isSidebarOpen = shouldOpen;
+                        this.updateSidebarUI();
+                    }
+                });
             },
 
-            toggleDarkMode() {
-                this.state.isDarkMode = !this.state.isDarkMode;
-                localStorage.setItem('itWikiDarkMode', this.state.isDarkMode);
-                document.documentElement.classList.toggle('dark', this.state.isDarkMode);
+            // Navigation Logic
+            handleNavigate(tabId, articleId = null) {
+                this.state.currentTab = tabId;
+                this.state.selectedArticleId = articleId;
+                this.state.searchTerm = '';
+                document.getElementById('search-input').value = '';
+                
+                if (window.innerWidth < 768) this.closeSidebar();
+                
+                this.renderSidebar();
+                this.renderContent();
+                document.getElementById('content-area').scrollTo(0, 0);
+            },
+
+            handleSearch(term) {
+                this.state.searchTerm = term;
+                this.state.selectedArticleId = null;
+                this.renderContent();
             },
 
             toggleFavorite(id) {
                 const idx = this.state.favorites.indexOf(id);
                 if (idx > -1) this.state.favorites.splice(idx, 1);
                 else this.state.favorites.push(id);
-                localStorage.setItem('itWikiFavorites', JSON.stringify(this.state.favorites));
-                this.renderContent(); 
+                localStorage.setItem('wiki_favs', JSON.stringify(this.state.favorites));
+                this.renderContent();
             },
 
-            handleNavigate(tabId, articleId = null) {
-                this.state.currentTab = tabId;
-                this.state.selectedArticleId = articleId;
-                this.state.searchTerm = '';
-                this.state.learning.quizAnsweredIdx = null;
-                this.state.learning.quizCorrect = null;
-                this.state.learning.showQuiz = false;
-                if (window.innerWidth < 768) this.closeSidebar();
+            toggleDarkMode() {
+                this.state.isDarkMode = !this.state.isDarkMode;
+                localStorage.setItem('wiki_dark', this.state.isDarkMode);
+                document.documentElement.classList.toggle('dark');
                 this.renderSidebar();
-                this.renderContent();
             },
 
-            handleSearch(term) {
-                if(this.state.learning.active) return;
-                this.state.searchTerm = term.toLowerCase();
-                this.renderContent();
-            },
-
+            // Sidebar UI Methods
             toggleSidebar() {
                 this.state.isSidebarOpen = !this.state.isSidebarOpen;
-                this.updateSidebarMobileVisibility();
+                this.updateSidebarUI();
             },
 
             closeSidebar() {
                 this.state.isSidebarOpen = false;
-                this.updateSidebarMobileVisibility();
+                this.updateSidebarUI();
             },
 
-            updateSidebarMobileVisibility() {
+            updateSidebarUI() {
                 const sidebar = document.getElementById('sidebar');
                 const overlay = document.getElementById('sidebar-overlay');
                 if (this.state.isSidebarOpen) {
                     sidebar.classList.remove('-translate-x-full');
-                    overlay.classList.remove('hidden', 'opacity-0');
+                    overlay.classList.remove('hidden');
+                    setTimeout(() => overlay.classList.remove('opacity-0'), 10);
                 } else {
                     sidebar.classList.add('-translate-x-full');
                     overlay.classList.add('opacity-0');
-                    setTimeout(() => overlay.classList.add('hidden'), 300);
+                    setTimeout(() => overlay.classList.add('hidden'), 500);
                 }
             },
 
-            // --- LEARNING MODE LÖSUNG ---
-            startLearningMode() {
-                this.state.learning.active = true;
-                const maxLvl = LEARNING_PATH.find(l => l.level === this.state.learning.maxUnlockedLevel);
-                if (maxLvl) this.handleNavigate(null, maxLvl.articleId);
-            },
-
-            stopLearningMode() {
-                this.state.learning.active = false;
-                this.handleNavigate('dashboard');
-            },
-
-            startQuiz() {
-                this.state.learning.showQuiz = true;
-                this.renderContent();
-            },
-
-            answerMiniQuiz(level, selectedIdx) {
-                if (this.state.learning.quizAnsweredIdx !== null) return; 
-                
-                const step = LEARNING_PATH.find(l => l.level === level);
-                const isCorrect = selectedIdx === step.answer;
-                
-                this.state.learning.quizAnsweredIdx = selectedIdx;
-                this.state.learning.quizCorrect = isCorrect;
-
-                if (isCorrect && level === this.state.learning.maxUnlockedLevel) {
-                    this.state.learning.maxUnlockedLevel++;
-                    localStorage.setItem('itWikiMaxLevel', this.state.learning.maxUnlockedLevel);
-                }
-                this.renderContent();
-            },
-
-            nextLevel() {
-                const nextStep = LEARNING_PATH.find(l => l.level === this.state.learning.maxUnlockedLevel);
-                if (nextStep) {
-                    this.handleNavigate(null, nextStep.articleId);
-                } else {
-                    alert("Du hast alle Lern-Level abgeschlossen! Großartig!");
-                    this.stopLearningMode();
-                }
-            },
-
-            // --- RENDER FUNKTIONEN ---
+            // --- STREAMING_CHUNK:Rendering Core Components... ---
             renderSidebar() {
                 const container = document.getElementById('sidebar-nav-container');
-                let html = '';
-
-                if (this.state.learning.active) {
-                    html += `<div class="mb-4"><button onclick="app.stopLearningMode()" class="text-sm text-red-500 hover:text-red-700 flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i> Lernmodus beenden</button></div>`;
-                    html += `<h3 class="text-xs font-bold text-slate-400 uppercase mb-4">Lernpfad</h3>`;
+                let html = '<div class="space-y-2">';
+                
+                NAV_ITEMS.forEach(item => {
+                    const isActive = this.state.currentTab === item.id && !this.state.selectedArticleId;
+                    const activeClass = isActive ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50';
                     
-                    LEARNING_PATH.forEach(step => {
-                        const isUnlocked = step.level <= this.state.learning.maxUnlockedLevel;
-                        const isCurrent = this.state.selectedArticleId === step.articleId;
-                        const icon = isUnlocked ? 'unlock' : 'lock';
-                        const color = isCurrent ? 'bg-indigo-50 text-indigo-600' : (isUnlocked ? 'text-slate-700 dark:text-slate-300 hover:bg-slate-100' : 'text-slate-400 opacity-50 cursor-not-allowed');
-                        
-                        html += `
-                            <div onclick="${isUnlocked ? `app.handleNavigate(null, '${step.articleId}')` : ''}" 
-                                 class="flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-colors ${color}">
-                                <i data-lucide="${icon}" class="w-4 h-4"></i>
-                                <span class="text-sm font-medium">Level ${step.level}: ${step.title}</span>
-                            </div>
-                        `;
-                    });
-                } else {
-                    NAVIGATION.forEach(nav => {
-                        const active = this.state.currentTab === nav.id ? 'bg-indigo-50 text-indigo-600' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800';
-                        html += `
-                            <button onclick="app.handleNavigate('${nav.id}')" class="w-full flex items-center gap-3 p-3 rounded-xl ${active} transition-colors">
-                                <i data-lucide="${nav.icon}" class="w-5 h-5"></i>
-                                <span class="font-medium">${nav.name}</span>
+                    html += `
+                        <div>
+                            <button onclick="app.handleNavigate('${item.id}')" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${activeClass}">
+                                <i data-lucide="${item.icon}" class="w-5 h-5"></i>
+                                <span class="text-sm">${item.name}</span>
                             </button>
-                        `;
-                    });
-                    
-                    html += `<hr class="my-4 border-slate-200 dark:border-slate-700">`;
-                    html += `<h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Alle Artikel</h3>`;
-                    
-                    WIKI_DATA.forEach(article => {
-                        const active = this.state.selectedArticleId === article.id ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 dark:text-slate-400 hover:text-indigo-600';
-                        html += `
-                            <button onclick="app.handleNavigate('article', '${article.id}')" class="w-full text-left p-2 rounded-lg text-sm ${active} transition-colors">
-                                ${article.title}
-                            </button>
-                        `;
-                    });
-                }
-
+                            ${item.children ? `
+                                <div class="ml-4 mt-1 border-l-2 border-slate-100 dark:border-slate-700 space-y-1">
+                                    ${item.children.map(child => {
+                                        const isChildActive = this.state.currentTab === child.id;
+                                        return `
+                                            <button onclick="app.handleNavigate('${child.id}')" class="w-full flex items-center gap-3 px-4 py-2 rounded-xl text-xs transition-all ${isChildActive ? 'text-indigo-600 dark:text-indigo-400 font-bold' : 'text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'}">
+                                                <i data-lucide="${child.icon}" class="w-3 h-3"></i>
+                                                <span>${child.name}</span>
+                                            </button>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
                 container.innerHTML = html;
                 lucide.createIcons();
             },
 
             renderContent() {
                 const container = document.getElementById('view-container');
-                let html = '';
-
-                // Suchergebnisse anzeigen
-                if (this.state.searchTerm !== '') {
-                    const results = WIKI_DATA.filter(a => 
-                        a.title.toLowerCase().includes(this.state.searchTerm) || 
-                        a.content.toLowerCase().includes(this.state.searchTerm)
+                
+                // Search Results
+                if (this.state.searchTerm) {
+                    const results = WIKI_DATA.filter(d => 
+                        d.title.toLowerCase().includes(this.state.searchTerm.toLowerCase()) || 
+                        d.tags.some(t => t.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
                     );
-                    html = `<h2 class="text-2xl font-bold mb-6 animate-fade-in">Suchergebnisse für "${this.state.searchTerm}"</h2><div class="grid gap-4">`;
-                    results.forEach(res => {
-                        html += `
-                            <div onclick="app.handleNavigate('article', '${res.id}')" class="p-4 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-indigo-500 transition-colors animate-slide-in">
-                                <h3 class="font-bold text-lg text-indigo-600 dark:text-indigo-400 mb-2">${res.title}</h3>
-                                <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2">${res.definition}</p>
-                            </div>
-                        `;
-                    });
-                    html += `</div>`;
-                    if(results.length === 0) html += `<p class="text-slate-500">Keine Ergebnisse gefunden.</p>`;
-                } 
-                // Artikel Detailansicht
-                else if (this.state.selectedArticleId) {
-                    const article = WIKI_DATA.find(a => a.id === this.state.selectedArticleId);
-                    const isFav = this.state.favorites.includes(article.id);
-                    
-                    html = `
-                        <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-200 dark:border-slate-700 animate-slide-in">
-                            <div class="flex justify-between items-start mb-6">
-                                <h2 class="text-3xl font-black text-slate-900 dark:text-white">${article.title}</h2>
-                                <button onclick="app.toggleFavorite('${article.id}')" class="p-2 rounded-full ${isFav ? 'text-amber-500 bg-amber-50' : 'text-slate-400 hover:bg-slate-100'} transition-colors">
-                                    <i data-lucide="star" class="w-6 h-6 ${isFav ? 'fill-current' : ''}"></i>
-                                </button>
-                            </div>
-                            <div class="p-4 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-900 dark:text-indigo-100 rounded-xl mb-6 font-medium">
-                                ${article.definition.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
-                            </div>
-                            <div class="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed mb-8">
-                                ${article.content.replace(/\n/g, '<br/>')}
-                            </div>
-                            <div class="border-t border-slate-200 dark:border-slate-700 pt-6">
-                                <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3"><i data-lucide="briefcase" class="inline w-4 h-4 mr-2"></i>Sales Argument</h4>
-                                <p class="italic text-slate-600 dark:text-slate-400 border-l-4 border-green-500 pl-4">${article.businessValue}</p>
-                            </div>
-                        </div>
-                    `;
+                    this.renderListView(container, `Suche: ${this.state.searchTerm}`, results);
+                    return;
+                }
 
-                    // Wenn Lernmodus aktiv, Quiz unten anhängen
-                    if (this.state.learning.active) {
-                        const stepData = LEARNING_PATH.find(l => l.articleId === article.id);
-                        if (stepData) {
-                            if (!this.state.learning.showQuiz) {
-                                html += `
-                                    <div class="mt-8 text-center animate-fade-in">
-                                        <button onclick="app.startQuiz()" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg transition-transform transform hover:scale-105">
-                                            Artikel verstanden? Teste dein Wissen!
-                                        </button>
+                // Article Detail
+                if (this.state.selectedArticleId) {
+                    const article = WIKI_DATA.find(d => d.id === this.state.selectedArticleId);
+                    this.renderArticleView(container, article);
+                    return;
+                }
+
+                // Main Views
+                switch(this.state.currentTab) {
+                    case 'dashboard': this.renderDashboard(container); break;
+                    case 'glossar': this.renderGlossar(container); break;
+                    case 'favoriten': 
+                        const favs = WIKI_DATA.filter(d => this.state.favorites.includes(d.id));
+                        this.renderListView(container, 'Deine Favoriten', favs); 
+                        break;
+                    case 'selbststudium': this.renderLearning(container); break;
+                    case 'kanban': this.renderKanban(container); break;
+                    default:
+                        const catResults = WIKI_DATA.filter(d => d.category === this.state.currentTab);
+                        this.renderListView(container, this.state.currentTab.replace('_', ' '), catResults);
+                }
+                lucide.createIcons();
+            },
+
+            renderDashboard(container) {
+                container.innerHTML = `
+                    <div class="space-y-12 animate-fade-in">
+                        <div class="relative group">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                            <div class="relative bg-indigo-600 text-white p-10 md:p-16 rounded-[2.5rem] overflow-hidden">
+                                <div class="relative z-10 max-w-2xl">
+                                    <h2 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">Sales Intelligence <span class="text-indigo-200">Hardware.</span></h2>
+                                    <p class="text-indigo-100 text-lg md:text-xl mb-10 leading-relaxed">Vom Bauteil zum Kundennutzen. Schließe Wissenslücken, erstelle perfekte Pitches und zertifiziere dein Know-how.</p>
+                                    <div class="flex flex-wrap gap-4">
+                                        <button onclick="app.handleNavigate('selbststudium')" class="bg-white text-indigo-600 px-8 py-4 rounded-2xl font-black hover:scale-105 transition-all shadow-xl">Akademie starten</button>
+                                        <button onclick="app.handleNavigate('glossar')" class="bg-indigo-500/50 backdrop-blur-md text-white border border-indigo-400 px-8 py-4 rounded-2xl font-black hover:bg-indigo-500 transition-all">A-Z Glossar</button>
                                     </div>
-                                `;
-                            } else {
-                                html += `
-                                    <div class="mt-8 bg-slate-900 text-white rounded-3xl p-8 shadow-xl animate-slide-in border border-slate-700">
-                                        <h3 class="text-xl font-bold mb-6 text-indigo-400">Quiz: ${stepData.title}</h3>
-                                        <p class="text-lg mb-6">${stepData.question}</p>
-                                        <div class="grid gap-3">
-                                `;
-                                stepData.options.forEach((opt, idx) => {
-                                    let btnClass = "bg-slate-800 hover:bg-slate-700 border-slate-600";
-                                    if (this.state.learning.quizAnsweredIdx !== null) {
-                                        if (idx === stepData.answer) btnClass = "bg-green-600 border-green-500";
-                                        else if (idx === this.state.learning.quizAnsweredIdx) btnClass = "bg-red-600 border-red-500";
-                                    }
-                                    html += `
-                                        <button onclick="app.answerMiniQuiz(${stepData.level}, ${idx})" class="w-full text-left p-4 rounded-xl border ${btnClass} transition-colors font-medium">
-                                            ${opt}
-                                        </button>
-                                    `;
-                                });
-                                html += `</div>`;
-
-                                if (this.state.learning.quizAnsweredIdx !== null) {
-                                    if (this.state.learning.quizCorrect) {
-                                        html += `
-                                            <div class="mt-6 p-4 bg-green-500/20 text-green-400 rounded-xl border border-green-500/30 flex items-center gap-3 animate-fade-in">
-                                                <i data-lucide="check-circle" class="w-6 h-6 flex-shrink-0"></i>
-                                                <div class="flex-1 font-bold">Richtig! Perfekt gemacht.</div>
-                                                <button onclick="app.nextLevel()" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Weiter</button>
-                                            </div>
-                                        `;
-                                    } else {
-                                        html += `
-                                            <div class="mt-6 p-4 bg-red-500/20 text-red-400 rounded-xl border border-red-500/30 flex items-center gap-3 animate-fade-in">
-                                                <i data-lucide="x-circle" class="w-6 h-6 flex-shrink-0"></i>
-                                                <div class="flex-1 font-bold">Leider falsch. Lies den Artikel nochmal!</div>
-                                                <button onclick="app.handleNavigate(null, '${article.id}')" class="px-6 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600">Nochmal probieren</button>
-                                            </div>
-                                        `;
-                                    }
-                                }
-                                html += `</div>`;
-                            }
-                        }
-                    }
-                } 
-                // Dashboard Startseite
-                else {
-                    html = `
-                        <div class="text-center py-10 animate-fade-in">
-                            <h1 class="text-4xl font-black mb-4 dark:text-white">Willkommen im <span class="text-indigo-600">IT Wiki</span></h1>
-                            <p class="text-slate-500 max-w-lg mx-auto">Dein zentraler Knotenpunkt für Hardware-Wissen im Vertrieb. Wähle ein Thema aus der Leiste oder suche nach einem Begriff.</p>
-                        </div>
-                        <div class="grid md:grid-cols-2 gap-6 mt-8">
-                            <div onclick="app.handleNavigate('article', 'eva_konzept')" class="bg-gradient-to-br from-indigo-500 to-purple-600 p-8 rounded-3xl text-white cursor-pointer hover:shadow-xl transition-all transform hover:-translate-y-1">
-                                <h3 class="font-bold text-2xl mb-2 flex items-center gap-2"><i data-lucide="layers"></i> EVA Prinzip</h3>
-                                <p class="text-indigo-100 opacity-90">Der perfekte Startpunkt. Verstehe die Basis jedes Computers.</p>
+                                </div>
+                                <i data-lucide="zap" class="absolute -bottom-10 -right-10 w-96 h-96 text-white/10 rotate-12"></i>
                             </div>
-                            <div onclick="app.startLearningMode()" class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-indigo-500 transition-all">
-                                <h3 class="font-bold text-xl mb-2 text-slate-800 dark:text-white flex items-center gap-2"><i data-lucide="graduation-cap" class="text-indigo-600"></i> Selbststudium</h3>
-                                <p class="text-slate-500 text-sm">Absolviere den Lernpfad und werde Schritt für Schritt zum Hardware-Experten im Vertrieb.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="p-8 bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700">
+                                <h3 class="font-bold text-slate-400 text-xs uppercase tracking-widest mb-4">Fortschritt</h3>
+                                <div class="flex items-end gap-3">
+                                    <span class="text-4xl font-black">${this.state.learningLevel - 1}/${LEARNING_PATH.length}</span>
+                                    <span class="text-slate-400 text-sm mb-1">Module</span>
+                                </div>
+                            </div>
+                            <div class="p-8 bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700">
+                                <h3 class="font-bold text-slate-400 text-xs uppercase tracking-widest mb-4">Wiki-Daten</h3>
+                                <div class="flex items-end gap-3">
+                                    <span class="text-4xl font-black">${WIKI_DATA.length}</span>
+                                    <span class="text-slate-400 text-sm mb-1">Artikel</span>
+                                </div>
+                            </div>
+                            <div class="p-8 bg-white dark:bg-slate-800 rounded-3xl border border-slate-200 dark:border-slate-700">
+                                <h3 class="font-bold text-slate-400 text-xs uppercase tracking-widest mb-4">KI-Support</h3>
+                                <div class="flex items-end gap-3">
+                                    <span class="text-emerald-500 text-sm font-bold flex items-center gap-1 animate-pulse-soft">
+                                        <div class="w-2 h-2 rounded-full bg-emerald-500"></div> Online
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-black mb-8">Empfohlene Themen</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                ${WIKI_DATA.slice(0, 4).map(d => this.createCardHtml(d)).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderArticleView(container, article) {
+                const isFav = this.state.favorites.includes(article.id);
+                container.innerHTML = `
+                    <div class="animate-fade-in space-y-10">
+                        <div class="flex items-center justify-between">
+                            <button onclick="app.handleNavigate('${article.category}')" class="flex items-center gap-2 text-indigo-600 font-bold text-sm hover:-translate-x-1 transition-transform">
+                                <i data-lucide="arrow-left" class="w-4 h-4"></i> Zurück zur Liste
+                            </button>
+                            <button onclick="app.toggleFavorite('${article.id}')" class="p-3 rounded-2xl ${isFav ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 text-slate-400'} transition-all">
+                                <i data-lucide="star" class="w-6 h-6 ${isFav ? 'fill-current' : ''}"></i>
+                            </button>
+                        </div>
+
+                        <header class="space-y-6">
+                            <div class="flex flex-wrap gap-2">
+                                ${article.tags.map(t => `<span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-widest rounded-lg">${t}</span>`).join('')}
+                            </div>
+                            <h1 class="text-5xl font-black tracking-tight">${article.title}</h1>
+                            <p class="text-2xl text-slate-500 dark:text-slate-400 leading-relaxed font-medium">${article.definition.replace(/\*\*/g, '')}</p>
+                        </header>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                            <div class="lg:col-span-2 space-y-10">
+                                <div class="aspect-video rounded-[2.5rem] overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                                    <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover">
+                                </div>
+                                <div class="prose prose-slate dark:prose-invert max-w-none">
+                                    <h3 class="text-xl font-bold mb-4">Funktionsweise</h3>
+                                    <div class="text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-line">
+                                        ${article.content}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <div class="p-8 bg-indigo-600 text-white rounded-[2rem] shadow-xl shadow-indigo-100 dark:shadow-none">
+                                    <h3 class="font-black text-xs uppercase tracking-widest mb-6 text-indigo-200 flex items-center gap-2">
+                                        <i data-lucide="shield-check" class="w-4 h-4"></i> Sales Pitch
+                                    </h3>
+                                    <p class="text-lg font-medium leading-relaxed italic">"${article.businessValue}"</p>
+                                </div>
+
+                                <div class="p-8 bg-white dark:bg-slate-800 rounded-[2rem] border border-slate-200 dark:border-slate-700">
+                                    <h3 class="font-black text-xs uppercase tracking-widest mb-6 text-slate-400 flex items-center gap-2">
+                                        <i data-lucide="link" class="w-4 h-4"></i> Verwandt
+                                    </h3>
+                                    <div class="flex flex-col gap-3">
+                                        ${article.related.map(r => `
+                                            <button class="text-left text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-colors">
+                                                → ${r}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderListView(container, title, items) {
+                container.innerHTML = `
+                    <div class="animate-fade-in space-y-10">
+                        <h2 class="text-4xl font-black capitalize tracking-tight">${title}</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            ${items.map(d => this.createCardHtml(d)).join('')}
+                            ${items.length === 0 ? '<div class="col-span-full py-20 text-center text-slate-400 font-medium">Keine Einträge gefunden.</div>' : ''}
+                        </div>
+                    </div>
+                `;
+            },
+
+            createCardHtml(article) {
+                return `
+                    <div onclick="app.handleNavigate('${article.category}', '${article.id}')" class="group bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:shadow-2xl transition-all cursor-pointer">
+                        <div class="h-40 rounded-2xl bg-slate-50 dark:bg-slate-900 mb-6 overflow-hidden">
+                            <img src="${article.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-600 transition-colors">${article.title}</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 italic">${article.definition.replace(/\*\*/g, '')}</p>
+                        <div class="flex gap-2">
+                             ${article.tags.slice(0,2).map(t => `<span class="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-500 text-[9px] font-black uppercase tracking-widest rounded-lg">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderGlossar(container) {
+                const sorted = [...WIKI_DATA].sort((a,b) => a.title.localeCompare(b.title));
+                container.innerHTML = `
+                    <div class="animate-fade-in space-y-12">
+                        <h2 class="text-4xl font-black tracking-tight">A-Z Glossar</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            ${sorted.map(d => `
+                                <button onclick="app.handleNavigate('${d.category}', '${d.id}')" class="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 text-left transition-all group flex items-center justify-between">
+                                    <span class="font-bold group-hover:text-indigo-600 transition-colors">${d.title}</span>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300 group-hover:translate-x-1 transition-all"></i>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderKanban(container) {
+                container.innerHTML = `
+                    <div class="animate-fade-in space-y-6 h-full flex flex-col">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-3xl font-black tracking-tight">Projekt-Board</h2>
+                            <span class="text-xs font-bold text-slate-400">Live Synchronisiert via CryptPad</span>
+                        </div>
+                        <div class="flex-1 min-h-[600px] rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-inner">
+                            <iframe 
+                                src="https://cryptpad.fr/kanban/#/2/kanban/view/DyBsTGMdamt4G02TtJl6OhRlVPNtzbqP0wwedvlLEIQ/embed/" 
+                                class="w-full h-full bg-white"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                `;
+            },
+
+            // --- STREAMING_CHUNK:Building Gamification System... ---
+            renderLearning(container) {
+                const currentModule = LEARNING_PATH.find(l => l.level === this.state.learningLevel);
+                const progress = ((this.state.learningLevel - 1) / LEARNING_PATH.length) * 100;
+                
+                if (!currentModule) {
+                    this.renderCertificateView(container);
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div class="animate-fade-in max-w-3xl mx-auto space-y-12">
+                        <div class="text-center space-y-4">
+                            <h2 class="text-4xl font-black tracking-tight">Modul ${currentModule.level}: ${currentModule.title}</h2>
+                            <div class="w-full bg-slate-200 dark:bg-slate-700 h-3 rounded-full overflow-hidden max-w-md mx-auto">
+                                <div class="bg-indigo-600 h-full transition-all duration-1000" style="width: ${progress}%"></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-slate-800 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-700 shadow-2xl space-y-8">
+                            <div class="space-y-2">
+                                <span class="text-xs font-black text-indigo-600 uppercase tracking-widest">Wissenstest</span>
+                                <h3 class="text-2xl font-bold leading-tight">${currentModule.question}</h3>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 gap-4" id="quiz-options">
+                                ${currentModule.options.map((opt, i) => `
+                                    <button onclick="app.checkAnswer(${i})" class="w-full text-left p-5 rounded-2xl border-2 border-slate-100 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-500/50 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all font-medium">
+                                        ${opt}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="p-8 bg-indigo-50 dark:bg-indigo-500/10 rounded-3xl flex items-start gap-4">
+                            <i data-lucide="info" class="w-6 h-6 text-indigo-600 shrink-0"></i>
+                            <p class="text-sm text-indigo-900 dark:text-indigo-300 leading-relaxed italic">
+                                Tipp: Wenn du unsicher bist, schaue dir den Artikel zu <strong>${WIKI_DATA.find(d => d.id === currentModule.articleId).title}</strong> im Wiki an.
+                            </p>
+                        </div>
+                    </div>
+                `;
+            },
+
+            checkAnswer(idx) {
+                const currentModule = LEARNING_PATH.find(l => l.level === this.state.learningLevel);
+                const buttons = document.querySelectorAll('#quiz-options button');
+                
+                if (idx === currentModule.answer) {
+                    buttons[idx].classList.add('bg-emerald-500', 'border-emerald-500', 'text-white');
+                    setTimeout(() => {
+                        this.state.learningLevel++;
+                        localStorage.setItem('wiki_level', this.state.learningLevel);
+                        this.renderContent();
+                    }, 800);
+                } else {
+                    buttons[idx].classList.add('bg-red-500', 'border-red-500', 'text-white');
+                    setTimeout(() => this.renderContent(), 800);
+                }
+            },
+
+            renderCertificateView(container) {
+                container.innerHTML = `
+                    <div class="animate-fade-in text-center space-y-10 py-12">
+                        <div class="w-32 h-32 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto animate-bounce shadow-xl">
+                            <i data-lucide="award" class="w-16 h-16"></i>
+                        </div>
+                        <div class="space-y-4">
+                            <h2 class="text-5xl font-black tracking-tight">Akademie abgeschlossen!</h2>
+                            <p class="text-xl text-slate-500 max-w-xl mx-auto">Du hast alle Module erfolgreich gemeistert. Lade dir jetzt dein persönliches Sales-Zertifikat herunter.</p>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-slate-800 p-10 rounded-[2.5rem] border border-slate-200 dark:border-slate-700 shadow-2xl max-w-md mx-auto space-y-6">
+                            <input type="text" id="cert-name" placeholder="Dein vollständiger Name" class="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border-none outline-none focus:ring-2 focus:ring-indigo-600 font-bold">
+                            <button onclick="app.generateCertificate()" class="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-indigo-700 transition-all flex items-center justify-center gap-3">
+                                <i data-lucide="download" class="w-5 h-5"></i> Zertifikat erstellen
+                            </button>
+                            <button onclick="app.state.learningLevel = 1; app.renderContent()" class="text-slate-400 text-sm font-bold hover:text-slate-600">Lernpfad zurücksetzen</button>
+                        </div>
+                    </div>
+                    <canvas id="cert-canvas-hidden"></canvas>
+                `;
+            },
+
+            generateCertificate() {
+                const name = document.getElementById('cert-name').value || "IT Experte";
+                const canvas = document.getElementById('cert-canvas-hidden');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = 1200;
+                canvas.height = 800;
+                
+                // Styles
+                ctx.fillStyle = '#f8fafc';
+                ctx.fillRect(0,0,1200,800);
+                
+                ctx.strokeStyle = '#4f46e5';
+                ctx.lineWidth = 40;
+                ctx.strokeRect(0,0,1200,800);
+                
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '900 80px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText('ZERTIFIKAT', 600, 200);
+                
+                ctx.font = '500 30px Inter';
+                ctx.fillStyle = '#64748b';
+                ctx.fillText('Hiermit wird bestätigt, dass', 600, 300);
+                
+                ctx.font = 'italic 900 70px Inter';
+                ctx.fillStyle = '#4f46e5';
+                ctx.fillText(name, 600, 420);
+                
+                ctx.font = '500 30px Inter';
+                ctx.fillStyle = '#64748b';
+                ctx.fillText('die all around IT Sales Academy erfolgreich abgeschlossen hat.', 600, 520);
+                
+                ctx.font = '900 24px Inter';
+                ctx.fillStyle = '#1e293b';
+                ctx.fillText('ALL AROUND IT - SALES DIVISION', 600, 700);
+                
+                // Download
+                const link = document.createElement('a');
+                link.download = `IT_Zertifikat_${name.replace(' ', '_')}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            },
+
+            // --- STREAMING_CHUNK:Activating AI Sales Assistant... ---
+            renderChat() {
+                const root = document.getElementById('chat-widget-root');
+                const isOpen = this.state.isChatOpen;
+                
+                let html = '';
+                if (isOpen) {
+                    html = `
+                        <div class="mb-4 w-96 h-[500px] glass border border-slate-200 dark:border-slate-700 rounded-[2rem] shadow-2xl flex flex-col overflow-hidden animate-fade-in pointer-events-auto">
+                            <div class="p-6 bg-indigo-600 text-white flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center"><i data-lucide="bot" class="w-4 h-4"></i></div>
+                                    <span class="font-black text-sm">AI Sales Assistant</span>
+                                </div>
+                                <button onclick="app.toggleChat()"><i data-lucide="x" class="w-5 h-5"></i></button>
+                            </div>
+                            
+                            <div id="chat-scroller" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
+                                ${this.state.chatMessages.map(m => `
+                                    <div class="flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}">
+                                        <div class="max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${m.role === 'user' ? 'bg-indigo-600 text-white' : 'bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300'}">
+                                            ${m.text}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="p-4 border-t border-slate-100 dark:border-slate-700">
+                                <div class="relative">
+                                    <input type="text" id="chat-input" onkeydown="if(event.key==='Enter') app.sendChat()" placeholder="Frage mich nach Hardware..." class="w-full pl-4 pr-12 py-3 rounded-xl bg-slate-100 dark:bg-slate-900 border-none outline-none text-sm">
+                                    <button onclick="app.sendChat()" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg"><i data-lucide="send" class="w-4 h-4"></i></button>
+                                </div>
                             </div>
                         </div>
                     `;
                 }
 
-                container.innerHTML = html;
+                html += `
+                    <button onclick="app.toggleChat()" class="w-16 h-16 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-90 pointer-events-auto">
+                        <i data-lucide="${isOpen ? 'chevron-down' : 'message-circle'}" class="w-7 h-7"></i>
+                    </button>
+                `;
+                
+                root.innerHTML = html;
                 lucide.createIcons();
+                
+                if (isOpen) {
+                    const scroller = document.getElementById('chat-scroller');
+                    scroller.scrollTop = scroller.scrollHeight;
+                }
+            },
+
+            toggleChat() {
+                this.state.isChatOpen = !this.state.isChatOpen;
+                this.renderChat();
+            },
+
+            async sendChat() {
+                const input = document.getElementById('chat-input');
+                const text = input.value.trim();
+                if (!text) return;
+
+                this.state.chatMessages.push({ role: 'user', text });
+                input.value = '';
+                this.renderChat();
+
+                // Simple AI logic (Local Search fallback)
+                const lowerText = text.toLowerCase();
+                const match = WIKI_DATA.find(d => lowerText.includes(d.title.toLowerCase()) || d.tags.some(t => lowerText.includes(t.toLowerCase())));
+                
+                let response = "Dazu kann ich dir aktuell keinen spezifischen Pitch geben. Schau doch mal im Glossar vorbei!";
+                if (match) {
+                    response = `Hier ist ein starkes Argument für **${match.title}**: \n\n"${match.businessValue}" \n\nMehr Details findest du im Artikel!`;
+                } else if (lowerText.includes("hallo") || lowerText.includes("hi")) {
+                    response = "Hallo! Welches Hardware-Thema brennt dir heute unter den Nägeln?";
+                }
+
+                setTimeout(() => {
+                    this.state.chatMessages.push({ role: 'bot', text: response });
+                    this.renderChat();
+                }, 600);
             }
         };
 
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', () => {
-            app.init();
-        });
+        // --- FINAL BOOTSTRAP ---
+        window.addEventListener('DOMContentLoaded', () => app.init());
     </script>
 </body>
 </html>
