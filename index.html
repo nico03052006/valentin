@@ -114,11 +114,6 @@
         </section>
     </main>
 
-    <!-- Chat Widget Container -->
-    <div id="chat-widget-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
-        <!-- Rendered by JS -->
-    </div>
-
     <script>
         // --- DATA ---
         const WIKI_DATA = [
@@ -143,16 +138,16 @@
 
             // --- EINGABE ---
             { id: "eingabe_konzept", title: "Eingabe (Das Tor zum System)", category: "eingabe", definition: "Die **Eingabe** ist die erste Phase des EVA-S Prinzips. Hier gelangen Befehle des Nutzers in das digitale System.", content: "In der **Eingabe-Phase** übersetzen wir menschliche Wünsche in eine Sprache, die der Computer versteht. Stellen Sie sich das wie den **Posteingang** in einem Büro vor: Wenn der Postbote keine Briefe oder E-Mails bringt, sitzt der Sachbearbeiter Däumchen drehend am Schreibtisch.\n\nEingabegeräte sind unsere 'Sinnesorgane' für den Computer:\n- Die **Tastatur** ist der Stift.\n- Die **Maus** ist der Zeigefinger.\n- Das **Mikrofon** ist das Ohr des Computers.\n- Eine **Kamera** (Webcam) ist sein Auge.\n\nDa wir als Menschen physisch mit diesen Geräten arbeiten, muss hier alles perfekt zu unserem Körper passen. Ein klemmender Stift nervt – eine schlechte Maus macht auf Dauer krank.", alltagsbeispiel: "Die Eingabe ist wie die Bestellung im Restaurant. Sie sagen dem Kellner, was Sie essen möchten (Tastatur/Maus). Ohne diese Eingabe weiß die Küche (der Computer) nicht, was sie tun soll und fängt gar nicht erst an zu kochen.", related: ["Tastatur", "Maus", "Scanner"], tags: ["Input", "EVA-S"] },
-            { id: "tastatur", title: "Tastatur", category: "eingabe", definition: "Das primäre Eingabegerät für Text, Zahlen und komplexe Systembefehle.", content: "Die Tastatur (Keyboard) ist die **direkteste Schnittstelle zwischen menschlichen Gedanken und dem PC**. Für die meisten Büroarbeiter ist sie das Werkzeug, das sie am Tag am häufigsten anfassen.\n\nEs gibt deutliche Unterschiede in der Bauart:\n- **Membrantastaturen (Folientastaturen)**: Meist günstig, flach und leise. Sie fühlen sich oft etwas 'schwammig' an.\n- **Mechanische Tastaturen**: Unter jeder Taste sitzt ein echter, physischer Schalter. Sie sind lauter, geben den Fingern aber ein geniales Feedback. Wer viel tippt, schwört oft auf mechanische Tasten.\n- **Ergonomische Tastaturen**: Sind oft in der Mitte geteilt und gewellt, um die Hände in einer natürlichen, geraden Haltung zu halten und Sehnenscheidenentzündungen vorzubeugen.", alltagsbeispiel: "Die Tastatur ist wie das Lenkrad und die Pedale in Ihrem Auto. Es ist die einzige Möglichkeit, der großen, starken Maschine (dem PC) exakt mitzuteilen, wohin die Reise gehen soll.", related: ["Maus", "Eingabe"], tags: ["Hardware", "Input"] },
-            { id: "maus", title: "Maus", category: "eingabe", definition: "Ein Eingabegerät zur präzisen Steuerung des Cursors auf grafischen Oberflächen.", content: "Die Computer-Maus ist unser **virtueller Zeigefinger auf dem Bildschirm**. Sie übersetzt unsere Handbewegungen auf dem Schreibtisch direkt in Bewegungen des Cursors (Pfeil).\n\nModerne Mäuse nutzen optische Sensoren oder Laser, um den Untergrund zu scannen und die Bewegung zu berechnen. \n- **Kabellos vs. Kabel**: Kabellose Mäuse sorgen für einen aufgeräumten Schreibtisch, brauchen aber ab und zu Batterien oder müssen geladen werden.\n- **Vertikalmäuse**: Ein großer Trend in der Ergonomie! Man greift sie nicht flach von oben, sondern seitlich wie bei einem Handschlag. Das entlastet die Handgelenke und verhindert den berüchtigten 'Mausarm' (RSI-Syndrom).", alltagsbeispiel: "Die Maus funktioniert wie ein Laserpointer bei einer Präsentation. Anstatt kompliziert zu erklären, was Sie meinen, leuchten Sie einfach exakt auf den Punkt auf der Leinwand und klicken.", related: ["Tastatur", "Eingabe"], tags: ["Peripherie", "Ergonomie"] },
-            { id: "scanner", title: "Scanner", category: "eingabe", definition: "Ein Gerät, das physische Dokumente in digitale Bild- oder Textdateien umwandelt.", content: "Ein Scanner ist wie eine **digitale Kopiermaschine, die Papier in Einsen und Nullen verwandelt**.\n\nWenn ein Kunde noch viele Papierrechnungen, Verträge oder Skizzen bekommt, benötigt er einen Scanner. Das Dokument wird beleuchtet und zeilenweise abgetastet.\n- **Flachbettscanner**: Gut für Bücher oder empfindliche Dokumente. Das Blatt wird aufgelegt.\n- **Dokumentenscanner (ADF)**: Ein automatischer Papiereinzug. Zieht einen Stapel von 50 Blättern rasend schnell nacheinander durch. Ideal für die Buchhaltung.\n- **OCR-Software**: Das ist der Zaubertrick moderner Scanner. OCR (Optical Character Recognition) erkennt die Buchstaben im gescannten Bild und macht daraus ein durchsuchbares Word- oder PDF-Dokument.", alltagsbeispiel: "Ein Scanner in Kombination mit Texterkennung (OCR) ist wie ein extrem schneller Assistent, der einen echten Brief vom Finanzamt liest und ihn für Sie sofort fehlerfrei in eine digitale E-Mail abtippt.", related: ["Drucker", "Eingabe"], tags: ["Digitalisierung", "Peripherie"] },
-            { id: "mikrofon", title: "Mikrofon", category: "eingabe", definition: "Eingabegerät zur Aufzeichnung und Digitalisierung von Sprach- und Tonsignalen.", content: "Das Mikrofon wandelt Schallwellen in elektrische Signale um. In der modernen Geschäftswelt, die stark auf Microsoft Teams und Zoom setzt, ist ein gutes Mikrofon geschäftskritisch.\n\nOft sind Mikrofone in Laptops oder Headsets integriert. Es gibt aber auch eigenständige Tischmikrofone für Konferenzräume, die 360 Grad abdecken und störende Hintergrundgeräusche aktiv herausfiltern (Noise Cancellation).", alltagsbeispiel: "Das Mikrofon ist das Gehör des Computers, ähnlich wie das menschliche Ohr, das Schall in Nervenimpulse umwandelt.", related: ["Webcam", "Lautsprecher"], tags: ["Kommunikation", "Hardware"] },
-            { id: "webcam", title: "Webcam", category: "eingabe", definition: "Eine kleine digitale Kamera für Live-Video-Übertragungen in Meetings und Videokonferenzen.", content: "Die Webcam ist das **digitale Auge für das Home-Office**.\n\nZwar haben heute fast alle Laptops eine Kamera oben im Deckel integriert, aber diese sind oft extrem billig, klein und lichtschwach. Wenn der Mitarbeiter vor einem Fenster sitzt, ist sein Gesicht im Meeting oft komplett schwarz.\n\nExterne Webcams (per USB auf den Monitor geklippt) haben deutlich größere Linsen. Sie lassen mehr Licht hinein, haben einen schnellen Autofokus und können oft sogar im Raum umhergehen und Personen intelligent im Bildausschnitt verfolgen (Auto-Framing).", alltagsbeispiel: "Eine Webcam ist der digitale Türspion, durch den Ihre Kunden ins Home-Office blicken. Haben Sie eine schlechte Kamera, ist der Türspion winzig, verschmiert und dunkel. Eine Premium-Webcam wirkt hingegen, als hätten Sie die Tür weit geöffnet und stünden direkt gegenüber.", related: ["Audio-Anschlüsse", "Laptop / Notebook"], tags: ["Kommunikation", "Peripherie"] },
-            { id: "touchscreen", title: "Touchscreen", category: "eingabe", definition: "Ein Bildschirm, der gleichzeitig Ausgabegerät ist und Eingaben durch Berührung erkennt.", content: "Der Touchscreen vereint die Ausgabe (Monitor) und die Eingabe (Maus/Tastatur) in einem einzigen Panel. Sensoren unter dem Glas erkennen die winzigen elektrischen Ströme der menschlichen Haut (kapazitiver Touchscreen).\n\nIn der Geschäftswelt finden sich Touchscreens nicht nur in Tablets, sondern auch in Kiosksystemen, interaktiven Whiteboards in Meetingräumen oder robusten Industrie-PCs in Werkshallen.", alltagsbeispiel: "Ein Touchscreen ist wie das direkte Deuten auf ein Gericht auf der Speisekarte, anstatt dem Kellner (über eine Tastatur) den komplizierten Namen vorlesen zu müssen.", related: ["Tablet", "Monitor"], tags: ["Hardware", "Interaktiv"] },
+            { id: "tastatur", title: "Tastatur", image: "Tastatur.png", category: "eingabe", definition: "Das primäre Eingabegerät für Text, Zahlen und komplexe Systembefehle.", content: "Die Tastatur (Keyboard) ist die **direkteste Schnittstelle zwischen menschlichen Gedanken und dem PC**. Für die meisten Büroarbeiter ist sie das Werkzeug, das sie am Tag am häufigsten anfassen.\n\nEs gibt deutliche Unterschiede in der Bauart:\n- **Membrantastaturen (Folientastaturen)**: Meist günstig, flach und leise. Sie fühlen sich oft etwas 'schwammig' an.\n- **Mechanische Tastaturen**: Unter jeder Taste sitzt ein echter, physischer Schalter. Sie sind lauter, geben den Fingern aber ein geniales Feedback. Wer viel tippt, schwört oft auf mechanische Tasten.\n- **Ergonomische Tastaturen**: Sind oft in der Mitte geteilt und gewellt, um die Hände in einer natürlichen, geraden Haltung zu halten und Sehnenscheidenentzündungen vorzubeugen.", alltagsbeispiel: "Die Tastatur ist wie das Lenkrad und die Pedale in Ihrem Auto. Es ist die einzige Möglichkeit, der großen, starken Maschine (dem PC) exakt mitzuteilen, wohin die Reise gehen soll.", related: ["Maus", "Eingabe"], tags: ["Hardware", "Input"] },
+            { id: "maus", title: "Maus", image: "Maus.png", category: "eingabe", definition: "Ein Eingabegerät zur präzisen Steuerung des Cursors auf grafischen Oberflächen.", content: "Die Computer-Maus ist unser **virtueller Zeigefinger auf dem Bildschirm**. Sie übersetzt unsere Handbewegungen auf dem Schreibtisch direkt in Bewegungen des Cursors (Pfeil).\n\nModerne Mäuse nutzen optische Sensoren oder Laser, um den Untergrund zu scannen und die Bewegung zu berechnen. \n- **Kabellos vs. Kabel**: Kabellose Mäuse sorgen für einen aufgeräumten Schreibtisch, brauchen aber ab und zu Batterien oder müssen geladen werden.\n- **Vertikalmäuse**: Ein großer Trend in der Ergonomie! Man greift sie nicht flach von oben, sondern seitlich wie bei einem Handschlag. Das entlastet die Handgelenke und verhindert den berüchtigten 'Mausarm' (RSI-Syndrom).", alltagsbeispiel: "Die Maus funktioniert wie ein Laserpointer bei einer Präsentation. Anstatt kompliziert zu erklären, was Sie meinen, leuchten Sie einfach exakt auf den Punkt auf der Leinwand und klicken.", related: ["Tastatur", "Eingabe"], tags: ["Peripherie", "Ergonomie"] },
+            { id: "scanner", title: "Scanner", image: "Scanner.png", category: "eingabe", definition: "Ein Gerät, das physische Dokumente in digitale Bild- oder Textdateien umwandelt.", content: "Ein Scanner ist wie eine **digitale Kopiermaschine, die Papier in Einsen und Nullen verwandelt**.\n\nWenn ein Kunde noch viele Papierrechnungen, Verträge oder Skizzen bekommt, benötigt er einen Scanner. Das Dokument wird beleuchtet und zeilenweise abgetastet.\n- **Flachbettscanner**: Gut für Bücher oder empfindliche Dokumente. Das Blatt wird aufgelegt.\n- **Dokumentenscanner (ADF)**: Ein automatischer Papiereinzug. Zieht einen Stapel von 50 Blättern rasend schnell nacheinander durch. Ideal für die Buchhaltung.\n- **OCR-Software**: Das ist der Zaubertrick moderner Scanner. OCR (Optical Character Recognition) erkennt die Buchstaben im gescannten Bild und macht daraus ein durchsuchbares Word- oder PDF-Dokument.", alltagsbeispiel: "Ein Scanner in Kombination mit Texterkennung (OCR) ist wie ein extrem schneller Assistent, der einen echten Brief vom Finanzamt liest und ihn für Sie sofort fehlerfrei in eine digitale E-Mail abtippt.", related: ["Drucker", "Eingabe"], tags: ["Digitalisierung", "Peripherie"] },
+            { id: "mikrofon", title: "Mikrofon", image: "Mirkofon.png", category: "eingabe", definition: "Eingabegerät zur Aufzeichnung und Digitalisierung von Sprach- und Tonsignalen.", content: "Das Mikrofon wandelt Schallwellen in elektrische Signale um. In der modernen Geschäftswelt, die stark auf Microsoft Teams und Zoom setzt, ist ein gutes Mikrofon geschäftskritisch.\n\nOft sind Mikrofone in Laptops oder Headsets integriert. Es gibt aber auch eigenständige Tischmikrofone für Konferenzräume, die 360 Grad abdecken und störende Hintergrundgeräusche aktiv herausfiltern (Noise Cancellation).", alltagsbeispiel: "Das Mikrofon ist das Gehör des Computers, ähnlich wie das menschliche Ohr, das Schall in Nervenimpulse umwandelt.", related: ["Webcam", "Lautsprecher"], tags: ["Kommunikation", "Hardware"] },
+            { id: "webcam", title: "Webcam", image: "Webcam.png", category: "eingabe", definition: "Eine kleine digitale Kamera für Live-Video-Übertragungen in Meetings und Videokonferenzen.", content: "Die Webcam ist das **digitale Auge für das Home-Office**.\n\nZwar haben heute fast alle Laptops eine Kamera oben im Deckel integriert, aber diese sind oft extrem billig, klein und lichtschwach. Wenn der Mitarbeiter vor einem Fenster sitzt, ist sein Gesicht im Meeting oft komplett schwarz.\n\nExterne Webcams (per USB auf den Monitor geklippt) haben deutlich größere Linsen. Sie lassen mehr Licht hinein, haben einen schnellen Autofokus und können oft sogar im Raum umhergehen und Personen intelligent im Bildausschnitt verfolgen (Auto-Framing).", alltagsbeispiel: "Eine Webcam ist der digitale Türspion, durch den Ihre Kunden ins Home-Office blicken. Haben Sie eine schlechte Kamera, ist der Türspion winzig, verschmiert und dunkel. Eine Premium-Webcam wirkt hingegen, als hätten Sie die Tür weit geöffnet und stünden direkt gegenüber.", related: ["Audio-Anschlüsse", "Laptop / Notebook"], tags: ["Kommunikation", "Peripherie"] },
+            { id: "touchscreen", title: "Touchscreen", image: "Touchscreen.png", category: "eingabe", definition: "Ein Bildschirm, der gleichzeitig Ausgabegerät ist und Eingaben durch Berührung erkennt.", content: "Der Touchscreen vereint die Ausgabe (Monitor) und die Eingabe (Maus/Tastatur) in einem einzigen Panel. Sensoren unter dem Glas erkennen die winzigen elektrischen Ströme der menschlichen Haut (kapazitiver Touchscreen).\n\nIn der Geschäftswelt finden sich Touchscreens nicht nur in Tablets, sondern auch in Kiosksystemen, interaktiven Whiteboards in Meetingräumen oder robusten Industrie-PCs in Werkshallen.", alltagsbeispiel: "Ein Touchscreen ist wie das direkte Deuten auf ein Gericht auf der Speisekarte, anstatt dem Kellner (über eine Tastatur) den komplizierten Namen vorlesen zu müssen.", related: ["Tablet", "Monitor"], tags: ["Hardware", "Interaktiv"] },
             { id: "barcode_scanner", title: "Barcode- / QR-Scanner", image: "QR Scanner.png", category: "eingabe", definition: "Ein optisches Lesegerät zum schnellen Erfassen von gedruckten Strich- oder QR-Codes.", content: "Diese Spezial-Scanner nutzen einen kleinen Laser oder eine Kamera, um das Muster aus schwarzen Strichen und weißen Lücken in Bruchteilen einer Sekunde in eine Ziffernfolge zu übersetzen.\n\nFür den Vertrieb sind sie unverzichtbar bei Kunden aus Logistik, Handel oder Medizin (Patientenarmbänder). Es gibt kabelgebundene Handscanner, Funk-Scanner oder komplett in Maschinen integrierte Lesesysteme.", alltagsbeispiel: "Ein Barcode-Scanner liest Daten so schnell, wie unser Gehirn ein einfaches Straßenschild erkennt, nur dass der Scanner sich dabei im Gegensatz zum Menschen niemals vertippen oder verlesen kann.", related: ["Scanner", "Peripherie"], tags: ["Spezial", "Logistik"] },
-            { id: "joystick", title: "Joystick / Gamepad", category: "eingabe", definition: "Analoge Eingabegeräte, primär zur Steuerung von Bewegungen in 2D- oder 3D-Räumen.", content: "Obwohl man sie meist mit Gaming verbindet, haben Joysticks und Gamepads in der IT auch sehr ernste Anwendungen. \nIn der Medizin werden damit oft Operationsroboter gesteuert, in der Logistik schwere Kräne oder Drohnen, und im Flugzeug-Design dienen sie als realistische Steuerelemente am Simulator.", alltagsbeispiel: "Wie das Lenkrad und der Steuerknüppel in einem echten Flugzeug, um die virtuelle Maschine exakt und geschmeidig zu bedienen, was mit reinen Tastenanschlägen nicht möglich wäre.", related: ["Maus", "Eingabe"], tags: ["Spezial", "Hardware"] },
-            { id: "biometrie", title: "Fingerabdrucksensor / Biometrie", category: "eingabe", definition: "Eingabegeräte, die physische Merkmale eines Menschen (Finger, Gesicht, Iris) scannen.", content: "Biometrische Scanner dienen in der IT fast ausschließlich der Authentifizierung (Sicherheit).\n- **Fingerabdruckscanner**: Oft in Business-Laptops neben dem Touchpad verbaut.\n- **Gesichtserkennung**: Nutzen spezielle Infrarotkameras (z.B. Windows Hello), die ein 3D-Gitter des Gesichts scannen und sich nicht durch ein flaches Foto austricksen lassen.", alltagsbeispiel: "Biometrie ist wie ein Türschloss, in das kein leicht zu verlierender Metallschlüssel passt, sondern für das direkt Ihre Handfläche oder Ihr Gesicht als unverwechselbarer Schlüssel dient.", related: ["Sicherheit", "Passwort & Passwort-Manager"], tags: ["Security", "Identifikation"] },
-            { id: "spracheingabe", title: "Spracheingabe / Sprachassistent", category: "eingabe", definition: "Systeme, die das gesprochene Wort aufnehmen, den Text erkennen und Befehle ausführen.", content: "Mit Hilfe von Mikrofonen und komplexer KI-Verarbeitung (oft in der Cloud) können Computer heute flüssige Sprache verstehen.\n\nDas reicht vom Diktieren eines Arztbriefes in einer Praxis (Voice-to-Text) bis hin zur kompletten Steuerung von Smart-Offices (Licht an, Beamer runterfahren, Meeting starten) über Assistenten wie Cortana, Siri oder Alexa.", alltagsbeispiel: "Spracheingabe ist wie ein digitaler Butler, dem Sie vom anderen Ende des Raums zurufen, dass er das Licht ausschalten soll, anstatt aufzustehen und selbst den Schalter zu drücken.", related: ["Mikrofon", "KI"], tags: ["Zukunft", "Software"] },
+            { id: "joystick", title: "Joystick / Gamepad", image: "Controller.png", category: "eingabe", definition: "Analoge Eingabegeräte, primär zur Steuerung von Bewegungen in 2D- oder 3D-Räumen.", content: "Obwohl man sie meist mit Gaming verbindet, haben Joysticks und Gamepads in der IT auch sehr ernste Anwendungen. \nIn der Medizin werden damit oft Operationsroboter gesteuert, in der Logistik schwere Kräne oder Drohnen, und im Flugzeug-Design dienen sie als realistische Steuerelemente am Simulator.", alltagsbeispiel: "Wie das Lenkrad und der Steuerknüppel in einem echten Flugzeug, um die virtuelle Maschine exakt und geschmeidig zu bedienen, was mit reinen Tastenanschlägen nicht möglich wäre.", related: ["Maus", "Eingabe"], tags: ["Spezial", "Hardware"] },
+            { id: "biometrie", title: "Fingerabdrucksensor / Biometrie", image: "Fingerprint.png", category: "eingabe", definition: "Eingabegeräte, die physische Merkmale eines Menschen (Finger, Gesicht, Iris) scannen.", content: "Biometrische Scanner dienen in der IT fast ausschließlich der Authentifizierung (Sicherheit).\n- **Fingerabdruckscanner**: Oft in Business-Laptops neben dem Touchpad verbaut.\n- **Gesichtserkennung**: Nutzen spezielle Infrarotkameras (z.B. Windows Hello), die ein 3D-Gitter des Gesichts scannen und sich nicht durch ein flaches Foto austricksen lassen.", alltagsbeispiel: "Biometrie ist wie ein Türschloss, in das kein leicht zu verlierender Metallschlüssel passt, sondern für das direkt Ihre Handfläche oder Ihr Gesicht als unverwechselbarer Schlüssel dient.", related: ["Sicherheit", "Passwort & Passwort-Manager"], tags: ["Security", "Identifikation"] },
+            { id: "spracheingabe", title: "Spracheingabe / Sprachassistent", image: "Spracheingabe.png", category: "eingabe", definition: "Systeme, die das gesprochene Wort aufnehmen, den Text erkennen und Befehle ausführen.", content: "Mit Hilfe von Mikrofonen und komplexer KI-Verarbeitung (oft in der Cloud) können Computer heute flüssige Sprache verstehen.\n\nDas reicht vom Diktieren eines Arztbriefes in einer Praxis (Voice-to-Text) bis hin zur kompletten Steuerung von Smart-Offices (Licht an, Beamer runterfahren, Meeting starten) über Assistenten wie Cortana, Siri oder Alexa.", alltagsbeispiel: "Spracheingabe ist wie ein digitaler Butler, dem Sie vom anderen Ende des Raums zurufen, dass er das Licht ausschalten soll, anstatt aufzustehen und selbst den Schalter zu drücken.", related: ["Mikrofon", "KI"], tags: ["Zukunft", "Software"] },
 
             // --- VERARBEITUNG ---
             { id: "verarbeitung_konzept", title: "Verarbeitung (Das Herz der IT)", category: "verarbeitung", definition: "In der **Verarbeitung** werden die Rohdaten durch Rechenoperationen in nutzbare Informationen verwandelt.", content: "Das ist die Fabrik im Inneren des Gehäuses, in der die eigentliche Arbeit passiert. Bleiben wir beim Büro-Beispiel:\n\n- Der **Prozessor (CPU)** ist der kluge Sachbearbeiter. Er liest, rechnet und trifft Entscheidungen. Je klüger er ist, desto schneller geht es.\n- Der **Arbeitsspeicher (RAM)** ist die Tischplatte seines Schreibtisches. Je größer der Tisch, desto mehr Akten kann er gleichzeitig offen liegen haben, ohne ständig in den Schrank laufen zu müssen.\n- Das **Mainboard** ist das Bürogebäude mit seinen Fluren und Gängen, das dafür sorgt, dass Akten, Strom und Informationen sicher von A nach B kommen.\n\nAlle drei müssen perfekt zusammenspielen. Ein super Sachbearbeiter an einem winzigen Tisch wird trotzdem langsam sein.", alltagsbeispiel: "Das ist die Restaurant-Küche. Der Koch (**Prozessor**) nimmt Ihre Bestellung, holt Töpfe auf die Arbeitsfläche (**Arbeitsspeicher**) und bereitet das Essen zu. Je besser der Koch und je größer seine Arbeitsfläche, desto schneller bekommen Sie Ihr Essen.", related: ["CPU", "RAM", "Mainboard", "Grafikkarte"], tags: ["Logik", "EVA-S"] },
@@ -312,14 +307,7 @@
                 isSidebarOpen: window.innerWidth >= 768,
                 openSubmenus: { evas: false, geraete: false, infrastruktur: false, dokumentation: false },
                 favorites: JSON.parse(localStorage.getItem('itWikiFavorites')) || [],
-                isDarkMode: localStorage.getItem('itWikiDarkMode') === 'true',
-                
-                // Chatbot State
-                chatState: {
-                    isOpen: false,
-                    messages: [{ role: 'model', text: 'Hallo! Ich bin dein KI-Vertriebsassistent. Welche Hardware-Konzepte soll ich dir erklären oder welches Verkaufsargument suchst du?' }],
-                    isLoading: false
-                }
+                isDarkMode: localStorage.getItem('itWikiDarkMode') === 'true'
             },
 
             init() {
@@ -329,7 +317,6 @@
 
                 this.renderSidebar();
                 this.renderContent();
-                this.renderChat();
                 this.updateSidebarMobileVisibility();
                 
                 window.addEventListener('resize', () => {
@@ -445,214 +432,6 @@
                     }
                 });
                 return displayTitle;
-            },
-
-            // --- STREAMING_CHUNK:Chatbot Logik... ---
-            // --- CHATBOT LOGIC ---
-            toggleChat() {
-                this.state.chatState.isOpen = !this.state.chatState.isOpen;
-                this.renderChat();
-            },
-
-            async sendChatMessage() {
-                const inputEl = document.getElementById('chat-input');
-                const text = inputEl ? inputEl.value.trim() : '';
-                
-                if (!text || this.state.chatState.isLoading) return;
-
-                this.state.chatState.messages.push({ role: 'user', text: text });
-                this.state.chatState.isLoading = true;
-                this.renderChat();
-
-                if (inputEl) inputEl.value = '';
-
-                // --- AUTOMATISCHE UMGEBUNGSERKENNUNG (Canvas vs. GitHub) ---
-                const isCanvas = window.location.hostname.includes('usercontent.goog') || window.location.hostname === '';
-                
-                let apiKey = ""; 
-                let model = "gemini-2.5-flash-preview-09-2025"; 
-
-                if (!isCanvas) {
-                    apiKey = "AIzaSyAWMgA3l1X_G8Nvz6Dc02hLFUUFDGyMDEQ"; 
-                    model = "gemini-1.5-flash"; 
-                }
-
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-                
-                const contextData = WIKI_DATA.map(d => `- ${d.title}: ${d.definition}`).join('\n');
-                const systemInstruction = {
-                    parts: [{ text: `Du bist ein freundlicher, professioneller IT-Vertriebsassistent für das 'all around IT Wiki'. Beantworte Fragen auf Deutsch, prägnant (max. 3-4 Sätze) und direkt auf den Kundennutzen ausgerichtet. Nutze diese Wiki-Daten als dein Kernwissen:\n${contextData}` }]
-                };
-                
-                const validHistory = [];
-                this.state.chatState.messages.forEach((msg, idx) => {
-                    if (idx === 0 && msg.role === 'model') return; 
-                    if (msg.role === 'model' && msg.text.includes('Fehler')) return;
-                    if (msg.role === 'model' && msg.text.includes('lokal unser Wiki')) return;
-
-                    const lastValid = validHistory[validHistory.length - 1];
-                    if (!lastValid || lastValid.role !== msg.role) {
-                        validHistory.push({ role: msg.role === 'model' ? 'model' : 'user', text: msg.text });
-                    } else {
-                        lastValid.text += "\n" + msg.text; 
-                    }
-                });
-
-                while (validHistory.length > 0 && validHistory[0].role !== 'user') {
-                    validHistory.shift();
-                }
-
-                const contents = validHistory.map(msg => ({
-                    role: msg.role,
-                    parts: [{ text: msg.text }]
-                }));
-
-                const payload = { contents, systemInstruction };
-                const delays = [1000, 2000, 4000];
-                let responseText = "";
-                let apiSuccess = false;
-
-                for (let attempt = 0; attempt < 3; attempt++) {
-                    try {
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        if (!response.ok) {
-                            throw new Error(`Status ${response.status}`);
-                        }
-                        const data = await response.json();
-                        responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-                        if(responseText) {
-                            apiSuccess = true;
-                            break;
-                        }
-                    } catch (error) {
-                        console.error("Chat API Fehler:", error);
-                        await new Promise(resolve => setTimeout(resolve, delays[attempt] || 1000));
-                    }
-                }
-
-                // SMART FALLBACK: Wenn die API fehlschlägt, antworte trotzdem lokal!
-                if (!apiSuccess) {
-                    const lowerText = text.toLowerCase();
-                    if (lowerText.includes("hallo") || lowerText.includes("hi ") || lowerText === "hi" || lowerText.includes("hey")) {
-                        responseText = "Hallo! Die Online-KI ist gerade nicht erreichbar, aber ich durchsuche gerne lokal unser Wiki für dich. Frag mich z.B. nach RAM oder SSD!";
-                    } else {
-                        const bestMatch = WIKI_DATA.find(item => {
-                            const titleWords = item.title.toLowerCase().replace(/[^a-zäöüß0-9-]/g, ' ').split(' ');
-                            return titleWords.some(word => word.length > 2 && lowerText.includes(word)) || 
-                                   item.tags.some(tag => lowerText.includes(tag.toLowerCase()));
-                        });
-
-                        if (bestMatch) {
-                            responseText = `*Hinweis: Lokales Suchergebnis, da die KI offline ist.*\n\n**${bestMatch.title}**\n${bestMatch.definition}\n\n*Alltagsbeispiel:* ${bestMatch.alltagsbeispiel}`;
-                        } else {
-                            const partialMatch = WIKI_DATA.find(item => item.definition.toLowerCase().includes(lowerText));
-                            if (partialMatch) {
-                                responseText = `Meintest du vielleicht **${partialMatch.title}**?\n${partialMatch.definition}`;
-                            } else {
-                                responseText = "Dazu habe ich lokal leider keinen passenden Artikel gefunden.";
-                            }
-                        }
-                    }
-                }
-
-                this.state.chatState.messages.push({ role: 'model', text: responseText });
-                this.state.chatState.isLoading = false;
-                this.renderChat();
-            },
-
-            // --- STREAMING_CHUNK:Chat UI rendern... ---
-            // --- RENDERING ---
-            renderChat() {
-                const container = document.getElementById('chat-widget-container');
-                if (!container) return;
-                
-                let html = '';
-                
-                if (this.state.chatState.isOpen) {
-                    const messagesHtml = this.state.chatState.messages.map(msg => `
-                        <div class="flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}">
-                            <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm ${msg.role === 'user' ? 'bg-indigo-200 text-indigo-800' : 'bg-indigo-600 text-white'}">
-                                <i data-lucide="${msg.role === 'user' ? 'user' : 'bot'}" class="w-4 h-4"></i>
-                            </div>
-                            <div class="p-3 rounded-2xl text-sm leading-relaxed shadow-sm max-w-[80%] ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-tr-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm'}">
-                                ${this.formatText(msg.text)}
-                            </div>
-                        </div>
-                    `).join('');
-
-                    const loadingHtml = this.state.chatState.isLoading ? `
-                        <div class="flex gap-3 flex-row">
-                            <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-                                <i data-lucide="bot" class="w-4 h-4"></i>
-                            </div>
-                            <div class="p-3 bg-white border border-slate-200 rounded-2xl rounded-tl-sm flex items-center gap-2 shadow-sm">
-                                <i data-lucide="loader-2" class="w-4 h-4 text-indigo-600 animate-spin"></i>
-                                <span class="text-sm text-slate-500">Tippt...</span>
-                            </div>
-                        </div>
-                    ` : '';
-
-                    html += `
-                        <div class="mb-4 w-[350px] sm:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-slide-in pointer-events-auto">
-                            <div class="bg-indigo-600 text-white p-4 flex items-center justify-between shrink-0">
-                                <div class="flex items-center gap-2">
-                                    <i data-lucide="bot" class="w-5 h-5"></i>
-                                    <span class="font-bold">IT-Wiki KI</span>
-                                </div>
-                                <button onclick="app.toggleChat()" class="text-indigo-200 hover:text-white transition-colors">
-                                    <i data-lucide="x" class="w-5 h-5"></i>
-                                </button>
-                            </div>
-                            
-                            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto custom-scrollbar flex flex-col gap-4 bg-slate-50">
-                                ${messagesHtml}
-                                ${loadingHtml}
-                            </div>
-                            
-                            <div class="p-4 bg-white border-t border-slate-100 shrink-0">
-                                <div class="relative flex items-center">
-                                    <input 
-                                        type="text"
-                                        id="chat-input"
-                                        onkeydown="if(event.key === 'Enter') app.sendChatMessage()"
-                                        placeholder="Frag mich etwas..."
-                                        class="w-full bg-slate-100 border-none rounded-full pl-4 pr-12 py-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
-                                    />
-                                    <button 
-                                        onclick="app.sendChatMessage()"
-                                        ${this.state.chatState.isLoading ? 'disabled' : ''}
-                                        class="absolute right-2 p-2 text-indigo-600 hover:bg-indigo-100 rounded-full transition-colors disabled:opacity-50"
-                                    >
-                                        <i data-lucide="send" class="w-[18px] h-[18px]"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                html += `
-                    <button 
-                        onclick="app.toggleChat()"
-                        class="w-14 h-14 bg-slate-900 hover:bg-indigo-600 text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 pointer-events-auto"
-                    >
-                        <i data-lucide="${this.state.chatState.isOpen ? 'x' : 'message-circle'}" class="w-6 h-6"></i>
-                    </button>
-                `;
-
-                container.innerHTML = html;
-                lucide.createIcons();
-
-                if (this.state.chatState.isOpen) {
-                    const messagesDiv = document.getElementById('chat-messages');
-                    if (messagesDiv) messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                    const inputEl = document.getElementById('chat-input');
-                    if (inputEl && !this.state.chatState.isLoading) inputEl.focus();
-                }
             },
 
             // --- STREAMING_CHUNK:Sidebar rendern... ---
